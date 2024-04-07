@@ -1,4 +1,4 @@
 import weatherAPI
 
-weatherAPI.get_weather_data()
+weatherAPI.refresh()
 print(weatherAPI.weekWeather[0].status)

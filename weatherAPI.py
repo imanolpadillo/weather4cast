@@ -1,3 +1,7 @@
+# *************************************************************************************************** 
+# ******************************************* WEATHER API *******************************************
+# *************************************************************************************************** 
+
 import requests
 from enum import Enum
 
@@ -152,7 +156,7 @@ def decode_weather_status(input_string, dict_list):
     return None
 
 
-def get_weather_data():
+def refresh():
     """
     calls REST-API and converts json into appropiate information for global variable
     'weekStatus'
