@@ -1,7 +1,6 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API1 *******************************************
+# ******************************************* WEATHER API *******************************************
 # *************************************************************************************************** 
-# Source: https://www.el-tiempo.net/api
 
 import requests
 from enum import Enum
@@ -10,7 +9,7 @@ from enum import Enum
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
-NEXT_DAYS = 4
+DAYS = 6
 
 class WeatherStatus(Enum):
     SUNNY = 1
@@ -46,11 +45,11 @@ dict_weather_status = [
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
-        self.status = status if status is not None else [0]*24
+        self.status = status if status is not None else ['-']*24
         self.rain = rain if rain is not None else [0]*24
-        self.temperature = temperature if temperature is not None else [0]*24
+        self.temperature = temperature if temperature is not None else ['-']*24
 
-weekWeather = [DayWeather() for _ in range(NEXT_DAYS+2)]  # today + tomorrow + next days
+weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next days
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -104,7 +103,7 @@ def decode_json(data):
     weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
  
     # NEXT 4 DAYS
-    for x in range(NEXT_DAYS+1):  #first 'next days' matches with tomorrow and is discarded
+    for x in range(DAYS-1):  #first 'next days' matches with tomorrow and is discarded
         if x==0: continue   
         # A) Temperature
         weekWeather[x+1].temperature = [data['proximos_dias'][x]['temperatura']['minima']]*8 + \
@@ -133,7 +132,6 @@ def decode_json(data):
             weekWeather[x+1].status = [data['proximos_dias'][x]['estado_cielo_descripcion'][1]]*12 + \
                 [data['proximos_dias'][x]['estado_cielo_descripcion'][2]]*12
         else:                                                                       # [0: 00-24]
-            print(data['proximos_dias'][x]['estado_cielo_descripcion'])
             weekWeather[x+1].status = [data['proximos_dias'][x]['estado_cielo_descripcion']]*12
    
     # Decode weather status
@@ -149,10 +147,11 @@ def decode_weather_status(input_string, dict_list):
     :param dict_list: dictionary to compare input_string with.
     :return: key value from dict_list
     """
-    for dictionary in dict_list:
-        for key in dictionary:
-            if key.lower() in input_string.lower():
-                return dictionary[key]
+    if input_string is not None:
+        for dictionary in dict_list:
+            for key in dictionary:
+                if key.lower() in input_string.lower():
+                    return dictionary[key]
     return None
 
 
