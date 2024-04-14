@@ -1,29 +1,32 @@
 # *************************************************************************************************** 
-# ********************************************* INPUT HW ********************************************
+# ********************************************* PCF8574 *********************************************
 # *************************************************************************************************** 
-# A) ADS1115
 #    Source: 
-#       https://www.engineersgarage.com/raspberry-pi-ads1015-ads1115-analog-sensor-interfacing-ir-sensor-interfacing/
+#       https://pypi.org/project/pcf8574-io/
 #    Prerequisites:
 #       Enable I2C in raspi preferences
-#       sudo apt-get update
-#       sudo apt-get install build-essential python-dev-is-python2 python3-smbus python3-pip
-#       sudo pip3 install adafruit_ads1x15
+#       pip3 install smbus2
+#       pip3 install pcf8574-io
 
-import Adafruit_ADS1x15
-GAIN = 1
+
+import pcf8574_io
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-forecast_day = 0   # 0=today, 1=tomorrow...
-forecast_hour = 0  # 0=00:00, 1=01:00 ... 23=23:00
 
-adc = Adafruit_ADS1x15.ADS1115()
+p1 = pcf8574_io.PCF(0x20)
+p2 = pcf8574_io.PCF(0x21)
+p3 = pcf8574_io.PCF(0x22)
 
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
-
-value = adc.read_adc(0, gain=GAIN)
-analog_voltage = value*(4.096/32767)
+p1.pin_mode("p0", "OUTPUT")
+p1.write("p0", "LOW")
+p1.pin_mode("p1", "OUTPUT")
+p1.write("p1", "HIGH")
+p2.pin_mode("p0", "OUTPUT")
+p2.write("p0", "LOW")
+p3.pin_mode("p0", "OUTPUT")
+p3.write("p0", "LOW")
