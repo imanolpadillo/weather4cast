@@ -1,5 +1,6 @@
 import weatherAPI1
 import max7219
+import ky040
 from time import strftime
 import threading, time
 
@@ -31,15 +32,19 @@ def thread_max7219_function():
 
 thread_max7219 = threading.Thread(target=thread_max7219_function)
 thread_max7219.start()
-time.sleep(2)
-max7219.level=1
-time.sleep(2)
-max7219.level=2
-time.sleep(2)
-max7219.message="23"
-time.sleep(2)
-max7219.level=3
-time.sleep(2)
-thread_max7219_running = False
-thread_max7219.join()
-print("end")
+# time.sleep(2)
+# max7219.level=1
+# time.sleep(2)
+# max7219.level=2
+# time.sleep(2)
+# max7219.message="23"
+# time.sleep(2)
+# max7219.level=3
+# time.sleep(2)
+# thread_max7219_running = False
+# thread_max7219.join()
+# print("end")
+
+while True:
+    # print(ky040.counter)
+    time.sleep(1)
