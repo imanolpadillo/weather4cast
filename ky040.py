@@ -15,9 +15,13 @@ from RPi_GPIO_Rotary import rotary
 forecast_day = 0   # 0=today, 1=tomorrow...
 forecast_hour = 0  # 0=00:00, 1=01:00 ... 23=23:00
 
-HourDialCLK = 24
-HourDialDT = 17
-HourDialSW = 27
+HourDialCLK = 24 #24
+HourDialDT = 17 #17
+HourDialSW = 27 #27
+
+DayDialCLK = 13
+DayDialDT = 19
+DayDialSW = 26
 
 prev_counter = 0
 counter = 0
@@ -27,22 +31,56 @@ lastWasInc = False
 # FUNCTIONS
 # *************************************************************************************************** 
 
-## Define Callback functions
+## Define DAY-Callback functions
+def dayDialTurnInc():
+    print("+ day")
+
+def dayDialTurnDec():
+    print("- day")
+
+def dayDialPushed():
+    day_dial.stop()
+    day_dial.start()
+    setForecastDay(0)
+    print("reset day")
+
+def dayDialChanged(count):
+    print(count) ## Current Counter value
+    setForecastDay(count)
+
+def setForecastDay(count):
+    while count<0:
+        count += 20
+    while count>=20:
+        count -= 20
+    if count>=0 and count<4:
+        forecast_day = 1
+    elif count>=4 and count<8:
+        forecast_day = 2
+    elif count>=8 and count<12:
+        forecast_day = 3
+    elif count>=12 and count<16:
+        forecast_day = 4
+    elif count>=16:
+        forecast_day = 5
+    max7219.message = str(forecast_day)
+
+## Define HOUR-Callback functions
 def hourDialTurnInc():
     global lastWasInc
     lastWasInc = True
-    # print("CW Turn")
+    print("+ hour")
 
 def hourDialTurnDec():
     global lastWasInc
     lastWasInc = False
-    # print("CCW Turn")
+    print("- hour")
 
 def hourDialPushed():
     hour_dial.stop()
     hour_dial.start()
     setForecastHour(0)
-    # print("Button Pushed")
+    print("reset hour")
 
 def hourDialChanged(count):
     print(count) ## Current Counter value
@@ -140,10 +178,28 @@ def setForecastHour(count):
         elif count == 19:
             forecast_hour = 23
         elif count == 20:
-            forecast_hour = 00
-    max7219.message = str(forecast_hour)
+            forecast_hour = 0
+
+    if len(str(forecast_hour))==1:
+        max7219.message = '0' + str(forecast_hour)
+    else:
+        max7219.message = str(forecast_hour)
 
 
+## DAY START
+## Initialise (DayDialCLK, DayDialDT, DayDialSW, ticks)
+day_dial = rotary.Rotary(DayDialCLK,DayDialDT,DayDialSW,2)
+
+ ## Register callbacks
+day_dial.register(increment=dayDialTurnInc, decrement=dayDialTurnDec)
+
+## Register more callbacks
+day_dial.register(pressed=dayDialPushed, onchange=dayDialChanged) 
+
+## Start monitoring the encoder
+day_dial.start() 
+
+## HOUR START
 ## Initialise (HourDialCLK, HourDialDT, HourDialSW, ticks)
 hour_dial = rotary.Rotary(HourDialCLK,HourDialDT,HourDialSW,2)
 
@@ -156,8 +212,7 @@ hour_dial.register(pressed=hourDialPushed, onchange=hourDialChanged)
 ## Start monitoring the encoder
 hour_dial.start() 
 
-# while True:
-#     time.sleep(0.5)
+
 
 # ## Stop monitoring
 # hour_dial.stop()

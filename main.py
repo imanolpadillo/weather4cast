@@ -9,16 +9,6 @@ def thread_weatherAPI(f_stop):
     if not f_stop.is_set():
         threading.Timer(10, thread_weatherAPI, [f_stop]).start()
 
-# start calling f now and every 60 sec thereafter
-# f_stop = threading.Event()
-# thread_weatherAPI(f_stop)
-# time.sleep(60)
-# f_stop.set()
-
-# weatherAPI.refresh()
-# print(weatherAPI.weekWeather[0].status)
-# print(strftime("%X"))
-
 thread_max7219_running = True
 def thread_max7219_function():
     global thread_max7219_running
@@ -29,6 +19,16 @@ def thread_max7219_function():
         else:
             max7219.show_level(max7219.level)
         time.sleep(max7219.timeout)
+
+# start calling f now and every 60 sec thereafter
+# f_stop = threading.Event()
+# thread_weatherAPI(f_stop)
+# time.sleep(60)
+# f_stop.set()
+
+# weatherAPI.refresh()
+# print(weatherAPI.weekWeather[0].status)
+# print(strftime("%X"))
 
 thread_max7219 = threading.Thread(target=thread_max7219_function)
 thread_max7219.start()
