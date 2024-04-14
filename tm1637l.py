@@ -24,5 +24,5 @@ def show_temperature(min, max):
     :param max: max temperature
     :return: -
     """
-    tmin.temperature(min)
-    tmax.temperature(max)
+    tmin.temperature(int(min))
+    tmax.temperature(int(max))

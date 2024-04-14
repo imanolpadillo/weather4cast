@@ -1,13 +1,20 @@
 import weatherAPI1
 import max7219
+import tm1637l
 import ky040
 from time import strftime
 import threading, time
 
+WEATHER_API_REFRESH_TIME = 1800 # in seconds
+weather_refresh_flag = False
+
 def thread_weatherAPI(f_stop):
-    print(strftime("%X"))
+    print('call weatherAPI: ' + strftime("%X"))
+    weatherAPI1.refresh()
+    global weather_refresh_flag
+    weather_refresh_flag = True
     if not f_stop.is_set():
-        threading.Timer(10, thread_weatherAPI, [f_stop]).start()
+        threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
 
 thread_max7219_running = True
 def thread_max7219_function():
@@ -21,8 +28,8 @@ def thread_max7219_function():
         time.sleep(max7219.timeout)
 
 # start calling f now and every 60 sec thereafter
-# f_stop = threading.Event()
-# thread_weatherAPI(f_stop)
+f_stop = threading.Event()
+thread_weatherAPI(f_stop)
 # time.sleep(60)
 # f_stop.set()
 
@@ -46,5 +53,16 @@ thread_max7219.start()
 # print("end")
 
 while True:
-    # print(ky040.counter)
+    if weather_refresh_flag == True:
+        weather_refresh_flag = False
+        # display min/max temperature
+        [tmin,tmax]=weatherAPI1.get_min_max_temperature(ky040.forecast_day)
+        tm1637l.show_temperature(tmin,tmax)
+        print('tmin=' + str(tmin))
+        print('tmax=' + str(tmax))
+        # display temperature
+        print(weatherAPI1.weekWeather[ky040.forecast_day].temperature[ky040.forecast_hour])
+        # display rain
+        print(weatherAPI1.weekWeather[ky040.forecast_day].rain[ky040.forecast_hour])
+
     time.sleep(1)

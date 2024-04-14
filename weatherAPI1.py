@@ -163,3 +163,12 @@ def refresh():
     data = call_api()
     decode_json(data)
 
+def get_min_max_temperature (forecast_day):
+    """
+    gets min and max temperature of input forecast day
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :return: [tmin,tmax]
+    """
+    tmin = min(weekWeather[forecast_day].temperature)
+    tmax = max(weekWeather[forecast_day].temperature)
+    return [tmin, tmax]
