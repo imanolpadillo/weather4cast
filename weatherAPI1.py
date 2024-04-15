@@ -62,9 +62,15 @@ def decode_json(data):
     # A) Temperature
     weekWeather[0].temperature = data['pronostico']['hoy']['temperatura']
     temperature_len = len(weekWeather[0].temperature)
-    # - Fill previous hourly values with actual value
+    # - Fill previous hourly values with actual value. Except first value (min) and second (max).
+    #   This is done for min,max calculation from array.
     for x in range(24 - temperature_len):
-        weekWeather[0].temperature.insert(0,data['pronostico']['hoy']['temperatura'][0])
+        if x==24 - temperature_len -1:
+            weekWeather[0].temperature.insert(0,data['temperaturas']['min'])
+        elif x==24 - temperature_len -2:
+            weekWeather[0].temperature.insert(0,data['temperaturas']['max'])
+        else:
+            weekWeather[0].temperature.insert(0,data['pronostico']['hoy']['temperatura'][0])
     # B) Rain
     weekWeather[0].rain = data['pronostico']['hoy']['precipitacion']
     rain_len = len(weekWeather[0].rain)

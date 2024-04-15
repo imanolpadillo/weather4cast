@@ -8,7 +8,7 @@ import weatherAPI1, weatherAPI2
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
-api_weather_id = 2
+api_weather_id = 1
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -33,9 +33,12 @@ def get_min_max_temperature (forecast_day):
     :return: [tmin,tmax]
     """
     if api_weather_id == 1:
+        print(weatherAPI1.weekWeather[forecast_day].temperature)
         tmin = min(weatherAPI1.weekWeather[forecast_day].temperature)
+        print(tmin)
         tmax = max(weatherAPI1.weekWeather[forecast_day].temperature)
     else:
+        print(weatherAPI2.weekWeather[forecast_day].temperature)
         tmin = min(weatherAPI2.weekWeather[forecast_day].temperature)
         tmax = max(weatherAPI2.weekWeather[forecast_day].temperature)       
     return [tmin, tmax]
@@ -74,4 +77,5 @@ def get_status (forecast_day, forecast_hour):
     if api_weather_id == 1:
         return weatherAPI1.weekWeather[forecast_day].status[forecast_hour]
     else:
-        return weatherAPI2.weekWeather[forecast_day].status[forecast_hour]    
+        return weatherAPI2.weekWeather[forecast_day].status[forecast_hour]
+  

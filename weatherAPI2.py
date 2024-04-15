@@ -53,7 +53,7 @@ def decode_json(data):
     day_index=0
     for item in data['list']:
         if counter == 0:
-            first_temperature = item['main']['temp']
+            first_temperature = round(item['main']['temp'])
             first_status = item['weather'][0]['main']
         if item['dt_txt'][11:13] == "00":
             weekWeather[day_index].temperature[0] = round(item['main']['temp'])
