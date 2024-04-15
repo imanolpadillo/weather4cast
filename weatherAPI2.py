@@ -4,24 +4,14 @@
 # Source: https://openweathermap.org/api
 
 import requests
-from enum import Enum
+from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
-DAYS = 6
+api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=0490c3ec80c848e85ddda40210bc5693'
 
-class WeatherStatus(Enum):
-    SUNNY = 1
-    PARTLY_CLOUDY = 2
-    CLOUDY = 3
-    RAINY = 4
-    STORMY = 5
-    WINDY = 6
-    FOGGY = 7
-    SNOWY = 8
- 
 dict_weather_status = [
                        {'snow': WeatherStatus.SNOWY}, \
                        {'thunderstorm': WeatherStatus.STORMY}, \
@@ -31,12 +21,6 @@ dict_weather_status = [
                        {'fog': WeatherStatus.FOGGY}, \
                        {'clouds': WeatherStatus.CLOUDY}
                     ]
-
-class DayWeather:
-    def __init__(self, status=None, rain=None, temperature=None):
-        self.status = status if status is not None else [None]*24
-        self.rain = rain if rain is not None else ['0']*24
-        self.temperature = temperature if temperature is not None else [None]*24
 
 weekWeather = [DayWeather() for _ in range(DAYS+1)]  
 
@@ -49,7 +33,7 @@ def call_api():
     calls REST-API from "el-tiempo.net"
     :return: json file
     """ 
-    url = 'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=0490c3ec80c848e85ddda40210bc5693'
+    url = api_url
     headers = {'cache-control': "no-cache"}
     response = requests.get(url, headers=headers)
     if response.status_code == 200:

@@ -1,4 +1,4 @@
-import weatherAPI1
+import weather
 import max7219
 import tm1637l
 import ky040
@@ -9,8 +9,8 @@ WEATHER_API_REFRESH_TIME = 1800 # in seconds
 weather_refresh_flag = False
 
 def thread_weatherAPI(f_stop):
-    print('call weatherAPI: ' + strftime("%X"))
-    weatherAPI1.refresh()
+    print('call weatherAPI' + str(weather.api_weather_id) + ': ' + strftime("%X"))
+    weather.refresh()
     global weather_refresh_flag
     weather_refresh_flag = True
     if not f_stop.is_set():
@@ -56,13 +56,18 @@ while True:
     if weather_refresh_flag == True:
         weather_refresh_flag = False
         # display min/max temperature
-        [tmin,tmax]=weatherAPI1.get_min_max_temperature(ky040.forecast_day)
+        [tmin,tmax]=weather.get_min_max_temperature(ky040.forecast_day)
         tm1637l.show_temperature(tmin,tmax)
         print('tmin=' + str(tmin))
         print('tmax=' + str(tmax))
         # display temperature
-        print(weatherAPI1.weekWeather[ky040.forecast_day].temperature[ky040.forecast_hour])
+        t=weather.get_temperature(ky040.forecast_day, ky040.forecast_hour)
+        print('t=' + str(t))
         # display rain
-        print(weatherAPI1.weekWeather[ky040.forecast_day].rain[ky040.forecast_hour])
+        rain=weather.get_rain(ky040.forecast_day, ky040.forecast_hour)
+        print('rain=' + str(rain))
+        # display status
+        status=weather.get_status(ky040.forecast_day, ky040.forecast_hour)
+        print('status=' + str(status))
 
     time.sleep(1)

@@ -3,24 +3,14 @@
 # *************************************************************************************************** 
 
 import requests
-from enum import Enum
+from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-
-DAYS = 6
-
-class WeatherStatus(Enum):
-    SUNNY = 1
-    PARTLY_CLOUDY = 2
-    CLOUDY = 3
-    RAINY = 4
-    STORMY = 5
-    WINDY = 6
-    FOGGY = 7
-    SNOWY = 8
  
+api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
+
 dict_weather_status = [
                        {'Despejado': WeatherStatus.SUNNY}, \
                        {'Nubes altas': WeatherStatus.PARTLY_CLOUDY}, \
@@ -43,12 +33,6 @@ dict_weather_status = [
                        {'nub': WeatherStatus.CLOUDY}
                     ]
 
-class DayWeather:
-    def __init__(self, status=None, rain=None, temperature=None):
-        self.status = status if status is not None else ['-']*24
-        self.rain = rain if rain is not None else [0]*24
-        self.temperature = temperature if temperature is not None else ['-']*24
-
 weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next days
 
 # *************************************************************************************************** 
@@ -60,7 +44,7 @@ def call_api():
     calls REST-API from "el-tiempo.net"
     :return: json file
     """ 
-    url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
+    url = api_url
     headers = {'cache-control': "no-cache"}
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
@@ -163,12 +147,3 @@ def refresh():
     data = call_api()
     decode_json(data)
 
-def get_min_max_temperature (forecast_day):
-    """
-    gets min and max temperature of input forecast day
-    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
-    :return: [tmin,tmax]
-    """
-    tmin = min(weekWeather[forecast_day].temperature)
-    tmax = max(weekWeather[forecast_day].temperature)
-    return [tmin, tmax]
