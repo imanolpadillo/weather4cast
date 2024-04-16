@@ -54,20 +54,23 @@ thread_max7219.start()
 
 while True:
     if weather_refresh_flag == True:
-        weather_refresh_flag = False
-        # display min/max temperature
-        [tmin,tmax]=weather.get_min_max_temperature(ky040.forecast_day)
-        tm1637l.show_temperature(tmin,tmax)
-        print('tmin=' + str(tmin))
-        print('tmax=' + str(tmax))
-        # display temperature
-        t=weather.get_temperature(ky040.forecast_day, ky040.forecast_hour)
-        print('t=' + str(t))
-        # display rain
-        rain=weather.get_rain(ky040.forecast_day, ky040.forecast_hour)
-        print('rain=' + str(rain))
-        # display status
-        status=weather.get_status(ky040.forecast_day, ky040.forecast_hour)
-        print('status=' + str(status))
+        try:
+            weather_refresh_flag = False
+            # display min/max temperature
+            [tmin,tmax]=weather.get_min_max_temperature(ky040.forecast_day)
+            tm1637l.show_temperature(tmin,tmax)
+            print('tmin=' + str(tmin))
+            print('tmax=' + str(tmax))
+            # display temperature
+            t=weather.get_temperature(ky040.forecast_day, ky040.forecast_hour)
+            print('t=' + str(t))
+            # display rain
+            rain=weather.get_rain(ky040.forecast_day, ky040.forecast_hour)
+            print('rain=' + str(rain))
+            # display status
+            status=weather.get_status(ky040.forecast_day, ky040.forecast_hour)
+            print('status=' + str(status))
+        except Exception as e:
+            print('[main.py] Weather data not updated')
 
     time.sleep(1)

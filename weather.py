@@ -19,12 +19,15 @@ def refresh():
     calls REST-API and converts json into appropiate information for global variable
     'weekStatus'
     """
-    if api_weather_id == 1:
-        data = weatherAPI1.call_api()
-        weatherAPI1.decode_json(data)
-    else:
-        data = weatherAPI2.call_api()
-        weatherAPI2.decode_json(data)        
+    try:
+        if api_weather_id == 1:
+            data = weatherAPI1.call_api()
+            weatherAPI1.decode_json(data)
+        else:
+            data = weatherAPI2.call_api()
+            weatherAPI2.decode_json(data)    
+    except Exception as e:
+        print('[weather.py] API error')    
 
 def get_min_max_temperature (forecast_day):
     """

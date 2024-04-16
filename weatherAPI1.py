@@ -152,4 +152,3 @@ def refresh():
     """
     data = call_api()
     decode_json(data)
-
