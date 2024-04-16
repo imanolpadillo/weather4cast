@@ -33,14 +33,11 @@ def get_min_max_temperature (forecast_day):
     :return: [tmin,tmax]
     """
     if api_weather_id == 1:
-        print(weatherAPI1.weekWeather[forecast_day].temperature)
-        tmin = min(weatherAPI1.weekWeather[forecast_day].temperature)
-        print(tmin)
-        tmax = max(weatherAPI1.weekWeather[forecast_day].temperature)
+        tmin = min(list(map(int, weatherAPI1.weekWeather[forecast_day].temperature)))
+        tmax = max(list(map(int, weatherAPI1.weekWeather[forecast_day].temperature)))
     else:
-        print(weatherAPI2.weekWeather[forecast_day].temperature)
-        tmin = min(weatherAPI2.weekWeather[forecast_day].temperature)
-        tmax = max(weatherAPI2.weekWeather[forecast_day].temperature)       
+        tmin = min(list(map(int, weatherAPI2.weekWeather[forecast_day].temperature)))
+        tmax = max(list(map(int, weatherAPI2.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
 def get_temperature (forecast_day, forecast_hour):

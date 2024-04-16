@@ -151,6 +151,7 @@ def decode_json(data):
         if weekWeather[0].status[ycount] is None:
             weekWeather[0].status[ycount] = first_status
             weekWeather[0].temperature[ycount] = first_temperature
+            
 
     # Decode weather status
     for x in range(len(weekWeather)):
