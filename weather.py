@@ -50,6 +50,8 @@ def get_temperature (forecast_day, forecast_hour):
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: [tmin,tmax]
     """
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
     if api_weather_id == 1:
         return weatherAPI1.weekWeather[forecast_day].temperature[forecast_hour]
     else:
@@ -62,6 +64,8 @@ def get_rain (forecast_day, forecast_hour):
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: [tmin,tmax]
     """
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
     if api_weather_id == 1:
         return weatherAPI1.weekWeather[forecast_day].rain[forecast_hour]
     else:
@@ -74,6 +78,8 @@ def get_status (forecast_day, forecast_hour):
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: [tmin,tmax]
     """
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
     if api_weather_id == 1:
         return weatherAPI1.weekWeather[forecast_day].status[forecast_hour]
     else:

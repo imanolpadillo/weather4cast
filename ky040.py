@@ -19,7 +19,7 @@ HourDialCLK = 24 #24
 HourDialDT = 17 #17
 HourDialSW = 27 #27
 
-DayDialCLK = 13
+DayDialCLK = 6
 DayDialDT = 19
 DayDialSW = 26
 
