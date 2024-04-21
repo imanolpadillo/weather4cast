@@ -1,7 +1,7 @@
 # *************************************************************************************************** 
 # ************************************************ MAIN *********************************************
 # *************************************************************************************************** 
-import weather
+import weather, weatherAPIchange
 import max7219
 import tm1637l
 import ky040
@@ -18,17 +18,17 @@ WEATHER_API_REFRESH_TIME = 1800 # in seconds
 weather_refresh_flag = False
 thread_max7219_running = True
 
-class ForecastData:
+class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
         self.dayFlag = dayFlag
         self.hourFlag = hourFlag
         self.day = day
         self.hour = hour
-forecast_data = ForecastData()
-prev_forecast_data = ForecastData()
+forecast_input = ForecastInput()
+prev_forecast_input = ForecastInput()
 
 # *************************************************************************************************** 
-# FUNCTIONS
+# THREADS
 # *************************************************************************************************** 
 def thread_weatherAPI(f_stop):
     madrid_tz = pytz.timezone('Europe/Madrid')
@@ -50,42 +50,54 @@ def thread_max7219_function():
             max7219.show_level(max7219.level)
         time.sleep(max7219.timeout)
 
+# Function to handle pulse detection
+def thread_changeAPI_function():
+    global weather_refresh_flag
+    while True:
+        if weatherAPIchange.pulse_detector():
+            weather_refresh_flag = True
+        time.sleep(0.01)  # Adjust as needed for your application
+
+# *************************************************************************************************** 
+# FUNCTIONS
+# *************************************************************************************************** 
+
 def input_data_refresh():
     change_flag = False
     global weather_refresh_flag
     switch.update()
-    forecast_data.dayFlag = switch.forecast_day_flag
-    forecast_data.hourFlag = switch.forecast_hour_flag
-    if forecast_data.dayFlag == False:
-        forecast_data.day = 0
+    forecast_input.dayFlag = switch.forecast_day_flag
+    forecast_input.hourFlag = switch.forecast_hour_flag
+    if forecast_input.dayFlag == False:
+        forecast_input.day = 0
     else:
-        forecast_data.day = ky040.forecast_day
-    if forecast_data.hourFlag == False:
+        forecast_input.day = ky040.forecast_day
+    if forecast_input.hourFlag == False:
         # Get the timezone for Madrid
         madrid_tz = pytz.timezone('Europe/Madrid')
         now = datetime.now(madrid_tz)
-        forecast_data.hour = now.strftime("%H")
+        forecast_input.hour = now.strftime("%H")
     else:
-        forecast_data.hour = ky040.forecast_hour
+        forecast_input.hour = ky040.forecast_hour
 
-    if forecast_data.dayFlag != prev_forecast_data.dayFlag:
+    if forecast_input.dayFlag != prev_forecast_input.dayFlag:
         change_flag = True
-    if forecast_data.hourFlag != prev_forecast_data.hourFlag:
+    if forecast_input.hourFlag != prev_forecast_input.hourFlag:
         change_flag = True
-    if forecast_data.hour != prev_forecast_data.hour:
+    if forecast_input.hour != prev_forecast_input.hour:
         change_flag = True
-    if forecast_data.dayFlag == True and (forecast_data.day != prev_forecast_data.day):
+    if forecast_input.dayFlag == True and (forecast_input.day != prev_forecast_input.day):
         change_flag = True
 
     if change_flag == True:
-        print("INPUT_DATA: day_flag=" + str(forecast_data.dayFlag) + ", hour_flag=" + str(forecast_data.hourFlag) + \
-              ", day=" + str(forecast_data.day) + ", hour=" + str(forecast_data.hour))
+        print("INPUT_DATA: day_flag=" + str(forecast_input.dayFlag) + ", hour_flag=" + str(forecast_input.hourFlag) + \
+              ", day=" + str(forecast_input.day) + ", hour=" + str(forecast_input.hour))
         weather_refresh_flag = True
 
-    prev_forecast_data.dayFlag = forecast_data.dayFlag
-    prev_forecast_data.hourFlag = forecast_data.hourFlag
-    prev_forecast_data.day = forecast_data.day
-    prev_forecast_data.hour = forecast_data.hour
+    prev_forecast_input.dayFlag = forecast_input.dayFlag
+    prev_forecast_input.hourFlag = forecast_input.hourFlag
+    prev_forecast_input.day = forecast_input.day
+    prev_forecast_input.hour = forecast_input.hour
 
 
 # *************************************************************************************************** 
@@ -117,24 +129,27 @@ thread_max7219.start()
 # thread_max7219.join()
 # print("end")
 
+thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
+thread_changeAPI.start()
+
 while True:
     input_data_refresh()
     if weather_refresh_flag == True:
         try:
             weather_refresh_flag = False
             # display min/max temperature
-            [tmin,tmax]=weather.get_min_max_temperature(forecast_data.day)
+            [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day)
             tm1637l.show_temperature(tmin,tmax)
             print('tmin=' + str(tmin))
             print('tmax=' + str(tmax))
             # display temperature
-            t=weather.get_temperature(forecast_data.day, forecast_data.hour)
+            t=weather.get_temperature(forecast_input.day, forecast_input.hour)
             print('t=' + str(t))
             # display rain
-            rain=weather.get_rain(forecast_data.day, forecast_data.hour)
+            rain=weather.get_rain(forecast_input.day, forecast_input.hour)
             print('rain=' + str(rain))
             # display status
-            status=weather.get_status(forecast_data.day, forecast_data.hour)
+            status=weather.get_status(forecast_input.day, forecast_input.hour)
             print('status=' + str(status))
         except Exception as e:
             print('[main.py] Weather data not updated')

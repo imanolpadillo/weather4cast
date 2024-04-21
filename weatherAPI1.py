@@ -152,3 +152,9 @@ def refresh():
     """
     data = call_api()
     decode_json(data)
+
+refresh() # get data first time
+# print("API1")
+# print(weekWeather[0].temperature)
+# print(weekWeather[0].status)
+# print(weekWeather[0].rain)

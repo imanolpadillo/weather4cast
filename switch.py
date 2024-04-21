@@ -8,7 +8,7 @@ import time
 # *************************************************************************************************** 
 GPIO.setmode(GPIO.BCM)
 DAY_PIN = 16
-HOUR_PIN = 13
+HOUR_PIN = 25
 forecast_day_flag = False
 forecast_hour_flag = False
 
