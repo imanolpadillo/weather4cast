@@ -7,8 +7,8 @@ import time
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 GPIO.setmode(GPIO.BCM)
-DAY_PIN = 16
-HOUR_PIN = 25
+DAY_PIN = 25
+HOUR_PIN = 16
 forecast_day_flag = False
 forecast_hour_flag = False
 
