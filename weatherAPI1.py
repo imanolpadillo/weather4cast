@@ -2,7 +2,7 @@
 # ******************************************* WEATHER API *******************************************
 # *************************************************************************************************** 
 
-import requests
+import requests,math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 
 # *************************************************************************************************** 
@@ -72,7 +72,9 @@ def decode_json(data):
         else:
             weekWeather[0].temperature.insert(0,data['pronostico']['hoy']['temperatura'][0])
     # B) Rain
-    weekWeather[0].rain = data['pronostico']['hoy']['precipitacion']
+    today_rain = list(map(float, data['pronostico']['hoy']['precipitacion']))
+    weekWeather[0].rain = list(map(math.ceil, today_rain))
+    
     rain_len = len(weekWeather[0].rain)
     # - Fill previous hourly values with actual value
     for x in range(24 - rain_len):
@@ -88,7 +90,8 @@ def decode_json(data):
     # A) Temperature
     weekWeather[1].temperature = data['pronostico']['manana']['temperatura']
     # B) Rain
-    weekWeather[1].rain = data['pronostico']['manana']['precipitacion']
+    tomorrow_rain = list(map(float, data['pronostico']['manana']['precipitacion']))
+    weekWeather[1].rain = list(map(math.ceil, tomorrow_rain))
     # C) status
     weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
  
@@ -154,7 +157,7 @@ def refresh():
     decode_json(data)
 
 refresh() # get data first time
-# print("API1")
-# print(weekWeather[0].temperature)
-# print(weekWeather[0].status)
-# print(weekWeather[0].rain)
+print("API1")
+print(weekWeather[0].temperature)
+print(weekWeather[0].status)
+print(weekWeather[0].rain)

@@ -1,0 +1,1154 @@
+{
+    "origin": {
+        "productor": "Agencia Estatal de Meteorología - AEMET. Gobierno de España",
+        "web": "https://www.aemet.es",
+        "language": "es",
+        "copyright": "© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.",
+        "nota_legal": "https://www.aemet.es/es/nota_legal",
+        "descripcion": "elTiempo.net muestra la información meteorológica creada por © AEMET"
+    },
+    "title": "elTiempo.net | El tiempo en Vitoria-Gasteiz (Araba/Álava)",
+    "metadescripcion": "El tiempo en Vitoria-Gasteiz (Araba/Álava)",
+    "keywords": "Vitoria-Gasteiz, Provincia de Ã\u0081lava, previsión meteorológica, previsión del tiempo, España, viento, humedad, precipitaciones, lluvia, estado del cielo",
+    "municipio": {
+        "CODIGOINE": "01059000000",
+        "ID_REL": "1010590",
+        "COD_GEO": "01001",
+        "CODPROV": "01",
+        "NOMBRE_PROVINCIA": "Araba/Álava",
+        "NOMBRE": "Vitoria-Gasteiz",
+        "POBLACION_MUNI": 242082,
+        "SUPERFICIE": 27681.2008,
+        "PERIMETRO": 111412,
+        "CODIGOINE_CAPITAL": "01059006301",
+        "NOMBRE_CAPITAL": "Vitoria-Gasteiz",
+        "POBLACION_CAPITAL": "237092",
+        "HOJA_MTN25": "0112-4",
+        "LONGITUD_ETRS89_REGCAN95": -2.67275685,
+        "LATITUD_ETRS89_REGCAN95": 42.85058789,
+        "ORIGEN_COORD": "Mapa",
+        "ALTITUD": 539,
+        "ORIGEN_ALTITUD": "MDT5",
+        "DISCREPANTE_INE": 0
+    },
+    "fecha": "2024-04-23",
+    "stateSky": {
+        "description": "Cubierto",
+        "id": "16"
+    },
+    "temperatura_actual": "9",
+    "temperaturas": {
+        "max": "10",
+        "min": "1"
+    },
+    "humedad": "76",
+    "viento": "14",
+    "precipitacion": "0",
+    "lluvia": "100",
+    "imagen": null,
+    "pronostico": {
+        "hoy": {
+            "@attributes": {
+                "fecha": "2024-04-23",
+                "orto": "07:15",
+                "ocaso": "21:03"
+            },
+            "estado_cielo": [
+                "16",
+                "46",
+                "46",
+                "46",
+                "46",
+                "46",
+                "46",
+                "26",
+                "46",
+                "46",
+                "16",
+                "12",
+                "46",
+                "43",
+                "46n",
+                "43n"
+            ],
+            "precipitacion": [
+                "0",
+                "0.1",
+                "0.1",
+                "0.2",
+                "0.1",
+                "0.8",
+                "1",
+                "2",
+                "0.7",
+                "0.1",
+                "0",
+                "0",
+                "0.1",
+                "0.1",
+                "0.1",
+                "0.1"
+            ],
+            "prob_precipitacion": [
+                "100",
+                "100",
+                "65"
+            ],
+            "prob_tormenta": [
+                "45",
+                "10",
+                "0"
+            ],
+            "nieve": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            "prob_nieve": [
+                "0",
+                "0",
+                "0"
+            ],
+            "temperatura": [
+                "5",
+                "5",
+                "6",
+                "6",
+                "7",
+                "7",
+                "8",
+                "8",
+                "8",
+                "9",
+                "9",
+                "8",
+                "7",
+                "6",
+                "6"
+            ],
+            "sens_termica": [
+                "2",
+                "2",
+                "2",
+                "2",
+                "3",
+                "4",
+                "6",
+                "6",
+                "8",
+                "7",
+                "8",
+                "6",
+                "5",
+                "6",
+                "6"
+            ],
+            "humedad_relativa": [
+                "75",
+                "78",
+                "84",
+                "85",
+                "85",
+                "84",
+                "85",
+                "81",
+                "79",
+                "76",
+                "75",
+                "78",
+                "79",
+                "80",
+                "79"
+            ],
+            "viento": [
+                {
+                    "@attributes": {
+                        "periodo": "09"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "16"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "10"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "11"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "20"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "20"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "13"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "22"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "14"
+                    },
+                    "direccion": "O",
+                    "velocidad": "18"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "15"
+                    },
+                    "direccion": "N",
+                    "velocidad": "10"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "16"
+                    },
+                    "direccion": "N",
+                    "velocidad": "10"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "17"
+                    },
+                    "direccion": "N",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "18"
+                    },
+                    "direccion": "N",
+                    "velocidad": "14"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "19"
+                    },
+                    "direccion": "N",
+                    "velocidad": "9"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "20"
+                    },
+                    "direccion": "N",
+                    "velocidad": "10"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "21"
+                    },
+                    "direccion": "N",
+                    "velocidad": "11"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "22"
+                    },
+                    "direccion": "N",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "23"
+                    },
+                    "direccion": "N",
+                    "velocidad": "6"
+                }
+            ],
+            "racha_max": [
+                "26",
+                "35",
+                "34",
+                "36",
+                "29",
+                "19",
+                "18",
+                "12",
+                "25",
+                "15",
+                "16",
+                "17",
+                "13",
+                "10",
+                "10"
+            ],
+            "estado_cielo_descripcion": [
+                "Cubierto",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia",
+                "Cubierto con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Cubierto",
+                "Poco nuboso",
+                "Cubierto con lluvia escasa",
+                "Intervalos nubosos con lluvia escasa",
+                "Cubierto con lluvia escasa",
+                "Intervalos nubosos con lluvia escasa"
+            ]
+        },
+        "manana": {
+            "@attributes": {
+                "fecha": "2024-04-24",
+                "orto": "07:14",
+                "ocaso": "21:04"
+            },
+            "estado_cielo": [
+                "43n",
+                "16n",
+                "15n",
+                "15n",
+                "15n",
+                "12n",
+                "11n",
+                "12n",
+                "11",
+                "12",
+                "15",
+                "15",
+                "46",
+                "16",
+                "15",
+                "15",
+                "15",
+                "14",
+                "17",
+                "17",
+                "17",
+                "17",
+                "17n",
+                "14n"
+            ],
+            "precipitacion": [
+                "0.1",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0.1",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            "prob_precipitacion": [
+                "35",
+                "50",
+                "35",
+                "0"
+            ],
+            "prob_tormenta": [
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            "nieve": [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            "prob_nieve": [
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            "temperatura": [
+                "5",
+                "3",
+                "2",
+                "3",
+                "3",
+                "3",
+                "3",
+                "4",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "11",
+                "12",
+                "11",
+                "11",
+                "10",
+                "9",
+                "7",
+                "6"
+            ],
+            "sens_termica": [
+                "5",
+                "3",
+                "2",
+                "3",
+                "3",
+                "1",
+                "3",
+                "4",
+                "4",
+                "5",
+                "6",
+                "5",
+                "6",
+                "7",
+                "10",
+                "11",
+                "11",
+                "12",
+                "11",
+                "11",
+                "10",
+                "7",
+                "5",
+                "6"
+            ],
+            "humedad_relativa": [
+                "81",
+                "79",
+                "86",
+                "89",
+                "90",
+                "85",
+                "79",
+                "73",
+                "75",
+                "82",
+                "83",
+                "79",
+                "76",
+                "71",
+                "68",
+                "68",
+                "68",
+                "65",
+                "66",
+                "64",
+                "65",
+                "70",
+                "79",
+                "85"
+            ],
+            "viento": [
+                {
+                    "@attributes": {
+                        "periodo": "00"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "01"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "6"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "02"
+                    },
+                    "direccion": "O",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "03"
+                    },
+                    "direccion": "O",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "04"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "05"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "8"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "06"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "7"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "07"
+                    },
+                    "direccion": "O",
+                    "velocidad": "6"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "08"
+                    },
+                    "direccion": "SO",
+                    "velocidad": "6"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "09"
+                    },
+                    "direccion": "SO",
+                    "velocidad": "5"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "10"
+                    },
+                    "direccion": "O",
+                    "velocidad": "5"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "11"
+                    },
+                    "direccion": "N",
+                    "velocidad": "12"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12"
+                    },
+                    "direccion": "N",
+                    "velocidad": "14"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "13"
+                    },
+                    "direccion": "N",
+                    "velocidad": "13"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "14"
+                    },
+                    "direccion": "N",
+                    "velocidad": "14"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "15"
+                    },
+                    "direccion": "N",
+                    "velocidad": "16"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "16"
+                    },
+                    "direccion": "N",
+                    "velocidad": "19"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "17"
+                    },
+                    "direccion": "N",
+                    "velocidad": "18"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "18"
+                    },
+                    "direccion": "N",
+                    "velocidad": "18"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "19"
+                    },
+                    "direccion": "N",
+                    "velocidad": "17"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "20"
+                    },
+                    "direccion": "N",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "21"
+                    },
+                    "direccion": "N",
+                    "velocidad": "11"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "22"
+                    },
+                    "direccion": "N",
+                    "velocidad": "9"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "23"
+                    },
+                    "direccion": "N",
+                    "velocidad": "7"
+                }
+            ],
+            "racha_max": [
+                "9",
+                "9",
+                "11",
+                "12",
+                "12",
+                "11",
+                "8",
+                "8",
+                "9",
+                "12",
+                "22",
+                "25",
+                "25",
+                "26",
+                "28",
+                "33",
+                "32",
+                "31",
+                "28",
+                "25",
+                "19",
+                "16",
+                "11",
+                "6"
+            ],
+            "estado_cielo_descripcion": [
+                "Intervalos nubosos con lluvia escasa",
+                "Cubierto",
+                "Muy nuboso",
+                "Muy nuboso",
+                "Muy nuboso",
+                "Poco nuboso",
+                "Despejado",
+                "Poco nuboso",
+                "Despejado",
+                "Poco nuboso",
+                "Muy nuboso",
+                "Muy nuboso",
+                "Cubierto con lluvia escasa",
+                "Cubierto",
+                "Muy nuboso",
+                "Muy nuboso",
+                "Muy nuboso",
+                "Nuboso",
+                "Nubes altas",
+                "Nubes altas",
+                "Nubes altas",
+                "Nubes altas",
+                "Nubes altas",
+                "Nuboso"
+            ]
+        }
+    },
+    "proximos_dias": [
+        {
+            "@attributes": {
+                "fecha": "2024-04-24"
+            },
+            "prob_precipitacion": [
+                "80",
+                "75",
+                "40",
+                "35",
+                "50",
+                "35",
+                "0"
+            ],
+            "cota_nieve_prov": [
+                "1100",
+                "1000",
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    }
+                },
+                "800",
+                "1100",
+                "1400",
+                {
+                    "@attributes": {
+                        "periodo": "18-24"
+                    }
+                }
+            ],
+            "estado_cielo": [
+                "45",
+                "44",
+                "15",
+                "14n",
+                "44",
+                "15",
+                "15"
+            ],
+            "viento": [
+                {
+                    "@attributes": {
+                        "periodo": "00-24"
+                    },
+                    "direccion": "N",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-12"
+                    },
+                    "direccion": "N",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    },
+                    "direccion": "N",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-06"
+                    },
+                    "direccion": "SO",
+                    "velocidad": "5"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "06-12"
+                    },
+                    "direccion": "N",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-18"
+                    },
+                    "direccion": "N",
+                    "velocidad": "15"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "18-24"
+                    },
+                    "direccion": "C",
+                    "velocidad": "0"
+                }
+            ],
+            "racha_max": [
+                {
+                    "@attributes": {
+                        "periodo": "00-24"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-12"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-06"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "06-12"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-18"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "18-24"
+                    }
+                }
+            ],
+            "temperatura": {
+                "maxima": "13",
+                "minima": "2",
+                "dato": [
+                    "4",
+                    "10",
+                    "10",
+                    "3"
+                ]
+            },
+            "sens_termica": {
+                "maxima": "13",
+                "minima": "1",
+                "dato": [
+                    "4",
+                    "10",
+                    "10",
+                    "3"
+                ]
+            },
+            "humedad_relativa": {
+                "maxima": "100",
+                "minima": "65",
+                "dato": [
+                    "75",
+                    "70",
+                    "65",
+                    "100"
+                ]
+            },
+            "uv_max": "6",
+            "estado_cielo_descripcion": [
+                "Muy nuboso con lluvia escasa",
+                "Nuboso con lluvia escasa",
+                "Muy nuboso",
+                "Nuboso",
+                "Nuboso con lluvia escasa",
+                "Muy nuboso",
+                "Muy nuboso"
+            ]
+        },
+        {
+            "@attributes": {
+                "fecha": "2024-04-25"
+            },
+            "prob_precipitacion": [
+                "100",
+                "80",
+                "100"
+            ],
+            "cota_nieve_prov": [
+                "1300",
+                "1300",
+                "1400"
+            ],
+            "estado_cielo": [
+                "26",
+                "26",
+                "26"
+            ],
+            "viento": [
+                {
+                    "@attributes": {
+                        "periodo": "00-24"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "5"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-12"
+                    },
+                    "direccion": "NO",
+                    "velocidad": "5"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    },
+                    "direccion": "N",
+                    "velocidad": "5"
+                }
+            ],
+            "racha_max": [
+                {
+                    "@attributes": {
+                        "periodo": "00-24"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-12"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    }
+                }
+            ],
+            "temperatura": {
+                "maxima": "14",
+                "minima": "1"
+            },
+            "sens_termica": {
+                "maxima": "14",
+                "minima": "1"
+            },
+            "humedad_relativa": {
+                "maxima": "100",
+                "minima": "65"
+            },
+            "uv_max": "5",
+            "estado_cielo_descripcion": [
+                "Cubierto con lluvia",
+                "Cubierto con lluvia",
+                "Cubierto con lluvia"
+            ]
+        },
+        {
+            "@attributes": {
+                "fecha": "2024-04-26"
+            },
+            "prob_precipitacion": [
+                "95",
+                "45",
+                "75"
+            ],
+            "cota_nieve_prov": [
+                "1500",
+                "1500",
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    }
+                }
+            ],
+            "estado_cielo": [
+                "46",
+                "16",
+                "46"
+            ],
+            "viento": [
+                {
+                    "@attributes": {
+                        "periodo": "00-24"
+                    },
+                    "direccion": "SO",
+                    "velocidad": "20"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-12"
+                    },
+                    "direccion": "SO",
+                    "velocidad": "20"
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    },
+                    "direccion": "SO",
+                    "velocidad": "20"
+                }
+            ],
+            "racha_max": [
+                {
+                    "@attributes": {
+                        "periodo": "00-24"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "00-12"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "periodo": "12-24"
+                    }
+                }
+            ],
+            "temperatura": {
+                "maxima": "18",
+                "minima": "3"
+            },
+            "sens_termica": {
+                "maxima": "18",
+                "minima": "3"
+            },
+            "humedad_relativa": {
+                "maxima": "95",
+                "minima": "40"
+            },
+            "uv_max": "5",
+            "estado_cielo_descripcion": [
+                "Cubierto con lluvia escasa",
+                "Cubierto",
+                "Cubierto con lluvia escasa"
+            ]
+        },
+        {
+            "@attributes": {
+                "fecha": "2024-04-27"
+            },
+            "prob_precipitacion": "100",
+            "cota_nieve_prov": "1200",
+            "estado_cielo": "24",
+            "viento": {
+                "direccion": "SO",
+                "velocidad": "25"
+            },
+            "racha_max": "60",
+            "temperatura": {
+                "maxima": "16",
+                "minima": "3"
+            },
+            "sens_termica": {
+                "maxima": "16",
+                "minima": "3"
+            },
+            "humedad_relativa": {
+                "maxima": "95",
+                "minima": "55"
+            },
+            "uv_max": "4",
+            "estado_cielo_descripcion": "Nuboso con lluvia"
+        },
+        {
+            "@attributes": {
+                "fecha": "2024-04-28"
+            },
+            "prob_precipitacion": "95",
+            "cota_nieve_prov": "1300",
+            "estado_cielo": "23",
+            "viento": {
+                "direccion": "SO",
+                "velocidad": "10"
+            },
+            "racha_max": {},
+            "temperatura": {
+                "maxima": "18",
+                "minima": "2"
+            },
+            "sens_termica": {
+                "maxima": "18",
+                "minima": "2"
+            },
+            "humedad_relativa": {
+                "maxima": "95",
+                "minima": "45"
+            },
+            "estado_cielo_descripcion": "Intervalos nubosos con lluvia"
+        },
+        {
+            "@attributes": {
+                "fecha": "2024-04-29"
+            },
+            "prob_precipitacion": "90",
+            "cota_nieve_prov": "1400",
+            "estado_cielo": "26",
+            "viento": {
+                "direccion": "NE",
+                "velocidad": "15"
+            },
+            "racha_max": {},
+            "temperatura": {
+                "maxima": "15",
+                "minima": "4"
+            },
+            "sens_termica": {
+                "maxima": "15",
+                "minima": "4"
+            },
+            "humedad_relativa": {
+                "maxima": "100",
+                "minima": "65"
+            },
+            "estado_cielo_descripcion": "Cubierto con lluvia"
+        }
+    ],
+    "breadcrumb": [
+        {
+            "name": "Provincias",
+            "url": "/provincias",
+            "title": "El tiempo | Lista de provincias"
+        },
+        {
+            "name": "Araba/Álava",
+            "url": "/provincias/01",
+            "title": "El tiempo en la provincia de Araba/Álava"
+        },
+        {
+            "name": "Municipios",
+            "url": "/provincias/01/municipios",
+            "title": "El tiempo | Lista de municipios de Araba/Álava"
+        },
+        {
+            "name": "Vitoria-Gasteiz",
+            "url": "/provincias/01/municipios/01001",
+            "title": "El tiempo en Vitoria-Gasteiz"
+        }
+    ]
+}
