@@ -49,6 +49,25 @@ def ceil_half(value):
     # For all other cases, round up to the nearest half-integer
     else:
         return math.ceil(value * 2) / 2
+    
+def info_weather_to_rain_mm(day_index):
+    """
+    Forecast from tomorrow does not include rain_mm. This function translates weather info
+    into rain_mm
+    """
+    for hour in range(24):
+        if "lluvia escasa" in weekWeather[day_index].status[hour]:
+            weekWeather[day_index].rain[hour] = 0.5
+        elif "lluvia" in weekWeather[day_index].status[hour]:
+            weekWeather[day_index].rain[hour] = 2
+        elif "nieve" in weekWeather[day_index].status[hour]:
+            weekWeather[day_index].rain[hour] = 2
+        elif "tormenta" in weekWeather[day_index].status[hour]:
+            weekWeather[day_index].rain[hour] = 3
+        elif int(weekWeather[day_index].rain[hour]) >= 80:
+            weekWeather[day_index].rain[hour] = 0.5
+        else:
+            weekWeather[day_index].rain[hour] = 0
 
 def call_api():
     """
@@ -82,60 +101,61 @@ def decode_json(data):
             weekWeather[0].temperature.insert(0,data['temperaturas']['max'])
         else:
             weekWeather[0].temperature.insert(0,data['pronostico']['hoy']['temperatura'][0])
-    # B) Rain
+    # B) status
+    weekWeather[0].status = data['pronostico']['hoy']['estado_cielo_descripcion']
+    status_len = len(weekWeather[0].status)
+    # - Fill previous hourly values with actual value
+    for x in range(24 - status_len):
+        weekWeather[0].status.insert(0,data['pronostico']['hoy']['estado_cielo_descripcion'][0])
+    # C) Rain
     today_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['hoy']['precipitacion']]
     weekWeather[0].rain = [ceil_half(value) for value in today_rain]   
     rain_len = len(weekWeather[0].rain)
     # - Fill previous hourly values with actual value
     for x in range(24 - rain_len):
         weekWeather[0].rain.insert(0,today_rain[0])
-    # C) status
-    weekWeather[0].status = data['pronostico']['hoy']['estado_cielo_descripcion']
-    status_len = len(weekWeather[0].status)
-    # - Fill previous hourly values with actual value
-    for x in range(24 - status_len):
-        weekWeather[0].status.insert(0,data['pronostico']['hoy']['estado_cielo_descripcion'][0])
  
     # TOMORROW WEATHER
     # A) Temperature
     weekWeather[1].temperature = data['pronostico']['manana']['temperatura']
-    # B) Rain
+    # B) status
+    weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
+    # C) Rain
     tomorrow_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['manana']['precipitacion']]
     weekWeather[1].rain = list(map(math.ceil, tomorrow_rain))
-    # C) status
-    weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
  
     # NEXT 4 DAYS
     for x in range(DAYS-1):  #first 'next days' matches with tomorrow and is discarded
-        if x==0: continue   
+        if x==0: continue 
         # A) Temperature
-        weekWeather[x+1].temperature = [data['proximos_dias'][x]['temperatura']['minima']]*8 + \
-            [data['proximos_dias'][x]['temperatura']['maxima']]*8 + \
-            [data['proximos_dias'][x]['temperatura']['minima']]*8
-        # B) Rain
-        if len(data['proximos_dias'][x]['prob_precipitacion']) == 7:                # [0: 00-24, 1: 00:12, 2: 12-24]
+        weekWeather[x+1].temperature = [data['proximos_dias'][x-1]['temperatura']['minima']]*8 + \
+            [data['proximos_dias'][x-1]['temperatura']['maxima']]*8 + \
+            [data['proximos_dias'][x-1]['temperatura']['minima']]*8
+        # B) Status
+        if len(data['proximos_dias'][x-1]['estado_cielo_descripcion']) == 7:          # [0: 00-24, 1: 00:12, 2: 12-24]
                                                                                     # [3: 00-06, 4: 06:12, 5: 12-18, 6: 18-24]
-            weekWeather[x+1].rain = [data['proximos_dias'][x]['prob_precipitacion'][3]]*6 + \
-                [data['proximos_dias'][x]['prob_precipitacion'][4]]*6 + \
-                [data['proximos_dias'][x]['prob_precipitacion'][5]]*6 + \
-                [data['proximos_dias'][x]['prob_precipitacion'][6]]*6
-        elif len(data['proximos_dias'][x]['prob_precipitacion']) == 3:              # [0: 00-24, 1: 00:12, 2: 12-24]
-            weekWeather[x+1].rain = [data['proximos_dias'][x]['prob_precipitacion'][1]]*12 + \
-                [data['proximos_dias'][x]['prob_precipitacion'][2]]*12      
+            weekWeather[x+1].status = [data['proximos_dias'][x-1]['estado_cielo_descripcion'][3]]*6 + \
+                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][4]]*6 + \
+                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][5]]*6 + \
+                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][6]]*6
+        elif len(data['proximos_dias'][x-1]['estado_cielo_descripcion']) == 3:        # [0: 00-24, 1: 00:12, 2: 12-24]
+            weekWeather[x+1].status = [data['proximos_dias'][x-1]['estado_cielo_descripcion'][1]]*12 + \
+                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][2]]*12
         else:                                                                       # [0: 00-24]
-            weekWeather[x+1].rain = [data['proximos_dias'][x]['prob_precipitacion']]*12     
-        # C) Status
-        if len(data['proximos_dias'][x]['estado_cielo_descripcion']) == 7:          # [0: 00-24, 1: 00:12, 2: 12-24]
+            weekWeather[x+1].status = [data['proximos_dias'][x-1]['estado_cielo_descripcion']]*24
+        # C) Rain
+        if len(data['proximos_dias'][x-1]['prob_precipitacion']) == 7:                # [0: 00-24, 1: 00:12, 2: 12-24]
                                                                                     # [3: 00-06, 4: 06:12, 5: 12-18, 6: 18-24]
-            weekWeather[x+1].status = [data['proximos_dias'][x]['estado_cielo_descripcion'][3]]*6 + \
-                [data['proximos_dias'][x]['estado_cielo_descripcion'][4]]*6 + \
-                [data['proximos_dias'][x]['estado_cielo_descripcion'][5]]*6 + \
-                [data['proximos_dias'][x]['estado_cielo_descripcion'][6]]*6
-        elif len(data['proximos_dias'][x]['estado_cielo_descripcion']) == 3:        # [0: 00-24, 1: 00:12, 2: 12-24]
-            weekWeather[x+1].status = [data['proximos_dias'][x]['estado_cielo_descripcion'][1]]*12 + \
-                [data['proximos_dias'][x]['estado_cielo_descripcion'][2]]*12
+            weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion'][3]]*6 + \
+                [data['proximos_dias'][x-1]['prob_precipitacion'][4]]*6 + \
+                [data['proximos_dias'][x-1]['prob_precipitacion'][5]]*6 + \
+                [data['proximos_dias'][x-1]['prob_precipitacion'][6]]*6
+        elif len(data['proximos_dias'][x-1]['prob_precipitacion']) == 3:              # [0: 00-24, 1: 00:12, 2: 12-24]
+            weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion'][1]]*12 + \
+                [data['proximos_dias'][x-1]['prob_precipitacion'][2]]*12      
         else:                                                                       # [0: 00-24]
-            weekWeather[x+1].status = [data['proximos_dias'][x]['estado_cielo_descripcion']]*12
+            weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion']]*24
+        info_weather_to_rain_mm(x+1)    
    
     # Decode weather status
     for x in range(len(weekWeather)):
@@ -167,7 +187,7 @@ def refresh():
     decode_json(data)
 
 refresh() # get data first time
-print("API1")
+# print("API1")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
-print(weekWeather[0].rain)
+# print(weekWeather[0].rain)
