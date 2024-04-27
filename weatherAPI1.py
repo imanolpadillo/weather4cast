@@ -39,6 +39,17 @@ weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next day
 # FUNCTIONS
 # *************************************************************************************************** 
 
+def ceil_half(value):
+    # Check if the fractional part is strictly greater than 0.5
+    if value % 1 > 0.5:
+        return math.ceil(value)
+    # Check if the value is exactly 0.5 or 1.0
+    elif value % 1 == 0.5 or value % 1 == 0:
+        return value
+    # For all other cases, round up to the nearest half-integer
+    else:
+        return math.ceil(value * 2) / 2
+
 def call_api():
     """
     calls REST-API from "el-tiempo.net"
@@ -72,13 +83,12 @@ def decode_json(data):
         else:
             weekWeather[0].temperature.insert(0,data['pronostico']['hoy']['temperatura'][0])
     # B) Rain
-    today_rain = list(map(float, data['pronostico']['hoy']['precipitacion']))
-    weekWeather[0].rain = list(map(math.ceil, today_rain))
-    
+    today_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['hoy']['precipitacion']]
+    weekWeather[0].rain = [ceil_half(value) for value in today_rain]   
     rain_len = len(weekWeather[0].rain)
     # - Fill previous hourly values with actual value
     for x in range(24 - rain_len):
-        weekWeather[0].rain.insert(0,data['pronostico']['hoy']['precipitacion'][0])
+        weekWeather[0].rain.insert(0,today_rain[0])
     # C) status
     weekWeather[0].status = data['pronostico']['hoy']['estado_cielo_descripcion']
     status_len = len(weekWeather[0].status)
@@ -90,7 +100,7 @@ def decode_json(data):
     # A) Temperature
     weekWeather[1].temperature = data['pronostico']['manana']['temperatura']
     # B) Rain
-    tomorrow_rain = list(map(float, data['pronostico']['manana']['precipitacion']))
+    tomorrow_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['manana']['precipitacion']]
     weekWeather[1].rain = list(map(math.ceil, tomorrow_rain))
     # C) status
     weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
@@ -158,6 +168,6 @@ def refresh():
 
 refresh() # get data first time
 print("API1")
-print(weekWeather[0].temperature)
-print(weekWeather[0].status)
+# print(weekWeather[0].temperature)
+# print(weekWeather[0].status)
 print(weekWeather[0].rain)
