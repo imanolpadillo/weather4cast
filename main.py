@@ -104,34 +104,17 @@ def input_data_refresh():
 # main
 # *************************************************************************************************** 
 
-# start calling f now and every 60 sec thereafter
+# start threads
 f_stop = threading.Event()
 thread_weatherAPI(f_stop)
-# time.sleep(60)
-# f_stop.set()
-
-# weatherAPI.refresh()
-# print(weatherAPI.weekWeather[0].status)
-# print(strftime("%X"))
 
 thread_max7219 = threading.Thread(target=thread_max7219_function)
 thread_max7219.start()
-# time.sleep(2)
-# max7219.level=1
-# time.sleep(2)
-# max7219.level=2
-# time.sleep(2)
-# max7219.message="23"
-# time.sleep(2)
-# max7219.level=3
-# time.sleep(2)
-# thread_max7219_running = False
-# thread_max7219.join()
-# print("end")
 
 thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
 thread_changeAPI.start()
 
+# infinite loop
 while True:
     input_data_refresh()
     if weather_refresh_flag == True:
