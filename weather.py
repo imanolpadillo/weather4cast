@@ -3,6 +3,7 @@
 # *************************************************************************************************** 
 
 import weatherAPI1, weatherAPI2
+import logging
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -27,7 +28,8 @@ def refresh():
             data = weatherAPI2.call_api()
             weatherAPI2.decode_json(data)    
     except Exception as e:
-        print('[weather.py] API error')    
+        logging.error('[weather.py] API error: ' + str(e))
+        print('[weather.py] API error: ' + str(e))    
 
 def get_min_max_temperature (forecast_day):
     """

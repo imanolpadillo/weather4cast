@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import threading
 import time
 import weather, max7219
+import logging
 
 
 # Set up GPIO using BCM numbering
@@ -19,11 +20,13 @@ def pulse_detector():
         if weather.api_weather_id == 1:
             weather.api_weather_id = 2
             max7219.message='A2'
-            print("Change to weatherAPI2")
+            logging.info('Change to weatherAPI2')
+            print('Change to weatherAPI2')
         else:
             weather.api_weather_id = 1
             max7219.message='A1'
-            print("Change to weatherAPI1")
+            logging.info('Change to weatherAPI1')
+            print('Change to weatherAPI1')
         time.sleep(3)
         return True
     else:
