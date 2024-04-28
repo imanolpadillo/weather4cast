@@ -49,6 +49,44 @@ status.pin_mode("p7", "OUTPUT")
 # FUNCTIONS
 # *************************************************************************************************** 
 
+def demo(flag):
+    """
+    Activates/deactivates all leds depending on flag value
+    """
+    global temperature_high
+    global temperature_low
+    global status
+    if flag == True:
+        value = "LOW"
+    else:
+        value = "HIGH"
+    temperature_high.write("p0", value)
+    temperature_high.write("p1", value)
+    temperature_high.write("p2", value)
+    temperature_high.write("p3", value)
+    temperature_high.write("p4", value)
+    temperature_high.write("p5", value)
+    temperature_high.write("p6", value)
+    temperature_high.write("p7", value)
+    temperature_low.write("p0", value)
+    temperature_low.write("p1", value)
+    temperature_low.write("p2", value)
+    temperature_low.write("p3", value)
+    temperature_low.write("p4", value)
+    temperature_low.write("p5", value)
+    temperature_low.write("p6", value)
+    temperature_low.write("p7", value)
+    status.write("p0", value)
+    status.write("p1", value)
+    status.write("p2", value)
+    status.write("p3", value)
+    status.write("p4", value)
+    status.write("p5", value)
+    status.write("p6", value)
+    status.write("p7", value)
+    
+
+
 #   7-segment digit led position
 #         p0
 #      p5    p1

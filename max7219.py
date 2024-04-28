@@ -33,6 +33,12 @@ device = max7219(serial, cascaded=2, block_orientation=-90,
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
+# def demo(flag):
+#     """
+#     Activates/deactivates all leds depending on flag value
+#     """
+
+
 def show_message(message = message):
     """
     shows string message
