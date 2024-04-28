@@ -147,6 +147,7 @@ while True:
             print('t=' + str(t))
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour)
+            max7219.level = rain
             print('rain=' + str(rain))
             # display status
             status=weather.get_status(forecast_input.day, forecast_input.hour)

@@ -11,7 +11,7 @@
 #       (optional) https://github.com/rm-hull/luma.led_matrix.git
 #       (optional) python3 ./luma.led_matrix/examples/matrix_demo.py --cascade=2 --block-orientation=-90
 
-import time
+import time, math
 from PIL import Image
 from luma.led_matrix.device import max7219
 from luma.core.interface.serial import spi, noop
@@ -51,12 +51,16 @@ def show_level(level = level):
     """
     # Display the level
     level_array = []
+    decimal_flag = False
     for row in reversed(range(8)):
-        if (int(level) -1) >= row:
+        if (level -1) >= row:
             level_array = level_array + [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         else:
-            level_array = level_array + [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            if level % 1 == 0.5 and decimal_flag == False and (math.ceil(level)) == row+1:
+                decimal_flag = True
+                level_array = level_array + [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
+            else:
+                level_array = level_array + [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     image = Image.new("1", (16, 8))
     image.putdata(level_array)
     device.display(image)
-
