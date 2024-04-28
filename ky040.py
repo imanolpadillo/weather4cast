@@ -16,13 +16,13 @@ from gpioenum import gpio
 forecast_day = 0   # 0=today, 1=tomorrow...
 forecast_hour = 0  # 0=00:00, 1=01:00 ... 23=23:00
 
-HourDialCLK = gpio.KY040_HOUR_CLK
-HourDialDT = gpio.KY040_HOUR_DT
-HourDialSW = gpio.KY040_HOUR_SW
+HourDialCLK = gpio.KY040_HOUR_CLK.value
+HourDialDT = gpio.KY040_HOUR_DT.value
+HourDialSW = gpio.KY040_HOUR_SW.value
 
-DayDialCLK = gpio.KY040_DAY_CLK
-DayDialDT = gpio.KY040_DAY_DT
-DayDialSW = gpio.KY040_DAY_SW
+DayDialCLK = gpio.KY040_DAY_CLK.value
+DayDialDT = gpio.KY040_DAY_DT.value
+DayDialSW = gpio.KY040_DAY_SW.value
 
 prev_counter = 0
 counter = 0

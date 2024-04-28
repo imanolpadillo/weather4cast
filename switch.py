@@ -7,8 +7,8 @@ from gpioenum import gpio
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 GPIO.setmode(GPIO.BCM)
-DAY_PIN = gpio.SWITCH_DAY
-HOUR_PIN = gpio.SWITCH_HOUR
+DAY_PIN = gpio.SWITCH_DAY.value
+HOUR_PIN = gpio.SWITCH_HOUR.value
 forecast_day_flag = False
 forecast_hour_flag = False
 

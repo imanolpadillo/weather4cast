@@ -12,8 +12,8 @@ from gpioenum import gpio
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-tmin = tm1637.TM1637(clk=gpio.TM1637_TMIN_CLK, dio=gpio.TM1637_TMIN_DIO)
-tmax = tm1637.TM1637(clk=gpio.TM1637_TMAX_CLK, dio=gpio.TM1637_TMAX_DIO)
+tmin = tm1637.TM1637(clk=gpio.TM1637_TMIN_CLK.value, dio=gpio.TM1637_TMIN_DIO.value)
+tmax = tm1637.TM1637(clk=gpio.TM1637_TMAX_CLK.value, dio=gpio.TM1637_TMAX_DIO.value)
 
 # *************************************************************************************************** 
 # FUNCTIONS

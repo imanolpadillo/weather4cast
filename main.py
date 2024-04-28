@@ -134,7 +134,7 @@ thread_changeAPI.start()
 while True:
     input_data_refresh()
     if weather_refresh_flag == True:
-        try:
+        # try:
             weather_refresh_flag = False
             # display min/max temperature
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day)
@@ -143,7 +143,7 @@ while True:
             print('tmax=' + str(tmax))
             # display temperature
             t=weather.get_temperature(forecast_input.day, forecast_input.hour)
-            pcf8574.display_temperature(t)
+            pcf8574.display_temperature(int(t))
             print('t=' + str(t))
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour)
@@ -153,7 +153,7 @@ while True:
             status=weather.get_status(forecast_input.day, forecast_input.hour)
             pcf8574.display_status(status)
             print('status=' + str(status))
-        except Exception as e:
-            print('[main.py] Weather data not updated')
+        # except Exception as e:
+        #     print('[main.py] Weather data not updated: ', str(e))
 
     time.sleep(1)
