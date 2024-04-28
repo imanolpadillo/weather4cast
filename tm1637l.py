@@ -17,6 +17,20 @@ tmax = tm1637.TM1637(clk=21, dio=20)
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
+def demo(flag):
+    """
+    Activates/deactivates all leds depending on flag value
+    """
+    if flag == True:
+        # all LEDS on "88:88"
+        tmin.write([127, 255, 127, 127])
+        tmax.write([127, 255, 127, 127])
+    else:
+        # all LEDS off
+        tmin.write([0, 0, 0, 0])
+        tmax.write([0, 0, 0, 0])
+        
+
 def show_temperature(min, max):
     """
     shows min and max temperature

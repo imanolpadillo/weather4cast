@@ -62,8 +62,18 @@ def thread_changeAPI_function():
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
+def demo(flag):
+    """
+    Activates/deactivates all leds depending on flag value
+    """
+    max7219.demo(flag)
+    pcf8574.demo(flag)
+    tm1637l.demo(flag)
 
 def input_data_refresh():
+    """
+    Checks when control input changes (new day/hour)
+    """
     change_flag = False
     global weather_refresh_flag
     switch.update()
@@ -104,6 +114,11 @@ def input_data_refresh():
 # *************************************************************************************************** 
 # main
 # *************************************************************************************************** 
+
+# demo functionality for checking all leds
+demo(True)
+time.sleep(3)
+demo(False)
 
 # start threads
 f_stop = threading.Event()
