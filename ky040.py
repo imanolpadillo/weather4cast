@@ -8,6 +8,7 @@
 #       pip3 install RPi-GPIO-Rotary
 import max7219
 from RPi_GPIO_Rotary import rotary
+from gpioenum import gpio
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -15,13 +16,13 @@ from RPi_GPIO_Rotary import rotary
 forecast_day = 0   # 0=today, 1=tomorrow...
 forecast_hour = 0  # 0=00:00, 1=01:00 ... 23=23:00
 
-HourDialCLK = 24 #24
-HourDialDT = 17 #17
-HourDialSW = 27 #27
+HourDialCLK = gpio.KY040_HOUR_CLK
+HourDialDT = gpio.KY040_HOUR_DT
+HourDialSW = gpio.KY040_HOUR_SW
 
-DayDialCLK = 6
-DayDialDT = 19
-DayDialSW = 26
+DayDialCLK = gpio.KY040_DAY_CLK
+DayDialDT = gpio.KY040_DAY_DT
+DayDialSW = gpio.KY040_DAY_SW
 
 prev_counter = 0
 counter = 0

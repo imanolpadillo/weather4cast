@@ -7,12 +7,13 @@
 #       pip3 install raspberrypi-tm1637    
 
 import tm1637
+from gpioenum import gpio
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-tmin = tm1637.TM1637(clk=5, dio=4)
-tmax = tm1637.TM1637(clk=21, dio=20)
+tmin = tm1637.TM1637(clk=gpio.TM1637_TMIN_CLK, dio=gpio.TM1637_TMIN_DIO)
+tmax = tm1637.TM1637(clk=gpio.TM1637_TMAX_CLK, dio=gpio.TM1637_TMAX_DIO)
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -29,7 +30,7 @@ def demo(flag):
         # all LEDS off
         tmin.write([0, 0, 0, 0])
         tmax.write([0, 0, 0, 0])
-        
+
 
 def show_temperature(min, max):
     """

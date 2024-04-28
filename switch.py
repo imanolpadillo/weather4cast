@@ -2,13 +2,13 @@
 # ********************************************** SWITCH *********************************************
 # *************************************************************************************************** 
 import RPi.GPIO as GPIO
-import time
+from gpioenum import gpio
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 GPIO.setmode(GPIO.BCM)
-DAY_PIN = 25
-HOUR_PIN = 16
+DAY_PIN = gpio.SWITCH_DAY
+HOUR_PIN = gpio.SWITCH_HOUR
 forecast_day_flag = False
 forecast_hour_flag = False
 
@@ -31,8 +31,3 @@ def update():
     global forecast_day_flag, forecast_hour_flag
     forecast_day_flag = switch_state(DAY_PIN)
     forecast_hour_flag = switch_state(HOUR_PIN)
-
-# while True:
-#     update()
-#     print("day: " + str(forecast_day_flag) + ", hour: " + str(forecast_hour_flag))
-#     time.sleep(1)
