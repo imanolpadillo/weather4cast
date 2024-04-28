@@ -5,6 +5,7 @@ import weather, weatherAPIchange
 import max7219
 import tm1637l
 import ky040
+import pcf8574
 import switch
 from time import strftime
 import threading, time
@@ -127,6 +128,7 @@ while True:
             print('tmax=' + str(tmax))
             # display temperature
             t=weather.get_temperature(forecast_input.day, forecast_input.hour)
+            pcf8574.display_temperature(t)
             print('t=' + str(t))
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour)
@@ -134,6 +136,7 @@ while True:
             print('rain=' + str(rain))
             # display status
             status=weather.get_status(forecast_input.day, forecast_input.hour)
+            pcf8574.display_status(status)
             print('status=' + str(status))
         except Exception as e:
             print('[main.py] Weather data not updated')
