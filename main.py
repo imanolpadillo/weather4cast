@@ -120,6 +120,7 @@ def input_data_refresh():
 # *************************************************************************************************** 
 
 # demo functionality for checking all leds
+wlogging.log(LogType.INFO.value,LogId.SWITCH_ON.value,'Starting weather4cast!')
 demo(True)
 time.sleep(3)
 demo(False)

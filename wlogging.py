@@ -16,6 +16,7 @@ class LogType(Enum):
     ERROR = 2
 
 class LogId(Enum):
+    SWITCH_ON =   '  SWITCH_ON'
     INDATA_CHG =  ' INDATA_CHG'
     OUTDATA_CHG = 'OUTDATA_CHG'
     API_CHG =     '    API_CHG'
