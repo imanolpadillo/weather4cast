@@ -122,7 +122,7 @@ def decode_json(data):
     weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
     # C) Rain
     tomorrow_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['manana']['precipitacion']]
-    weekWeather[1].rain = list(map(math.ceil, tomorrow_rain))
+    weekWeather[1].rain = [ceil_half(value) for value in tomorrow_rain]   
  
     # NEXT 4 DAYS
     for x in range(DAYS-1):  #first 'next days' matches with tomorrow and is discarded
