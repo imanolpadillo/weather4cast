@@ -5,11 +5,15 @@
 
 import requests, math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+import configparser
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
+config = configparser.ConfigParser()
+config.read('secrets.ini')
+print(config['secrets']['api2_key'])
 api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=0490c3ec80c848e85ddda40210bc5693'
 
 dict_weather_status = [
