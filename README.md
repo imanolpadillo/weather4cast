@@ -45,4 +45,10 @@ cd /home/pi/Documents/weather4cast/logs
 cat weather4cast.log
 ```
 
+### SECRETS
+For those APIs that requires an api-key it is necessary to include in parent path a 'secrets.ini' including the following info:
+```
+[secrets]
+api2_key = XXXXXX
+```
 

@@ -13,8 +13,8 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('secrets.ini')
-print(config['secrets']['api2_key'])
-api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=0490c3ec80c848e85ddda40210bc5693'
+api_key = config['secrets']['api2_key']
+api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=' + api_key
 
 dict_weather_status = [
                        {'snow': WeatherStatus.SNOWY}, \
