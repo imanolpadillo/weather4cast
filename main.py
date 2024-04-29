@@ -12,12 +12,12 @@ from time import strftime
 import threading, time
 import pytz
 from datetime import datetime
-import logging
+import wlogging
+from wlogging import LogType, LogId
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
 WEATHER_API_REFRESH_TIME = 1800 # in seconds
 weather_refresh_flag = False
 thread_max7219_running = True
@@ -35,11 +35,8 @@ prev_forecast_input = ForecastInput()
 # THREADS
 # *************************************************************************************************** 
 def thread_weatherAPI(f_stop):
-    madrid_tz = pytz.timezone('Europe/Madrid')
-    now = datetime.now(madrid_tz)
-    log='call weatherAPI' + str(weather.api_weather_id) + ': ' + now.strftime("%H:%M:%S")
-    logging.info(log)
-    print(log)
+    log='API' + str(weather.api_weather_id) 
+    wlogging.log(LogType.INFO.value,LogId.API_UPD.value,log)
     weather.refresh()
     global weather_refresh_flag
     weather_refresh_flag = True
@@ -106,10 +103,10 @@ def input_data_refresh():
         change_flag = True
 
     if change_flag == True:
-        log="INPUT_DATA: day_flag=" + str(forecast_input.dayFlag) + ", hour_flag=" + str(forecast_input.hourFlag) + \
+        log="day_flag=" + str(forecast_input.dayFlag) + \
+              ", hour_flag=" + str(forecast_input.hourFlag) + \
               ", day=" + str(forecast_input.day) + ", hour=" + str(forecast_input.hour)
-        logging.info(log)
-        print(log)
+        wlogging.log(LogType.INFO.value,LogId.INDATA_CHG.value,log)
         weather_refresh_flag = True
 
     prev_forecast_input.dayFlag = forecast_input.dayFlag
@@ -143,30 +140,25 @@ while True:
     if weather_refresh_flag == True:
         try:
             weather_refresh_flag = False
+            log=''
             # display min/max temperature
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day)
             tm1637l.show_temperature(tmin,tmax)
-            logging.info('tmin=' + str(tmin))
-            logging.info('tmax=' + str(tmax))
-            print('tmin=' + str(tmin))
-            print('tmax=' + str(tmax))
+            log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
             # display temperature
             t=weather.get_temperature(forecast_input.day, forecast_input.hour)
             pcf8574.display_temperature(int(t))
-            logging.info('t=' + str(t))
-            print('t=' + str(t))
+            log+='; t=' + str(t)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour)
             max7219.level = rain
-            logging.info('rain=' + str(rain))
-            print('rain=' + str(rain))
+            log+='; rain=' + str(rain)
             # display status
             status=weather.get_status(forecast_input.day, forecast_input.hour)
             pcf8574.display_status(status)
-            logging.info('status=' + str(status))
-            print('status=' + str(status))
+            log+='; status=' + str(status)
+            wlogging.log(LogType.INFO.value,LogId.OUTDATA_CHG.value,log)
         except Exception as e:
-            logging.error('[main.py] Weather data not updated: ' + str(e))
-            print('[main.py] Weather data not updated: ', str(e))
-
+            log = '(main.py) Weather data not updated: ' + str(e)
+            wlogging.log(LogType.ERROR.value,LogId.EXCEPTION.value,log)
     time.sleep(1)

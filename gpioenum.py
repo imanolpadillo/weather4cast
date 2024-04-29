@@ -32,6 +32,7 @@ class gpio(Enum):
     MAX7219_CS = 8
     MAX7219_DIN = 10
     MAX7219_CLK = 11
+    BUTTON_API_CHG = 13
     SWITCH_HOUR = 16
     KY040_HOUR_DT = 17
     KY040_DAY_DT = 19

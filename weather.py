@@ -28,8 +28,8 @@ def refresh():
             data = weatherAPI2.call_api()
             weatherAPI2.decode_json(data)    
     except Exception as e:
-        logging.error('[weather.py] API error: ' + str(e))
-        print('[weather.py] API error: ' + str(e))    
+        logging.error('[EXCEPTION]   (weather.py) API error: ' + str(e))
+        print('[EXCEPTION]   (weather.py) API error: ' + str(e))    
 
 def get_min_max_temperature (forecast_day):
     """
