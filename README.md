@@ -16,36 +16,36 @@ Weather4cast works with the following weather APIs:
 
 ## 🎮 Raspi commands
 
-### Raspi ssh access
+ 1.  Raspi ssh access
 ```
 ssh pi@192.168.0.41
 ```
 
-### Copy files from PC to Raspi
+ 2. Copy files from PC to Raspi
 ```
 scp /Users/imanolpadillo/Documents/weather4cast/*.* pi@192.168.0.41:/home/pi/Documents/weather4cast
 ````
 
-### Execute weather4cast manually from Raspi
+ 3. Execute weather4cast manually from Raspi
 ```
 cd /home/pi/Documents/weather4cast
 python3 main.py
 ```
 
-### Program a cron for executing weather4cast on restart and delete logs every week
+ 4. Program a cron for executing weather4cast on restart and delete logs every week
 ```
 sudo crontab -e -u pi
 @reboot sh /home/pi/Documents/weather4cast/launcher.sh >/home/pi/Documents/weather4cast/logs/cron.log 2>&1
 0 0 * * 0 /bin/rm -f /home/pi/Documents/weather4cast/logs/*
 ```
 
-### Read Raspi logs
+ 5. Read Raspi logs
 ```
 cd /home/pi/Documents/weather4cast/logs
 cat weather4cast.log
 ```
 
-### SECRETS
+## 🔏 SECRETS
 For those APIs that requires an api-key it is necessary to include in parent path a 'secrets.ini' including the following info:
 ```
 [secrets]
