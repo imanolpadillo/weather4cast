@@ -13,3 +13,27 @@ Weather4cast works with the following weather APIs:
   - url: [/api.openweathermap.org](https://openweathermap.org/api)
 3. API3: open-meteo
   - url: [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs)
+
+## 🎮 Raspi commands
+
+### Raspi ssh access
+ssh pi@192.168.0.41
+
+### Copy files from PC to Raspi
+scp /Users/imanolpadillo/Documents/weather4cast/*.* pi@192.168.0.41:/home/pi/Documents/weather4cast
+
+### Execute weather4cast manually from Raspi
+cd /home/pi/Documents/weather4cast
+python3 main.py
+
+### Program a cron for executing weather4cast on restart and delete logs every week
+sudo crontab -e -u pi
+@reboot sh /home/pi/Documents/weather4cast/launcher.sh >/home/pi/Documents/weather4cast/logs/cron.log 2>&1
+0 0 * * 0 /bin/rm -f /home/pi/Documents/weather4cast/logs/*
+
+### Read Raspi logs
+cd /home/pi/Documents/weather4cast/logs
+cat weather4cast.log
+
+
+
