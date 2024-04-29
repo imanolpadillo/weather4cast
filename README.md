@@ -7,12 +7,12 @@ This project is focused on developing a weather forecast device based on a Raspb
 ## 🔌 Weather APIs
 Weather4cast works with the following weather APIs:
 
-1. API1: el-tiempo.net
-  - url: [https://www.el-tiempo.net/](https://www.el-tiempo.net/api)
-2. API2: openweathermap
-  - url: [/api.openweathermap.org](https://openweathermap.org/api)
-3. API3: open-meteo
+1. API1: open-meteo
   - url: [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs)
+2. API2: el-tiempo.net
+  - url: [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
+3. API3: openweathermap
+  - url: [https://openweathermap.org/api](https://openweathermap.org/api)
 
 ## 🎮 Raspi commands
 
@@ -49,6 +49,6 @@ cat weather4cast.log
 For those APIs that requires an api-key it is necessary to include in parent path a 'secrets.ini' including the following info:
 ```
 [secrets]
-api2_key = XXXXXX
+api3_key = XXXXXX
 ```
 

@@ -1,6 +1,7 @@
 # *************************************************************************************************** 
-# ******************************************* WEATHER API *******************************************
+# ****************************************** WEATHER API1 *******************************************
 # *************************************************************************************************** 
+# Source: https://open-meteo.com/en/docs
 
 import requests,math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
@@ -9,31 +10,43 @@ from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
  
-api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
+api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=temperature_2m,rain,weather_code,wind_speed_10m'
 
 dict_weather_status = [
-                       {'Despejado': WeatherStatus.SUNNY}, \
-                       {'Nubes altas': WeatherStatus.PARTLY_CLOUDY}, \
-                       {'Intervalos nuboso': WeatherStatus.PARTLY_CLOUDY}, \
-                       {'Poco nuboso': WeatherStatus.PARTLY_CLOUDY}, \
-                       {'Bruma': WeatherStatus.PARTLY_CLOUDY}, \
-                       {'Intervalos nubosos con lluvia escasa': WeatherStatus.PARTLY_CLOUDY}, \
-                       {'Muy nuboso': WeatherStatus.CLOUDY}, \
-                       {'Cubierto': WeatherStatus.CLOUDY}, \
-                       {'Cubierto con lluvia escasa': WeatherStatus.CLOUDY}, \
-                       {'Muy nuboso con lluvia escasa': WeatherStatus.CLOUDY}, \
-                       {'Nuboso con lluvia': WeatherStatus.RAINY}, \
-                       {'Muy nuboso con lluvia': WeatherStatus.RAINY}, \
-                       {'nie': WeatherStatus.SNOWY}, \
-                       {'tor': WeatherStatus.STORMY}, \
-                       {'sol': WeatherStatus.SUNNY}, \
-                       {'llu': WeatherStatus.RAINY}, \
-                       {'vie': WeatherStatus.FOGGY}, \
-                       {'cub': WeatherStatus.CLOUDY}, \
-                       {'nub': WeatherStatus.CLOUDY}
+                       {0: WeatherStatus.SUNNY}, \
+                       {1: WeatherStatus.SUNNY}, \
+                       {2: WeatherStatus.PARTLY_CLOUDY}, \
+                       {3: WeatherStatus.PARTLY_CLOUDY}, \
+                       {45: WeatherStatus.FOGGY}, \
+                       {48: WeatherStatus.FOGGY}, \
+                       {51: WeatherStatus.RAINY}, \
+                       {53: WeatherStatus.RAINY}, \
+                       {55: WeatherStatus.RAINY}, \
+                       {56: WeatherStatus.RAINY}, \
+                       {57: WeatherStatus.RAINY}, \
+                       {61: WeatherStatus.RAINY}, \
+                       {63: WeatherStatus.RAINY}, \
+                       {65: WeatherStatus.RAINY}, \
+                       {66: WeatherStatus.RAINY}, \
+                       {67: WeatherStatus.RAINY}, \
+                       {71: WeatherStatus.SNOWY}, \
+                       {73: WeatherStatus.SNOWY}, \
+                       {75: WeatherStatus.SNOWY}, \
+                       {77: WeatherStatus.SNOWY}, \
+                       {80: WeatherStatus.RAINY}, \
+                       {81: WeatherStatus.RAINY}, \
+                       {82: WeatherStatus.RAINY}, \
+                       {85: WeatherStatus.SNOWY}, \
+                       {86: WeatherStatus.SNOWY}, \
+                       {95: WeatherStatus.STORMY}, \
+                       {96: WeatherStatus.STORMY}, \
+                       {99: WeatherStatus.STORMY}, \
+                       {100: WeatherStatus.WINDY}
                     ]
 
 weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next days
+
+MAX_WIND_KMH = 50
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -50,28 +63,10 @@ def ceil_half(value):
     else:
         return math.ceil(value * 2) / 2
     
-def info_weather_to_rain_mm(day_index):
-    """
-    Forecast from tomorrow does not include rain_mm. This function translates weather info
-    into rain_mm
-    """
-    for hour in range(24):
-        if "lluvia escasa" in weekWeather[day_index].status[hour]:
-            weekWeather[day_index].rain[hour] = 0.5
-        elif "lluvia" in weekWeather[day_index].status[hour]:
-            weekWeather[day_index].rain[hour] = 2
-        elif "nieve" in weekWeather[day_index].status[hour]:
-            weekWeather[day_index].rain[hour] = 2
-        elif "tormenta" in weekWeather[day_index].status[hour]:
-            weekWeather[day_index].rain[hour] = 3
-        elif int(weekWeather[day_index].rain[hour]) >= 80:
-            weekWeather[day_index].rain[hour] = 0.5
-        else:
-            weekWeather[day_index].rain[hour] = 0
 
 def call_api():
     """
-    calls REST-API from "el-tiempo.net"
+    calls REST-API from "api.open-meteo.com"
     :return: json file
     """ 
     url = api_url
@@ -84,78 +79,21 @@ def call_api():
 
 def decode_json(data):
     """
-    calls REST-API from "el-tiempo.net". Global variable "weekWeather" is updated.
+    calls REST-API from "api.open-meteo.com". Global variable "weekWeather" is updated.
     :param data: json file obtained from "el-tiempo.net" REST-API
     :return: -
     """ 
-    # TODAY WEATHER
-    # A) Temperature
-    weekWeather[0].temperature = data['pronostico']['hoy']['temperatura']
-    temperature_len = len(weekWeather[0].temperature)
-    # - Fill previous hourly values with actual value. Except first value (min) and second (max).
-    #   This is done for min,max calculation from array.
-    for x in range(24 - temperature_len):
-        if x==24 - temperature_len -1:
-            weekWeather[0].temperature.insert(0,data['temperaturas']['min'])
-        elif x==24 - temperature_len -2:
-            weekWeather[0].temperature.insert(0,data['temperaturas']['max'])
-        else:
-            weekWeather[0].temperature.insert(0,data['pronostico']['hoy']['temperatura'][0])
-    # B) status
-    weekWeather[0].status = data['pronostico']['hoy']['estado_cielo_descripcion']
-    status_len = len(weekWeather[0].status)
-    # - Fill previous hourly values with actual value
-    for x in range(24 - status_len):
-        weekWeather[0].status.insert(0,data['pronostico']['hoy']['estado_cielo_descripcion'][0])
-    # C) Rain
-    today_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['hoy']['precipitacion']]
-    weekWeather[0].rain = [ceil_half(value) for value in today_rain]   
-    rain_len = len(weekWeather[0].rain)
-    # - Fill previous hourly values with actual value
-    for x in range(24 - rain_len):
-        weekWeather[0].rain.insert(0,today_rain[0])
- 
-    # TOMORROW WEATHER
-    # A) Temperature
-    weekWeather[1].temperature = data['pronostico']['manana']['temperatura']
-    # B) status
-    weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
-    # C) Rain
-    tomorrow_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['manana']['precipitacion']]
-    weekWeather[1].rain = [ceil_half(value) for value in tomorrow_rain]   
- 
-    # NEXT 4 DAYS
-    for x in range(DAYS-1):  #first 'next days' matches with tomorrow and is discarded
-        if x==0: continue 
-        # A) Temperature
-        weekWeather[x+1].temperature = [data['proximos_dias'][x-1]['temperatura']['minima']]*8 + \
-            [data['proximos_dias'][x-1]['temperatura']['maxima']]*8 + \
-            [data['proximos_dias'][x-1]['temperatura']['minima']]*8
-        # B) Status
-        if len(data['proximos_dias'][x-1]['estado_cielo_descripcion']) == 7:          # [0: 00-24, 1: 00:12, 2: 12-24]
-                                                                                    # [3: 00-06, 4: 06:12, 5: 12-18, 6: 18-24]
-            weekWeather[x+1].status = [data['proximos_dias'][x-1]['estado_cielo_descripcion'][3]]*6 + \
-                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][4]]*6 + \
-                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][5]]*6 + \
-                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][6]]*6
-        elif len(data['proximos_dias'][x-1]['estado_cielo_descripcion']) == 3:        # [0: 00-24, 1: 00:12, 2: 12-24]
-            weekWeather[x+1].status = [data['proximos_dias'][x-1]['estado_cielo_descripcion'][1]]*12 + \
-                [data['proximos_dias'][x-1]['estado_cielo_descripcion'][2]]*12
-        else:                                                                       # [0: 00-24]
-            weekWeather[x+1].status = [data['proximos_dias'][x-1]['estado_cielo_descripcion']]*24
-        # C) Rain
-        if len(data['proximos_dias'][x-1]['prob_precipitacion']) == 7:                # [0: 00-24, 1: 00:12, 2: 12-24]
-                                                                                    # [3: 00-06, 4: 06:12, 5: 12-18, 6: 18-24]
-            weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion'][3]]*6 + \
-                [data['proximos_dias'][x-1]['prob_precipitacion'][4]]*6 + \
-                [data['proximos_dias'][x-1]['prob_precipitacion'][5]]*6 + \
-                [data['proximos_dias'][x-1]['prob_precipitacion'][6]]*6
-        elif len(data['proximos_dias'][x-1]['prob_precipitacion']) == 3:              # [0: 00-24, 1: 00:12, 2: 12-24]
-            weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion'][1]]*12 + \
-                [data['proximos_dias'][x-1]['prob_precipitacion'][2]]*12      
-        else:                                                                       # [0: 00-24]
-            weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion']]*24
-        info_weather_to_rain_mm(x+1)    
+    count = 0
+    for day in range(DAYS):
+        for hour in range(24):
+            weekWeather[day].temperature[hour] = round(data['hourly']['temperature_2m'][count])
+            weekWeather[day].rain[hour] = ceil_half(data['hourly']['rain'][count])
+            if (data['hourly']['wind_speed_10m'][count]>MAX_WIND_KMH):
+                #wind status is not defined in 'weather code'
+                weekWeather[day].status[hour] = 100 # windy code
+            else:
+                weekWeather[day].status[hour] = data['hourly']['weather_code'][count]
+            count+=1  
    
     # Decode weather status
     for x in range(len(weekWeather)):
@@ -173,7 +111,7 @@ def decode_weather_status(input_string, dict_list):
     if input_string is not None:
         for dictionary in dict_list:
             for key in dictionary:
-                if key.lower() in input_string.lower():
+                if key == input_string:
                     return dictionary[key]
     return None
 
@@ -186,8 +124,9 @@ def refresh():
     data = call_api()
     decode_json(data)
 
+
 refresh() # get data first time
-# print("API1")
+# print("API3")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)
