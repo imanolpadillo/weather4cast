@@ -19,5 +19,5 @@ class WeatherStatus(Enum):
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
         self.status = status if status is not None else [None]*24
-        self.rain = rain if rain is not None else [0]*24
+        self.rain = rain if rain is not None else [0.0]*24
         self.temperature = temperature if temperature is not None else [None]*24
