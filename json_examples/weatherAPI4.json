@@ -1,0 +1,1102 @@
+{
+    "data": {
+        "timelines": [
+            {
+                "timestep": "1h",
+                "endTime": "2024-05-05T20:00:00Z",
+                "startTime": "2024-04-30T20:00:00Z",
+                "intervals": [
+                    {
+                        "startTime": "2024-04-30T20:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.39,
+                            "temperature": 10.31,
+                            "weatherCode": 4000,
+                            "windSpeed": 2.81
+                        }
+                    },
+                    {
+                        "startTime": "2024-04-30T21:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.87,
+                            "temperature": 8.9,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.5
+                        }
+                    },
+                    {
+                        "startTime": "2024-04-30T22:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 1.38,
+                            "temperature": 8.29,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.8
+                        }
+                    },
+                    {
+                        "startTime": "2024-04-30T23:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.14,
+                            "temperature": 7.76,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.72
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T00:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.54,
+                            "temperature": 7.6,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.4
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T01:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.28,
+                            "temperature": 7.43,
+                            "weatherCode": 4000,
+                            "windSpeed": 2.41
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T02:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.16,
+                            "temperature": 7.19,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.49
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T03:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.54,
+                            "temperature": 6.77,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.57
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T04:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.51,
+                            "temperature": 6.36,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.6
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T05:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.18,
+                            "temperature": 6.17,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.42
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T06:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 1.06,
+                            "temperature": 6.05,
+                            "weatherCode": 4200,
+                            "windSpeed": 1.59
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T07:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 1.24,
+                            "temperature": 6.1,
+                            "weatherCode": 4200,
+                            "windSpeed": 2
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T08:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.27,
+                            "temperature": 6.13,
+                            "weatherCode": 4000,
+                            "windSpeed": 2.06
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T09:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.05,
+                            "temperature": 6.37,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.44
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T10:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.08,
+                            "temperature": 7.53,
+                            "weatherCode": 1101,
+                            "windSpeed": 2.58
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T11:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.11,
+                            "temperature": 8.78,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.91
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T12:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.12,
+                            "temperature": 9.55,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.62
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T13:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.34,
+                            "temperature": 9.53,
+                            "weatherCode": 4000,
+                            "windSpeed": 3.06
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T14:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.1,
+                            "temperature": 9.1,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.73
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T15:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 3.63,
+                            "temperature": 8.57,
+                            "weatherCode": 4001,
+                            "windSpeed": 4.71
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T16:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.07,
+                            "temperature": 8.77,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.25
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T17:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 8.14,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.82
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T18:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.04,
+                            "temperature": 7.33,
+                            "weatherCode": 1101,
+                            "windSpeed": 3.91
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T19:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.04,
+                            "temperature": 6.24,
+                            "weatherCode": 1101,
+                            "windSpeed": 2.53
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T20:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 5.14,
+                            "weatherCode": 1100,
+                            "windSpeed": 1.6
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T21:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.52,
+                            "weatherCode": 1101,
+                            "windSpeed": 1.63
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T22:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.51,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.75
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-01T23:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 3.17,
+                            "weatherCode": 1100,
+                            "windSpeed": 1.64
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T00:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 2.78,
+                            "weatherCode": 1101,
+                            "windSpeed": 1.7
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T01:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 2.5,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.73
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T02:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 1.8,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.75
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T03:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 1.22,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.77
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T04:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 0.65,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.91
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T05:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 0.19,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.91
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T06:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 2.3,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.13
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T07:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.89,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.59
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T08:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 6.81,
+                            "weatherCode": 1000,
+                            "windSpeed": 2.82
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T09:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 8.49,
+                            "weatherCode": 1000,
+                            "windSpeed": 3.47
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T10:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 9.98,
+                            "weatherCode": 1100,
+                            "windSpeed": 4.27
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T11:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.44,
+                            "temperature": 11.21,
+                            "weatherCode": 4000,
+                            "windSpeed": 3.53
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T12:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 12.13,
+                            "weatherCode": 1100,
+                            "windSpeed": 3.5
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T13:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.16,
+                            "temperature": 13.01,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.89
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T14:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.11,
+                            "temperature": 10.62,
+                            "weatherCode": 1101,
+                            "windSpeed": 4.21
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T15:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.97,
+                            "temperature": 10.5,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.68
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T16:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 10.4,
+                            "weatherCode": 1101,
+                            "windSpeed": 1.59
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T17:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 1.03,
+                            "temperature": 9.77,
+                            "weatherCode": 4200,
+                            "windSpeed": 1.38
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T18:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.27,
+                            "temperature": 8.37,
+                            "weatherCode": 4000,
+                            "windSpeed": 0.93
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T19:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 7.32,
+                            "weatherCode": 1001,
+                            "windSpeed": 1.15
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T20:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 2.88,
+                            "temperature": 6.42,
+                            "weatherCode": 4001,
+                            "windSpeed": 1.13
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T21:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 6.91,
+                            "weatherCode": 1100,
+                            "windSpeed": 0.66
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T22:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 5.97,
+                            "weatherCode": 1101,
+                            "windSpeed": 1.17
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-02T23:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 6.77,
+                            "weatherCode": 1000,
+                            "windSpeed": 0.74
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T00:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.34,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.78
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T01:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.34,
+                            "weatherCode": 1000,
+                            "windSpeed": 1.97
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T02:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.79,
+                            "weatherCode": 1000,
+                            "windSpeed": 2.24
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T03:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.75,
+                            "weatherCode": 1000,
+                            "windSpeed": 2.35
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T04:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.07,
+                            "weatherCode": 1000,
+                            "windSpeed": 2.46
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T05:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.04,
+                            "weatherCode": 1000,
+                            "windSpeed": 2.58
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T06:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 4.88,
+                            "weatherCode": 1100,
+                            "windSpeed": 2.88
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T07:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 6.6,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.91
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T08:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 7.83,
+                            "weatherCode": 1001,
+                            "windSpeed": 5.11
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T09:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.03,
+                            "temperature": 9.18,
+                            "weatherCode": 1001,
+                            "windSpeed": 5.66
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T10:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 10.47,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.57
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T11:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 12.01,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.8
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T12:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 13.32,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.69
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T13:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 13.51,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.69
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T14:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 13.85,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.08
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T15:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 14.61,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.43
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T16:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.5,
+                            "temperature": 12.71,
+                            "weatherCode": 4000,
+                            "windSpeed": 3.46
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T17:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.78,
+                            "temperature": 11.11,
+                            "weatherCode": 4200,
+                            "windSpeed": 2.65
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T18:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.18,
+                            "temperature": 9.65,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.72
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T19:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.39,
+                            "temperature": 8.83,
+                            "weatherCode": 4000,
+                            "windSpeed": 2.4
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T20:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.31,
+                            "temperature": 8.51,
+                            "weatherCode": 4000,
+                            "windSpeed": 1.74
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T21:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.07,
+                            "temperature": 10.4,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.72
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T22:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.33,
+                            "temperature": 8.31,
+                            "weatherCode": 4000,
+                            "windSpeed": 1.99
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-03T23:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.31,
+                            "temperature": 8.41,
+                            "weatherCode": 4000,
+                            "windSpeed": 2.15
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T00:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.36,
+                            "temperature": 8.5,
+                            "weatherCode": 4000,
+                            "windSpeed": 2.66
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T01:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.25,
+                            "temperature": 8.75,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.7
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T02:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.2,
+                            "temperature": 8.85,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.09
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T03:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 12.28,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.18
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T04:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.43,
+                            "temperature": 9.23,
+                            "weatherCode": 4000,
+                            "windSpeed": 4.99
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T05:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 12.2,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.12
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T06:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.23,
+                            "temperature": 10.37,
+                            "weatherCode": 1001,
+                            "windSpeed": 5.22
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T07:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 11.29,
+                            "weatherCode": 1001,
+                            "windSpeed": 6.31
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T08:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.11,
+                            "temperature": 11.46,
+                            "weatherCode": 1001,
+                            "windSpeed": 5.45
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T09:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.24,
+                            "temperature": 11.09,
+                            "weatherCode": 1001,
+                            "windSpeed": 5.17
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T10:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.21,
+                            "temperature": 11.21,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.99
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T11:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.18,
+                            "temperature": 12.08,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.64
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T12:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.16,
+                            "temperature": 13.67,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.61
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T13:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.2,
+                            "temperature": 15.72,
+                            "weatherCode": 1001,
+                            "windSpeed": 6
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T14:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.74,
+                            "temperature": 12.93,
+                            "weatherCode": 4200,
+                            "windSpeed": 4.9
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T15:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.96,
+                            "temperature": 13.32,
+                            "weatherCode": 4200,
+                            "windSpeed": 3.22
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T16:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 1.04,
+                            "temperature": 13.24,
+                            "weatherCode": 4200,
+                            "windSpeed": 3.31
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T17:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.84,
+                            "temperature": 13.04,
+                            "weatherCode": 4200,
+                            "windSpeed": 4.09
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T18:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.7,
+                            "temperature": 14.05,
+                            "weatherCode": 4200,
+                            "windSpeed": 5.76
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T19:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 12.81,
+                            "weatherCode": 1102,
+                            "windSpeed": 4.08
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T20:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 10.9,
+                            "weatherCode": 1102,
+                            "windSpeed": 2.61
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T21:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 10.5,
+                            "weatherCode": 1102,
+                            "windSpeed": 2.7
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T22:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 10.34,
+                            "weatherCode": 1101,
+                            "windSpeed": 2.84
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-04T23:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.01,
+                            "temperature": 10.46,
+                            "weatherCode": 1101,
+                            "windSpeed": 3.1
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T00:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.02,
+                            "temperature": 12.06,
+                            "weatherCode": 1101,
+                            "windSpeed": 3.7
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T01:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0.01,
+                            "temperature": 12.2,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.08
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T02:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 11.27,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.12
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T03:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 12.22,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.97
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T04:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 11.09,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.23
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T05:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 10.93,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.25
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T06:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 11.81,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.27
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T07:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 13.07,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.69
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T08:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 14.54,
+                            "weatherCode": 1001,
+                            "windSpeed": 5.89
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T09:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 16.65,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.33
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T10:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 18.18,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.95
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T11:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 19.86,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.95
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T12:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 21.06,
+                            "weatherCode": 1001,
+                            "windSpeed": 8.45
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T13:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 20.94,
+                            "weatherCode": 1001,
+                            "windSpeed": 8.18
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T14:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 20.83,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.91
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T15:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 20.71,
+                            "weatherCode": 1001,
+                            "windSpeed": 7.64
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T16:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 19.67,
+                            "weatherCode": 1001,
+                            "windSpeed": 6.27
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T17:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 18.63,
+                            "weatherCode": 1001,
+                            "windSpeed": 4.89
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T18:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 17.58,
+                            "weatherCode": 1001,
+                            "windSpeed": 3.52
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T19:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 15.71,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.97
+                        }
+                    },
+                    {
+                        "startTime": "2024-05-05T20:00:00Z",
+                        "values": {
+                            "precipitationIntensity": 0,
+                            "temperature": 13.83,
+                            "weatherCode": 1001,
+                            "windSpeed": 2.42
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

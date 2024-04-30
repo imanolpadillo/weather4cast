@@ -163,7 +163,7 @@ def decode_json(data):
             day_index+=1
         counter+=1
 
-    # Replace empy temperature + status by first_perature and first_status
+    # Replace empy temperature + status by first_temperature and first_status
     for ycount, yvalue in enumerate(weekWeather[0].status):
         if weekWeather[0].status[ycount] is None:
             weekWeather[0].status[ycount] = first_status

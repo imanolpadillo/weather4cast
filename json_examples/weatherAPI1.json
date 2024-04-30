@@ -1,1061 +1,868 @@
 {
-    "origin": {
-        "productor": "Agencia Estatal de Meteorología - AEMET. Gobierno de España",
-        "web": "https://www.aemet.es",
-        "language": "es",
-        "copyright": "© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.",
-        "nota_legal": "https://www.aemet.es/es/nota_legal",
-        "descripcion": "elTiempo.net muestra la información meteorológica creada por © AEMET"
+    "latitude": 42.85,
+    "longitude": -2.67,
+    "generationtime_ms": 0.3110170364379883,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 540,
+    "hourly_units": {
+        "time": "iso8601",
+        "temperature_2m": "°C",
+        "rain": "mm",
+        "weather_code": "wmo code",
+        "wind_speed_10m": "km/h"
     },
-    "title": "elTiempo.net | El tiempo en Vitoria-Gasteiz (Araba/Álava)",
-    "metadescripcion": "El tiempo en Vitoria-Gasteiz (Araba/Álava)",
-    "keywords": "Vitoria-Gasteiz, Provincia de Ã\u0081lava, previsión meteorológica, previsión del tiempo, España, viento, humedad, precipitaciones, lluvia, estado del cielo",
-    "municipio": {
-        "CODIGOINE": "01059000000",
-        "ID_REL": "1010590",
-        "COD_GEO": "01001",
-        "CODPROV": "01",
-        "NOMBRE_PROVINCIA": "Araba/Álava",
-        "NOMBRE": "Vitoria-Gasteiz",
-        "POBLACION_MUNI": 242082,
-        "SUPERFICIE": 27681.2008,
-        "PERIMETRO": 111412,
-        "CODIGOINE_CAPITAL": "01059006301",
-        "NOMBRE_CAPITAL": "Vitoria-Gasteiz",
-        "POBLACION_CAPITAL": "237092",
-        "HOJA_MTN25": "0112-4",
-        "LONGITUD_ETRS89_REGCAN95": -2.67275685,
-        "LATITUD_ETRS89_REGCAN95": 42.85058789,
-        "ORIGEN_COORD": "Mapa",
-        "ALTITUD": 539,
-        "ORIGEN_ALTITUD": "MDT5",
-        "DISCREPANTE_INE": 0
-    },
-    "fecha": "2024-04-15",
-    "stateSky": {
-        "description": "Cubierto",
-        "id": "16n"
-    },
-    "temperatura_actual": "11",
-    "temperaturas": {
-        "max": "16",
-        "min": "7"
-    },
-    "humedad": "76",
-    "viento": "16",
-    "precipitacion": "0",
-    "lluvia": "100",
-    "imagen": null,
-    "pronostico": {
-        "hoy": {
-            "@attributes": {
-                "fecha": "2024-04-15",
-                "orto": "07:28",
-                "ocaso": "20:53"
-            },
-            "estado_cielo": [
-                "46",
-                "16",
-                "16",
-                "15",
-                "15",
-                "16",
-                "46",
-                "16n",
-                "16n",
-                "16n"
-            ],
-            "precipitacion": [
-                "0.1",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0.1",
-                "0",
-                "0",
-                "0"
-            ],
-            "prob_precipitacion": [
-                "100",
-                "90"
-            ],
-            "prob_tormenta": [
-                "0",
-                "0"
-            ],
-            "nieve": [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            "prob_nieve": [
-                "0",
-                "0"
-            ],
-            "temperatura": [
-                "14",
-                "14",
-                "14",
-                "14",
-                "13",
-                "12",
-                "11",
-                "10",
-                "9"
-            ],
-            "sens_termica": [
-                "14",
-                "14",
-                "14",
-                "14",
-                "13",
-                "12",
-                "11",
-                "10",
-                "6"
-            ],
-            "humedad_relativa": [
-                "73",
-                "72",
-                "70",
-                "71",
-                "71",
-                "71",
-                "76",
-                "78",
-                "78"
-            ],
-            "viento": [
-                {
-                    "@attributes": {
-                        "periodo": "15"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "16"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "17"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "18"
-                    },
-                    "direccion": "N",
-                    "velocidad": "17"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "19"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "20"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "21"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "22"
-                    },
-                    "direccion": "N",
-                    "velocidad": "17"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "23"
-                    },
-                    "direccion": "N",
-                    "velocidad": "19"
-                }
-            ],
-            "racha_max": [
-                "28",
-                "29",
-                "29",
-                "28",
-                "26",
-                "26",
-                "27",
-                "30",
-                "27"
-            ],
-            "estado_cielo_descripcion": [
-                "Cubierto con lluvia escasa",
-                "Cubierto",
-                "Cubierto",
-                "Muy nuboso",
-                "Muy nuboso",
-                "Cubierto",
-                "Cubierto con lluvia escasa",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto"
-            ]
-        },
-        "manana": {
-            "@attributes": {
-                "fecha": "2024-04-16",
-                "orto": "07:26",
-                "ocaso": "20:55"
-            },
-            "estado_cielo": [
-                "16n",
-                "16n",
-                "16n",
-                "16n",
-                "16n",
-                "16n",
-                "16n",
-                "16n",
-                "16",
-                "16",
-                "46",
-                "46",
-                "46",
-                "46",
-                "46",
-                "46",
-                "46",
-                "46",
-                "16",
-                "16",
-                "16",
-                "46n",
-                "46n",
-                "46n"
-            ],
-            "precipitacion": [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0.2",
-                "0.2",
-                "0.2",
-                "0.1",
-                "0.1",
-                "0.1",
-                "0.1",
-                "0.1",
-                "0",
-                "0",
-                "0",
-                "0.1",
-                "0.3",
-                "0.3"
-            ],
-            "prob_precipitacion": [
-                "35",
-                "100",
-                "100",
-                "100"
-            ],
-            "prob_tormenta": [
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            "nieve": [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            "prob_nieve": [
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            "temperatura": [
-                "9",
-                "8",
-                "7",
-                "7",
-                "6",
-                "7",
-                "7",
-                "8",
-                "8",
-                "8",
-                "9",
-                "9",
-                "10",
-                "10",
-                "11",
-                "11",
-                "11",
-                "11",
-                "10",
-                "10",
-                "10",
-                "9",
-                "8",
-                "8"
-            ],
-            "sens_termica": [
-                "6",
-                "6",
-                "5",
-                "5",
-                "6",
-                "7",
-                "7",
-                "8",
-                "6",
-                "6",
-                "7",
-                "7",
-                "10",
-                "10",
-                "11",
-                "11",
-                "11",
-                "11",
-                "10",
-                "10",
-                "10",
-                "7",
-                "6",
-                "6"
-            ],
-            "humedad_relativa": [
-                "81",
-                "84",
-                "85",
-                "84",
-                "86",
-                "86",
-                "86",
-                "85",
-                "85",
-                "83",
-                "86",
-                "90",
-                "86",
-                "81",
-                "78",
-                "77",
-                "77",
-                "76",
-                "77",
-                "78",
-                "79",
-                "80",
-                "81",
-                "84"
-            ],
-            "viento": [
-                {
-                    "@attributes": {
-                        "periodo": "00"
-                    },
-                    "direccion": "N",
-                    "velocidad": "17"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "01"
-                    },
-                    "direccion": "N",
-                    "velocidad": "12"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "02"
-                    },
-                    "direccion": "N",
-                    "velocidad": "9"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "03"
-                    },
-                    "direccion": "N",
-                    "velocidad": "8"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "04"
-                    },
-                    "direccion": "SO",
-                    "velocidad": "2"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "05"
-                    },
-                    "direccion": "O",
-                    "velocidad": "5"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "06"
-                    },
-                    "direccion": "NO",
-                    "velocidad": "1"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "07"
-                    },
-                    "direccion": "O",
-                    "velocidad": "5"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "08"
-                    },
-                    "direccion": "O",
-                    "velocidad": "10"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "09"
-                    },
-                    "direccion": "NO",
-                    "velocidad": "10"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "10"
-                    },
-                    "direccion": "NO",
-                    "velocidad": "13"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "11"
-                    },
-                    "direccion": "N",
-                    "velocidad": "16"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12"
-                    },
-                    "direccion": "N",
-                    "velocidad": "19"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "13"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "14"
-                    },
-                    "direccion": "N",
-                    "velocidad": "13"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "15"
-                    },
-                    "direccion": "N",
-                    "velocidad": "14"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "16"
-                    },
-                    "direccion": "N",
-                    "velocidad": "13"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "17"
-                    },
-                    "direccion": "N",
-                    "velocidad": "14"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "18"
-                    },
-                    "direccion": "N",
-                    "velocidad": "12"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "19"
-                    },
-                    "direccion": "N",
-                    "velocidad": "13"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "20"
-                    },
-                    "direccion": "N",
-                    "velocidad": "14"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "21"
-                    },
-                    "direccion": "N",
-                    "velocidad": "12"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "22"
-                    },
-                    "direccion": "N",
-                    "velocidad": "13"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "23"
-                    },
-                    "direccion": "N",
-                    "velocidad": "13"
-                }
-            ],
-            "racha_max": [
-                "22",
-                "15",
-                "17",
-                "3",
-                "10",
-                "3",
-                "8",
-                "16",
-                "19",
-                "23",
-                "26",
-                "30",
-                "25",
-                "21",
-                "22",
-                "21",
-                "22",
-                "20",
-                "20",
-                "22",
-                "19",
-                "21",
-                "21",
-                "16"
-            ],
-            "estado_cielo_descripcion": [
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa",
-                "Cubierto con lluvia escasa"
-            ]
-        }
-    },
-    "proximos_dias": [
-        {
-            "@attributes": {
-                "fecha": "2024-04-16"
-            },
-            "prob_precipitacion": [
-                "100",
-                "100",
-                "100",
-                "35",
-                "100",
-                "100",
-                "100"
-            ],
-            "cota_nieve_prov": [
-                "1400",
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    }
-                },
-                "1400",
-                {
-                    "@attributes": {
-                        "periodo": "00-06"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "06-12"
-                    }
-                },
-                "1400",
-                "1400"
-            ],
-            "estado_cielo": [
-                "26",
-                "26",
-                "26",
-                "16n",
-                "26",
-                "26",
-                "26"
-            ],
-            "viento": [
-                {
-                    "@attributes": {
-                        "periodo": "00-24"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-24"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-06"
-                    },
-                    "direccion": "O",
-                    "velocidad": "10"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "06-12"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-18"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "18-24"
-                    },
-                    "direccion": "NO",
-                    "velocidad": "5"
-                }
-            ],
-            "racha_max": [
-                {
-                    "@attributes": {
-                        "periodo": "00-24"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-24"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-06"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "06-12"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-18"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "18-24"
-                    }
-                }
-            ],
-            "temperatura": {
-                "maxima": "12",
-                "minima": "6",
-                "dato": [
-                    "8",
-                    "11",
-                    "10",
-                    "7"
-                ]
-            },
-            "sens_termica": {
-                "maxima": "12",
-                "minima": "6",
-                "dato": [
-                    "6",
-                    "11",
-                    "10",
-                    "7"
-                ]
-            },
-            "humedad_relativa": {
-                "maxima": "95",
-                "minima": "75",
-                "dato": [
-                    "85",
-                    "80",
-                    "80",
-                    "95"
-                ]
-            },
-            "uv_max": "6",
-            "estado_cielo_descripcion": [
-                "Cubierto con lluvia",
-                "Cubierto con lluvia",
-                "Cubierto con lluvia",
-                "Cubierto",
-                "Cubierto con lluvia",
-                "Cubierto con lluvia",
-                "Cubierto con lluvia"
-            ]
-        },
-        {
-            "@attributes": {
-                "fecha": "2024-04-17"
-            },
-            "prob_precipitacion": [
-                "100",
-                "100",
-                "95"
-            ],
-            "cota_nieve_prov": [
-                "1300",
-                "1300",
-                "1300"
-            ],
-            "estado_cielo": [
-                "25",
-                "25",
-                "25"
-            ],
-            "viento": [
-                {
-                    "@attributes": {
-                        "periodo": "00-24"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-24"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                }
-            ],
-            "racha_max": [
-                {
-                    "@attributes": {
-                        "periodo": "00-24"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-24"
-                    }
-                }
-            ],
-            "temperatura": {
-                "maxima": "12",
-                "minima": "5"
-            },
-            "sens_termica": {
-                "maxima": "12",
-                "minima": "5"
-            },
-            "humedad_relativa": {
-                "maxima": "95",
-                "minima": "65"
-            },
-            "uv_max": "6",
-            "estado_cielo_descripcion": [
-                "Muy nuboso con lluvia",
-                "Muy nuboso con lluvia",
-                "Muy nuboso con lluvia"
-            ]
-        },
-        {
-            "@attributes": {
-                "fecha": "2024-04-18"
-            },
-            "prob_precipitacion": [
-                "95",
-                "90",
-                "60"
-            ],
-            "cota_nieve_prov": [
-                "1200",
-                "1200",
-                "1100"
-            ],
-            "estado_cielo": [
-                "25",
-                "26",
-                "25"
-            ],
-            "viento": [
-                {
-                    "@attributes": {
-                        "periodo": "00-24"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-24"
-                    },
-                    "direccion": "N",
-                    "velocidad": "15"
-                }
-            ],
-            "racha_max": [
-                {
-                    "@attributes": {
-                        "periodo": "00-24"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "00-12"
-                    }
-                },
-                {
-                    "@attributes": {
-                        "periodo": "12-24"
-                    }
-                }
-            ],
-            "temperatura": {
-                "maxima": "13",
-                "minima": "2"
-            },
-            "sens_termica": {
-                "maxima": "13",
-                "minima": "2"
-            },
-            "humedad_relativa": {
-                "maxima": "100",
-                "minima": "55"
-            },
-            "uv_max": "5",
-            "estado_cielo_descripcion": [
-                "Muy nuboso con lluvia",
-                "Cubierto con lluvia",
-                "Muy nuboso con lluvia"
-            ]
-        },
-        {
-            "@attributes": {
-                "fecha": "2024-04-19"
-            },
-            "prob_precipitacion": "20",
-            "cota_nieve_prov": "1100",
-            "estado_cielo": "13",
-            "viento": {
-                "direccion": "C",
-                "velocidad": "0"
-            },
-            "racha_max": {},
-            "temperatura": {
-                "maxima": "19",
-                "minima": "0"
-            },
-            "sens_termica": {
-                "maxima": "19",
-                "minima": "0"
-            },
-            "humedad_relativa": {
-                "maxima": "100",
-                "minima": "40"
-            },
-            "uv_max": "5",
-            "estado_cielo_descripcion": "Intervalos nubosos"
-        },
-        {
-            "@attributes": {
-                "fecha": "2024-04-20"
-            },
-            "prob_precipitacion": "25",
-            "cota_nieve_prov": "1300",
-            "estado_cielo": "13",
-            "viento": {
-                "direccion": "N",
-                "velocidad": "15"
-            },
-            "racha_max": {},
-            "temperatura": {
-                "maxima": "18",
-                "minima": "3"
-            },
-            "sens_termica": {
-                "maxima": "18",
-                "minima": "3"
-            },
-            "humedad_relativa": {
-                "maxima": "100",
-                "minima": "45"
-            },
-            "estado_cielo_descripcion": "Intervalos nubosos"
-        },
-        {
-            "@attributes": {
-                "fecha": "2024-04-21"
-            },
-            "prob_precipitacion": "25",
-            "cota_nieve_prov": "1300",
-            "estado_cielo": "13",
-            "viento": {
-                "direccion": "N",
-                "velocidad": "20"
-            },
-            "racha_max": {},
-            "temperatura": {
-                "maxima": "16",
-                "minima": "4"
-            },
-            "sens_termica": {
-                "maxima": "16",
-                "minima": "4"
-            },
-            "humedad_relativa": {
-                "maxima": "85",
-                "minima": "45"
-            },
-            "estado_cielo_descripcion": "Intervalos nubosos"
-        }
-    ],
-    "breadcrumb": [
-        {
-            "name": "Provincias",
-            "url": "/provincias",
-            "title": "El tiempo | Lista de provincias"
-        },
-        {
-            "name": "Araba/Álava",
-            "url": "/provincias/01",
-            "title": "El tiempo en la provincia de Araba/Álava"
-        },
-        {
-            "name": "Municipios",
-            "url": "/provincias/01/municipios",
-            "title": "El tiempo | Lista de municipios de Araba/Álava"
-        },
-        {
-            "name": "Vitoria-Gasteiz",
-            "url": "/provincias/01/municipios/01001",
-            "title": "El tiempo en Vitoria-Gasteiz"
-        }
-    ]
+    "hourly": {
+        "time": [
+            "2024-04-29T00:00",
+            "2024-04-29T01:00",
+            "2024-04-29T02:00",
+            "2024-04-29T03:00",
+            "2024-04-29T04:00",
+            "2024-04-29T05:00",
+            "2024-04-29T06:00",
+            "2024-04-29T07:00",
+            "2024-04-29T08:00",
+            "2024-04-29T09:00",
+            "2024-04-29T10:00",
+            "2024-04-29T11:00",
+            "2024-04-29T12:00",
+            "2024-04-29T13:00",
+            "2024-04-29T14:00",
+            "2024-04-29T15:00",
+            "2024-04-29T16:00",
+            "2024-04-29T17:00",
+            "2024-04-29T18:00",
+            "2024-04-29T19:00",
+            "2024-04-29T20:00",
+            "2024-04-29T21:00",
+            "2024-04-29T22:00",
+            "2024-04-29T23:00",
+            "2024-04-30T00:00",
+            "2024-04-30T01:00",
+            "2024-04-30T02:00",
+            "2024-04-30T03:00",
+            "2024-04-30T04:00",
+            "2024-04-30T05:00",
+            "2024-04-30T06:00",
+            "2024-04-30T07:00",
+            "2024-04-30T08:00",
+            "2024-04-30T09:00",
+            "2024-04-30T10:00",
+            "2024-04-30T11:00",
+            "2024-04-30T12:00",
+            "2024-04-30T13:00",
+            "2024-04-30T14:00",
+            "2024-04-30T15:00",
+            "2024-04-30T16:00",
+            "2024-04-30T17:00",
+            "2024-04-30T18:00",
+            "2024-04-30T19:00",
+            "2024-04-30T20:00",
+            "2024-04-30T21:00",
+            "2024-04-30T22:00",
+            "2024-04-30T23:00",
+            "2024-05-01T00:00",
+            "2024-05-01T01:00",
+            "2024-05-01T02:00",
+            "2024-05-01T03:00",
+            "2024-05-01T04:00",
+            "2024-05-01T05:00",
+            "2024-05-01T06:00",
+            "2024-05-01T07:00",
+            "2024-05-01T08:00",
+            "2024-05-01T09:00",
+            "2024-05-01T10:00",
+            "2024-05-01T11:00",
+            "2024-05-01T12:00",
+            "2024-05-01T13:00",
+            "2024-05-01T14:00",
+            "2024-05-01T15:00",
+            "2024-05-01T16:00",
+            "2024-05-01T17:00",
+            "2024-05-01T18:00",
+            "2024-05-01T19:00",
+            "2024-05-01T20:00",
+            "2024-05-01T21:00",
+            "2024-05-01T22:00",
+            "2024-05-01T23:00",
+            "2024-05-02T00:00",
+            "2024-05-02T01:00",
+            "2024-05-02T02:00",
+            "2024-05-02T03:00",
+            "2024-05-02T04:00",
+            "2024-05-02T05:00",
+            "2024-05-02T06:00",
+            "2024-05-02T07:00",
+            "2024-05-02T08:00",
+            "2024-05-02T09:00",
+            "2024-05-02T10:00",
+            "2024-05-02T11:00",
+            "2024-05-02T12:00",
+            "2024-05-02T13:00",
+            "2024-05-02T14:00",
+            "2024-05-02T15:00",
+            "2024-05-02T16:00",
+            "2024-05-02T17:00",
+            "2024-05-02T18:00",
+            "2024-05-02T19:00",
+            "2024-05-02T20:00",
+            "2024-05-02T21:00",
+            "2024-05-02T22:00",
+            "2024-05-02T23:00",
+            "2024-05-03T00:00",
+            "2024-05-03T01:00",
+            "2024-05-03T02:00",
+            "2024-05-03T03:00",
+            "2024-05-03T04:00",
+            "2024-05-03T05:00",
+            "2024-05-03T06:00",
+            "2024-05-03T07:00",
+            "2024-05-03T08:00",
+            "2024-05-03T09:00",
+            "2024-05-03T10:00",
+            "2024-05-03T11:00",
+            "2024-05-03T12:00",
+            "2024-05-03T13:00",
+            "2024-05-03T14:00",
+            "2024-05-03T15:00",
+            "2024-05-03T16:00",
+            "2024-05-03T17:00",
+            "2024-05-03T18:00",
+            "2024-05-03T19:00",
+            "2024-05-03T20:00",
+            "2024-05-03T21:00",
+            "2024-05-03T22:00",
+            "2024-05-03T23:00",
+            "2024-05-04T00:00",
+            "2024-05-04T01:00",
+            "2024-05-04T02:00",
+            "2024-05-04T03:00",
+            "2024-05-04T04:00",
+            "2024-05-04T05:00",
+            "2024-05-04T06:00",
+            "2024-05-04T07:00",
+            "2024-05-04T08:00",
+            "2024-05-04T09:00",
+            "2024-05-04T10:00",
+            "2024-05-04T11:00",
+            "2024-05-04T12:00",
+            "2024-05-04T13:00",
+            "2024-05-04T14:00",
+            "2024-05-04T15:00",
+            "2024-05-04T16:00",
+            "2024-05-04T17:00",
+            "2024-05-04T18:00",
+            "2024-05-04T19:00",
+            "2024-05-04T20:00",
+            "2024-05-04T21:00",
+            "2024-05-04T22:00",
+            "2024-05-04T23:00",
+            "2024-05-05T00:00",
+            "2024-05-05T01:00",
+            "2024-05-05T02:00",
+            "2024-05-05T03:00",
+            "2024-05-05T04:00",
+            "2024-05-05T05:00",
+            "2024-05-05T06:00",
+            "2024-05-05T07:00",
+            "2024-05-05T08:00",
+            "2024-05-05T09:00",
+            "2024-05-05T10:00",
+            "2024-05-05T11:00",
+            "2024-05-05T12:00",
+            "2024-05-05T13:00",
+            "2024-05-05T14:00",
+            "2024-05-05T15:00",
+            "2024-05-05T16:00",
+            "2024-05-05T17:00",
+            "2024-05-05T18:00",
+            "2024-05-05T19:00",
+            "2024-05-05T20:00",
+            "2024-05-05T21:00",
+            "2024-05-05T22:00",
+            "2024-05-05T23:00"
+        ],
+        "temperature_2m": [
+            8.3,
+            7.5,
+            7.3,
+            5.7,
+            4.9,
+            5.4,
+            5.8,
+            6.7,
+            7.4,
+            8.2,
+            10.5,
+            12.9,
+            14.1,
+            15.2,
+            15.6,
+            15.3,
+            14.4,
+            13.7,
+            12.9,
+            11.7,
+            10.4,
+            9.6,
+            9.1,
+            8.4,
+            7.2,
+            6.6,
+            5.8,
+            5.3,
+            4.4,
+            4.5,
+            4.6,
+            7.2,
+            9.6,
+            13,
+            16,
+            17.8,
+            18.8,
+            19.7,
+            20.5,
+            20.6,
+            20.5,
+            20.3,
+            14.4,
+            11.5,
+            10.1,
+            10,
+            9.8,
+            9.5,
+            8.9,
+            7.7,
+            7.1,
+            6.9,
+            6.4,
+            6.4,
+            6.2,
+            7.3,
+            7.9,
+            8.7,
+            9.7,
+            11,
+            12.2,
+            12.4,
+            12.3,
+            11.4,
+            9.3,
+            7.4,
+            6.2,
+            5.5,
+            5.5,
+            5.6,
+            5.5,
+            5.2,
+            5.1,
+            5,
+            5.1,
+            4.9,
+            4.6,
+            4.3,
+            4.5,
+            6.1,
+            7.7,
+            9,
+            10.5,
+            11.8,
+            12.7,
+            13.1,
+            13.2,
+            13.6,
+            13.2,
+            12.4,
+            11.9,
+            10.8,
+            9.6,
+            9.4,
+            8.5,
+            8.2,
+            8,
+            7.9,
+            7.8,
+            7.6,
+            7.4,
+            7.2,
+            7.1,
+            8,
+            9.3,
+            11,
+            12.2,
+            13.6,
+            15,
+            18.7,
+            19.2,
+            19.1,
+            18.1,
+            16.5,
+            15,
+            14,
+            13.2,
+            12.7,
+            12.4,
+            12.3,
+            12.3,
+            12.4,
+            12.6,
+            12.7,
+            12.8,
+            12.7,
+            12.7,
+            13.5,
+            14.5,
+            15.7,
+            17.2,
+            19,
+            20.4,
+            21.2,
+            21.7,
+            21.9,
+            21.8,
+            21.4,
+            20.6,
+            19.2,
+            17.5,
+            15.9,
+            14.2,
+            12.5,
+            11.5,
+            11.4,
+            11.9,
+            12.5,
+            12.8,
+            13.2,
+            14,
+            15.4,
+            17.2,
+            18.8,
+            20.3,
+            21.6,
+            22.7,
+            23.5,
+            24.1,
+            24.3,
+            24.1,
+            23.5,
+            22.3,
+            20.1,
+            17.4,
+            15.1,
+            13.7,
+            12.7
+        ],
+        "rain": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0.1,
+            0.1,
+            0,
+            0,
+            1.3,
+            0.6,
+            0.6,
+            1.3,
+            2.1,
+            0.7,
+            0.6,
+            0.1,
+            0.1,
+            0,
+            0.1,
+            0.1,
+            0.3,
+            0,
+            0,
+            0.2,
+            0.2,
+            0.4,
+            1.1,
+            1,
+            2.2,
+            1.7,
+            1.1,
+            0.6,
+            0.3,
+            0.2,
+            0,
+            0.1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "weather_code": [
+            3,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            1,
+            2,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            3,
+            3,
+            3,
+            51,
+            51,
+            3,
+            3,
+            61,
+            53,
+            53,
+            61,
+            61,
+            53,
+            53,
+            51,
+            51,
+            3,
+            51,
+            51,
+            51,
+            2,
+            2,
+            51,
+            51,
+            51,
+            55,
+            55,
+            61,
+            61,
+            55,
+            53,
+            51,
+            51,
+            3,
+            51,
+            3,
+            2,
+            2,
+            2,
+            1,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            2,
+            1,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2,
+            0,
+            2,
+            3,
+            3,
+            3,
+            61,
+            61,
+            61,
+            61,
+            61,
+            61,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            45,
+            45
+        ],
+        "wind_speed_10m": [
+            5.4,
+            5.4,
+            3.3,
+            5.3,
+            3.9,
+            3.3,
+            1.9,
+            3.1,
+            4,
+            2.7,
+            4.6,
+            6.1,
+            11.6,
+            12.8,
+            15,
+            17.8,
+            17.8,
+            15.9,
+            13.7,
+            10.7,
+            7.9,
+            5.2,
+            1.5,
+            4.1,
+            4,
+            0.7,
+            1,
+            1.8,
+            5,
+            0,
+            3.2,
+            1.1,
+            2.4,
+            2.9,
+            13.8,
+            13,
+            20.6,
+            19.8,
+            19,
+            19.5,
+            16.3,
+            14.6,
+            19.8,
+            15,
+            14.4,
+            5.7,
+            9.7,
+            9.3,
+            10.7,
+            13.3,
+            14.1,
+            3.2,
+            6.2,
+            4.4,
+            7.6,
+            5.5,
+            7.2,
+            8.4,
+            7.1,
+            7.7,
+            16.4,
+            11.6,
+            8.6,
+            7.6,
+            14.5,
+            14.7,
+            13.4,
+            6.9,
+            3,
+            3.3,
+            7.4,
+            8.2,
+            9.5,
+            9.3,
+            6.3,
+            5.2,
+            6,
+            7.3,
+            7.8,
+            5.8,
+            8.7,
+            11.2,
+            13,
+            15.6,
+            14,
+            17.1,
+            16.1,
+            16.9,
+            15.6,
+            15.1,
+            12.9,
+            10.4,
+            8.9,
+            11.1,
+            8.6,
+            11.9,
+            10.9,
+            11.1,
+            12.6,
+            13.4,
+            15.3,
+            16.3,
+            16.3,
+            15.3,
+            14.6,
+            18.1,
+            19.4,
+            18.4,
+            19.4,
+            19.7,
+            21.5,
+            21.1,
+            17.3,
+            11.3,
+            7.1,
+            6.2,
+            6.7,
+            7.5,
+            7.9,
+            8.5,
+            9.3,
+            10.9,
+            13,
+            14.5,
+            14.8,
+            14.8,
+            14.5,
+            16.1,
+            19.2,
+            21.8,
+            22.7,
+            22.6,
+            22.1,
+            21.7,
+            20.9,
+            19.5,
+            17,
+            14.1,
+            10.7,
+            6.6,
+            2.8,
+            1.9,
+            3.1,
+            4.3,
+            5.4,
+            5.8,
+            5.4,
+            5.5,
+            5.9,
+            6.8,
+            7.7,
+            9.4,
+            12.5,
+            14.9,
+            16.1,
+            17.1,
+            17.8,
+            18.6,
+            19.1,
+            17.9,
+            13.7,
+            8.2,
+            5.1,
+            3.6,
+            2.6,
+            2.5,
+            2.9,
+            3.9
+        ]
+    }
 }
