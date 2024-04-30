@@ -31,6 +31,9 @@ def demo(flag):
         tmin.write([0, 0, 0, 0])
         tmax.write([0, 0, 0, 0])
 
+def show_api_error():
+    tmin.show(' api')
+    tmax.show(' err')
 
 def show_temperature(min, max):
     """

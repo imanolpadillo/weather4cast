@@ -13,7 +13,7 @@ import threading, time
 import pytz
 from datetime import datetime
 import wlogging
-from wlogging import LogType, LogId, LogMessage
+from wlogging import LogType, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -36,7 +36,7 @@ prev_forecast_input = ForecastInput()
 # *************************************************************************************************** 
 def thread_weatherAPI(f_stop):
     log='API' + str(weather.api_weather_id) 
-    wlogging.log(LogType.INFO.value,LogId.API_UPD.value,log)
+    wlogging.log(LogType.INFO.value,LogMessage.API_UPD.name, log)
     weather.refresh()
     global weather_refresh_flag
     weather_refresh_flag = True
@@ -72,6 +72,13 @@ def demo(flag):
     pcf8574.demo(flag)
     tm1637l.demo(flag)
 
+def show_api_error():
+    """
+    Deactivate all leds, except the message "api err" in tm1637
+    """
+    demo(False)
+    tm1637l.show_api_error()
+
 def input_data_refresh():
     """
     Checks when control input changes (new day/hour)
@@ -106,7 +113,7 @@ def input_data_refresh():
         log="day_flag=" + str(forecast_input.dayFlag) + \
               ", hour_flag=" + str(forecast_input.hourFlag) + \
               ", day=" + str(forecast_input.day) + ", hour=" + str(forecast_input.hour)
-        wlogging.log(LogType.INFO.value,LogId.INDATA_CHG.value,log)
+        wlogging.log(LogType.INFO.value,LogMessage.INDATA_CHG.name,log)
         weather_refresh_flag = True
 
     prev_forecast_input.dayFlag = forecast_input.dayFlag
@@ -120,7 +127,7 @@ def input_data_refresh():
 # *************************************************************************************************** 
 
 # demo functionality for checking all leds
-wlogging.log(LogType.INFO.value,LogId.SWITCH_ON.value,'Starting weather4cast!')
+wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.value,LogMessage.SWITCH_ON.value)
 demo(True)
 time.sleep(3)
 demo(False)
@@ -158,7 +165,8 @@ while True:
             status=weather.get_status(forecast_input.day, forecast_input.hour)
             pcf8574.display_status(status)
             log+='; status=' + str(status)
-            wlogging.log(LogType.INFO.value,LogId.OUTDATA_CHG.value,log)
+            wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.value,log)
         except Exception as e:
-            wlogging.log(LogType.ERROR.value,LogId.EXCEPTION.value,LogMessage.NO_API_DATA.value)
+            show_api_error()
+            wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value)
     time.sleep(1)

@@ -7,7 +7,7 @@ import requests, math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 import configparser
 import wlogging
-from wlogging import LogType, LogId, LogMessage
+from wlogging import LogType, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -200,7 +200,7 @@ def refresh():
         data = call_api()
         decode_json(data)
     except Exception as e:
-        wlogging.log(LogType.ERROR.value, LogId.EXCEPTION.value, LogMessage.API_ERR.value + ': ' + str(e))
+        wlogging.log(LogType.ERROR.value, LogMessage.ERR_API_CONN.name, LogMessage.ERR_API_CONN.value + ': ' + str(e))
 
 refresh() # get data first time
 # print("API3")

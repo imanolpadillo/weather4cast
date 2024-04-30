@@ -3,8 +3,6 @@
 # *************************************************************************************************** 
 
 import weatherAPI1, weatherAPI2, weatherAPI3
-import wlogging
-from wlogging import LogType, LogId, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -32,7 +30,6 @@ def refresh():
             data = weatherAPI3.call_api()
             weatherAPI3.decode_json(data)    
     except Exception as e:
-        # wlogging.log(LogType.ERROR.value, LogId.EXCEPTION.value, LogMessage.NO_API_DATA.value)
         return
 
 def get_min_max_temperature (forecast_day):

@@ -4,7 +4,7 @@ import time
 import weather, max7219
 from gpioenum import gpio
 import wlogging
-from wlogging import LogType, LogId
+from wlogging import LogType, LogMessage
 
 
 # Set up GPIO using BCM numbering
@@ -29,7 +29,7 @@ def pulse_detector():
             weather.api_weather_id = 1
             max7219.message='A1'
         log = 'API' + str(weather.api_weather_id)
-        wlogging.log(LogType.INFO.value,LogId.API_CHG.value,log)
+        wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
         time.sleep(3)
         return True
     else:

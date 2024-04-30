@@ -11,21 +11,20 @@ from enum import Enum
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
+LOGID_MAX_LEN = 12
+
 class LogType(Enum):
     INFO = 1
     ERROR = 2
 
-class LogId(Enum):
-    SWITCH_ON =   '  SWITCH_ON'
-    INDATA_CHG =  ' INDATA_CHG'
-    OUTDATA_CHG = 'OUTDATA_CHG'
-    API_CHG =     '    API_CHG'
-    API_UPD =     '    API_UPD'
-    EXCEPTION =   '  EXCEPTION'
-
 class LogMessage(Enum):
-    API_ERR =     'API not reachable'
-    NO_API_DATA = 'No weather data'
+    SWITCH_ON =    'Starting weather4cast!'
+    INDATA_CHG =   ''
+    OUTDATA_CHG =  ''
+    API_CHG =      ''
+    API_UPD =      ''
+    ERR_API_DATA = 'No API data'
+    ERR_API_CONN = 'Unable to connect with API'
 
 logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
 
@@ -37,6 +36,8 @@ def log(logType, logId, message):
     madrid_tz = pytz.timezone('Europe/Madrid')
     now = datetime.now(madrid_tz)
     log = now.strftime("%H:%M:%S")
+    while len(logId) < LOGID_MAX_LEN:
+        logId = ' ' + logId
     log += ' [' + logId + '] ' + message
     if logType == LogType.INFO.value:
         logging.info(log)
