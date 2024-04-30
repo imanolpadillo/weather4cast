@@ -127,7 +127,7 @@ def input_data_refresh():
 # *************************************************************************************************** 
 
 # demo functionality for checking all leds
-wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.value,LogMessage.SWITCH_ON.value)
+wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
 demo(True)
 time.sleep(3)
 demo(False)
@@ -165,7 +165,7 @@ while True:
             status=weather.get_status(forecast_input.day, forecast_input.hour)
             pcf8574.display_status(status)
             log+='; status=' + str(status)
-            wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.value,log)
+            wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
         except Exception as e:
             show_api_error()
             wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value)
