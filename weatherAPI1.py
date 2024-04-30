@@ -5,12 +5,14 @@
 
 import requests,math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+import wlogging
+from wlogging import LogType, LogId, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
  
-api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=temperature_2m,rain,weather_code,wind_speed_10m'
+api_url = 'XXXhttps://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=temperature_2m,rain,weather_code,wind_speed_10m'
 
 dict_weather_status = [
                        {0: WeatherStatus.SUNNY}, \
@@ -121,12 +123,15 @@ def refresh():
     calls REST-API and converts json into appropiate information for global variable
     'weekStatus'
     """
-    data = call_api()
-    decode_json(data)
+    try:
+        data = call_api()
+        decode_json(data)
+    except Exception as e:
+        wlogging.log(LogType.ERROR.value, LogId.EXCEPTION.value, LogMessage.API_ERR.value + ': ' + str(e))
 
 
 refresh() # get data first time
-# print("API3")
+# print("API1")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

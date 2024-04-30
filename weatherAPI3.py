@@ -6,6 +6,8 @@
 import requests, math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 import configparser
+import wlogging
+from wlogging import LogType, LogId, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -14,7 +16,7 @@ import configparser
 config = configparser.ConfigParser()
 config.read('secrets.ini')
 api_key = config['secrets']['api3_key']
-api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=' + api_key
+api_url =  'XXXhttps://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=' + api_key
 
 dict_weather_status = [
                        {'snow': WeatherStatus.SNOWY}, \
@@ -194,11 +196,14 @@ def refresh():
     calls REST-API and converts json into appropiate information for global variable
     'weekStatus'
     """
-    data = call_api()
-    decode_json(data)
+    try:
+        data = call_api()
+        decode_json(data)
+    except Exception as e:
+        wlogging.log(LogType.ERROR.value, LogId.EXCEPTION.value, LogMessage.API_ERR.value + ': ' + str(e))
 
 refresh() # get data first time
-# print("API2")
+# print("API3")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

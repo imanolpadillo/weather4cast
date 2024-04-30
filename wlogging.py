@@ -23,6 +23,10 @@ class LogId(Enum):
     API_UPD =     '    API_UPD'
     EXCEPTION =   '  EXCEPTION'
 
+class LogMessage(Enum):
+    API_ERR =     'API not reachable'
+    NO_API_DATA = 'No weather data'
+
 logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
 
 # *************************************************************************************************** 

@@ -13,7 +13,7 @@ import threading, time
 import pytz
 from datetime import datetime
 import wlogging
-from wlogging import LogType, LogId
+from wlogging import LogType, LogId, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -160,6 +160,5 @@ while True:
             log+='; status=' + str(status)
             wlogging.log(LogType.INFO.value,LogId.OUTDATA_CHG.value,log)
         except Exception as e:
-            log = '(main.py) Weather data not updated: ' + str(e)
-            wlogging.log(LogType.ERROR.value,LogId.EXCEPTION.value,log)
+            wlogging.log(LogType.ERROR.value,LogId.EXCEPTION.value,LogMessage.NO_API_DATA.value)
     time.sleep(1)
