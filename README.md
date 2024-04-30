@@ -11,7 +11,9 @@ Weather4cast works with the following weather APIs:
   - url: [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs)
 2. API2: el-tiempo.net
   - url: [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
-3. API3: openweathermap
+3. API3: api.tomorrow.io -> requires API_KEY
+  - url: [https://api.tomorrow.io/](https://api.tomorrow.io/)
+4. API4: openweathermap -> requires API_KEY
   - url: [https://openweathermap.org/api](https://openweathermap.org/api)
 
 ## 🎮 Raspi commands
@@ -50,5 +52,6 @@ For those APIs that requires an api-key it is necessary to include in parent pat
 ```
 [secrets]
 api3_key = XXXXXX
+api4_key = XXXXXX
 ```
 

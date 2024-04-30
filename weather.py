@@ -2,7 +2,7 @@
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
 
-import weatherAPI1, weatherAPI2, weatherAPI3
+import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -26,9 +26,12 @@ def refresh():
         elif api_weather_id == 2:
             data = weatherAPI2.call_api()
             weatherAPI2.decode_json(data)
-        else:
+        elif api_weather_id == 3:
             data = weatherAPI3.call_api()
-            weatherAPI3.decode_json(data)    
+            weatherAPI3.decode_json(data)
+        else:
+            data = weatherAPI4.call_api()
+            weatherAPI4.decode_json(data)    
     except Exception as e:
         return
 
@@ -44,9 +47,12 @@ def get_min_max_temperature (forecast_day):
     elif api_weather_id == 2:
         tmin = min(list(map(int, weatherAPI2.weekWeather[forecast_day].temperature)))
         tmax = max(list(map(int, weatherAPI2.weekWeather[forecast_day].temperature))) 
-    else:
+    elif api_weather_id == 3:
         tmin = min(list(map(int, weatherAPI3.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI3.weekWeather[forecast_day].temperature)))    
+        tmax = max(list(map(int, weatherAPI3.weekWeather[forecast_day].temperature)))
+    else:
+        tmin = min(list(map(int, weatherAPI4.weekWeather[forecast_day].temperature)))
+        tmax = max(list(map(int, weatherAPI4.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
 def get_temperature (forecast_day, forecast_hour):
@@ -62,8 +68,10 @@ def get_temperature (forecast_day, forecast_hour):
         return weatherAPI1.weekWeather[forecast_day].temperature[forecast_hour]
     elif api_weather_id == 2:
         return weatherAPI2.weekWeather[forecast_day].temperature[forecast_hour]
+    elif api_weather_id == 3:
+        return weatherAPI3.weekWeather[forecast_day].temperature[forecast_hour]
     else:
-        return weatherAPI3.weekWeather[forecast_day].temperature[forecast_hour]    
+        return weatherAPI4.weekWeather[forecast_day].temperature[forecast_hour]    
 
 def get_rain (forecast_day, forecast_hour):
     """
@@ -76,10 +84,12 @@ def get_rain (forecast_day, forecast_hour):
     forecast_hour = int(forecast_hour)
     if api_weather_id == 1:
         return weatherAPI1.weekWeather[forecast_day].rain[forecast_hour]
-    if api_weather_id == 2:
+    elif api_weather_id == 2:
         return weatherAPI2.weekWeather[forecast_day].rain[forecast_hour]
-    else:
+    elif api_weather_id == 3:
         return weatherAPI3.weekWeather[forecast_day].rain[forecast_hour]
+    else:
+        return weatherAPI4.weekWeather[forecast_day].rain[forecast_hour]
 
 def get_status (forecast_day, forecast_hour):
     """
@@ -94,6 +104,8 @@ def get_status (forecast_day, forecast_hour):
         return weatherAPI1.weekWeather[forecast_day].status[forecast_hour]
     elif api_weather_id == 2:
         return weatherAPI2.weekWeather[forecast_day].status[forecast_hour]
-    else:
+    elif api_weather_id == 3:
         return weatherAPI3.weekWeather[forecast_day].status[forecast_hour]
+    else:
+        return weatherAPI4.weekWeather[forecast_day].status[forecast_hour]
   

@@ -25,6 +25,9 @@ def pulse_detector():
         elif weather.api_weather_id == 2:
             weather.api_weather_id = 3
             max7219.message='A3'
+        elif weather.api_weather_id == 3:
+            weather.api_weather_id = 4
+            max7219.message='A4'
         else:
             weather.api_weather_id = 1
             max7219.message='A1'
