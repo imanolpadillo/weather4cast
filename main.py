@@ -58,6 +58,7 @@ def thread_changeAPI_function():
     global weather_refresh_flag
     while True:
         if weatherAPIchange.pulse_detector():
+            weather.refresh()
             weather_refresh_flag = True
         time.sleep(0.01)  # Adjust as needed for your application
 

@@ -26,7 +26,8 @@ class LogMessage(Enum):
     ERR_API_DATA = 'No API data'
     ERR_API_CONN = 'Unable to connect with API'
 
-logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
+# logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
+logging.basicConfig(filename='./logs/weather4cast.log', level=logging.INFO)
 
 # *************************************************************************************************** 
 # FUNCTIONS
