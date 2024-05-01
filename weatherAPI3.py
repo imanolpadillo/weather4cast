@@ -84,6 +84,8 @@ def decode_json(data):
     :param data: json file obtained from "openweathermap" REST-API
     :return: -
     """ 
+    global weekWeather
+    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
     first_temperature = 0
     first_status = 0
     first_rain = 0

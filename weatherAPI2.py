@@ -91,6 +91,8 @@ def decode_json(data):
     :param data: json file obtained from "el-tiempo.net" REST-API
     :return: -
     """ 
+    global weekWeather
+    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
     # TODAY WEATHER
     # A) Temperature
     weekWeather[0].temperature = data['pronostico']['hoy']['temperatura']

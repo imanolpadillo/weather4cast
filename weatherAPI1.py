@@ -85,6 +85,8 @@ def decode_json(data):
     :param data: json file obtained from "el-tiempo.net" REST-API
     :return: -
     """ 
+    global weekWeather
+    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
     count = 0
     for day in range(DAYS):
         for hour in range(24):
