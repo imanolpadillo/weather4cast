@@ -9,6 +9,7 @@ import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4
 # *************************************************************************************************** 
 
 api_weather_id = 1
+api_weather_names = [weatherAPI1.api_name, weatherAPI2.api_name, weatherAPI3.api_name, weatherAPI4.api_name]
 
 # *************************************************************************************************** 
 # FUNCTIONS

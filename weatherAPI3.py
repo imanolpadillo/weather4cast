@@ -17,6 +17,7 @@ config = configparser.ConfigParser()
 config.read('secrets.ini')
 api_key = config['secrets']['api3_key']
 api_url =  'https://api.tomorrow.io/v4/timelines?location=42.8597,-2.6818&fields=temperature,weatherCode,precipitationIntensity,windSpeed&units=metric&timesteps=1h&apikey=' + api_key
+api_name = 'tomorrow.io'
 
 WIND_MAX_MS = 12
 

@@ -13,6 +13,7 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
  
 api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
+api_name = 'el-tiempo'
 
 dict_weather_status = [
                        {'Despejado': WeatherStatus.SUNNY}, \

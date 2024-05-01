@@ -14,6 +14,7 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
+from weatherAPIchange import ButtonStatus
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -57,10 +58,10 @@ def thread_max7219_function():
 def thread_changeAPI_function():
     global weather_refresh_flag
     while True:
-        if weatherAPIchange.pulse_detector():
+        if weatherAPIchange.detect_button() == ButtonStatus.SHORT_CLICK:
             weather.refresh()
             weather_refresh_flag = True
-        time.sleep(0.01)  # Adjust as needed for your application
+        time.sleep(0.1)  # Adjust as needed for your application
 
 # *************************************************************************************************** 
 # FUNCTIONS
