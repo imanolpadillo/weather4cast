@@ -45,6 +45,7 @@ def detect_button():
                 # print('longClick')
                 show_weather_api_name()
                 return ButtonStatus.LONG_CLICK
+            # print('pulse down')
             time.sleep(0.01)  # Adjust sleep time for responsiveness
         # print('shortClick')
         change_weather_api()
