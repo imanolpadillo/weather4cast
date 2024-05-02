@@ -13,7 +13,9 @@ Weather4cast works with the following weather APIs:
   - url: [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
 3. API3: api.tomorrow.io -> requires API_KEY
   - url: [https://api.tomorrow.io/](https://api.tomorrow.io/)
-4. API4: openweathermap -> requires API_KEY
+4. API4: visualcrossing -> requires API_KEY
+  - url: [https://www.visualcrossing.com](https://www.visualcrossing.com)
+5. API5: openweathermap -> requires API_KEY
   - url: [https://openweathermap.org/api](https://openweathermap.org/api)
 
 ## 🎮 Raspi commands
