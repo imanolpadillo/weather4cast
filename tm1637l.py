@@ -7,6 +7,7 @@
 #       pip3 install raspberrypi-tm1637    
 
 import tm1637
+import weather
 from gpioenum import gpio
 
 # *************************************************************************************************** 
@@ -32,9 +33,14 @@ def demo(flag):
         tmax.write([0, 0, 0, 0])
 
 def show_api_error():
-    tmin.show(' api')
-    tmax.show(' err')
+    tmax.show(' api')
+    tmin.show(' err')
 
+def show_api_name():
+    api_name = weather.api_weather_names[weather.api_weather_id-1]
+    tmax.show(api_name[:4])   # first 4 characters
+    tmin.show(api_name[5:9])  # next 4 characters
+        
 def show_temperature(min, max):
     """
     shows min and max temperature

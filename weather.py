@@ -3,6 +3,8 @@
 # *************************************************************************************************** 
 
 import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4
+import wlogging
+from wlogging import LogType, LogMessage
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -35,6 +37,18 @@ def refresh():
             weatherAPI4.decode_json(data)    
     except Exception as e:
         return
+    
+# Change weather api
+def change_weather_api():
+    global api_weather_id
+    if api_weather_id == 1:
+        api_weather_id = 2
+    elif api_weather_id == 2:
+        api_weather_id = 3
+    elif api_weather_id == 3:
+        api_weather_id = 4
+    else:
+        api_weather_id = 1
 
 def get_min_max_temperature (forecast_day):
     """

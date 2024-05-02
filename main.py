@@ -58,10 +58,21 @@ def thread_max7219_function():
 def thread_changeAPI_function():
     global weather_refresh_flag
     while True:
-        if weatherAPIchange.detect_button() == ButtonStatus.SHORT_CLICK:
+        if weatherAPIchange.detect_button() == True:
+            # Update weather_api_id
+            weather.change_weather_api()
+            # Display info about new api
+            demo(False)
+            tm1637l.show_api_name()
+            max7219.message='A' + str(weather.api_weather_id)
+            time.sleep(max7219.timeout)
+            # Update api data
             weather.refresh()
             weather_refresh_flag = True
-        time.sleep(0.1)  # Adjust as needed for your application
+            # Log api update
+            log = 'API' + str(weather.api_weather_id)
+            wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+        time.sleep(0.1)  
 
 # *************************************************************************************************** 
 # FUNCTIONS
