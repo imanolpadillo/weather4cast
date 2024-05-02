@@ -42,7 +42,6 @@ def detect_button():
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  # Long click threshold (adjust as needed)
                 # print('longClick')
-                show_weather_api_name()
                 return True
             time.sleep(0.01) 
         # print('shortClick')
@@ -51,12 +50,6 @@ def detect_button():
     return False
 
 
-
-# Show weather api name
-def show_weather_api_name():
-    api_name = 'API' + str(weather.api_weather_id) + ': ' + weather.api_weather_names[weather.api_weather_id-1]
-    max7219.message=api_name
-    wlogging.log(LogType.INFO.value,LogMessage.API_SHW.name,api_name)
 
 
 

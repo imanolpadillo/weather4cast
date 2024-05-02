@@ -23,7 +23,6 @@ class LogMessage(Enum):
     OUTDATA_CHG =  'OUTDATA_CHG'
     API_CHG =      'API_CHG'
     API_UPD =      'API_UPD'
-    API_SHW =      'API_SHW'
     ERR_API_DATA = 'No API data'
     ERR_API_CONN = 'Unable to connect with API'
 
