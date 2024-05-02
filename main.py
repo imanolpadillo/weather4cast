@@ -36,7 +36,7 @@ prev_forecast_input = ForecastInput()
 # THREADS
 # *************************************************************************************************** 
 def thread_weatherAPI(f_stop):
-    log='API' + str(weather.api_weather_id) 
+    log='API' + str(weather.api_weather_id) + ': ' + weather.api_weather_names[weather.api_weather_id-1]
     wlogging.log(LogType.INFO.value,LogMessage.API_UPD.name, log)
     weather.refresh()
     global weather_refresh_flag
@@ -70,7 +70,7 @@ def thread_changeAPI_function():
             weather.refresh()
             weather_refresh_flag = True
             # Log api update
-            log = 'API' + str(weather.api_weather_id)
+            log = 'API' + str(weather.api_weather_id) + ': ' + weather.api_weather_names[weather.api_weather_id-1]
             wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
         time.sleep(0.1)  
 
