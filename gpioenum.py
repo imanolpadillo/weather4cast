@@ -10,7 +10,7 @@ from enum import Enum
 #     KY040_HOUR_SW = 27
 #     KY040_DAY_CLK = 6
 #     KY040_DAY_DT = 19
-#     KY040_DAY_SW = 26
+#     KY040_DAY_SW = 23
 #     MAX7219_DIN = 10
 #     MAX7219_CS = 8
 #     MAX7219_CLK = 11
@@ -40,6 +40,6 @@ class gpio(Enum):
     TM1637_TMAX_CLK = 21
     KY040_HOUR_CLK = 24
     SWITCH_DAY = 25
-    KY040_DAY_SW = 26
+    KY040_DAY_SW = 23
     KY040_HOUR_SW = 27
     
