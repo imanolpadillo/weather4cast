@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API4 *******************************************
+# ****************************************** WEATHER API5 *******************************************
 # *************************************************************************************************** 
 # Source: https://openweathermap.org/api
 
@@ -206,7 +206,7 @@ def refresh():
         wlogging.log(LogType.ERROR.value, LogMessage.ERR_API_CONN.name, LogMessage.ERR_API_CONN.value + ': ' + str(e))
 
 refresh() # get data first time
-# print("API4")
+# print("API5")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

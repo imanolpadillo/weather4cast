@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API3 *******************************************
+# ****************************************** WEATHER API4 *******************************************
 # *************************************************************************************************** 
 # Source: https://docs.tomorrow.io/
 
@@ -96,7 +96,7 @@ def decode_json(data):
         if counter == 0:
             first_temperature = round(item['values']['temperature'])
             first_status = int(item['values']['weatherCode'])
-            first_rain = ceil_half(item['values']['precipitationIntensity'])
+            first_rain = ceil_half(round(float(item['values']['precipitationIntensity']), 1))
         hour = int(item['startTime'][11:13])
         weekWeather[day_index].temperature[hour] = round(item['values']['temperature'])
         if int(item['values']['windSpeed']) > WIND_MAX_MS:
@@ -150,7 +150,7 @@ def refresh():
         return
 
 refresh() # get data first time
-# print("API3")
-# print(weekWeather[0].temperature)
-# print(weekWeather[0].status)
-# print(weekWeather[0].rain)
+print("API4")
+print(weekWeather[0].temperature)
+print(weekWeather[0].status)
+print(weekWeather[0].rain)
