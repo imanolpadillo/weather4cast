@@ -103,7 +103,7 @@ def decode_json(data):
             weekWeather[day_index].status[hour] = 9999  #windy
         else:
             weekWeather[day_index].status[hour] = int(item['values']['weatherCode'])
-        weekWeather[day_index].rain[hour] = ceil_half(item['values']['precipitationIntensity'])
+        weekWeather[day_index].rain[hour] = ceil_half(round(float(item['values']['precipitationIntensity']), 1))
         counter+=1
         if hour == 23:
             day_index+=1
