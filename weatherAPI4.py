@@ -150,7 +150,7 @@ def refresh():
         return
 
 refresh() # get data first time
-print("API4")
-print(weekWeather[0].temperature)
-print(weekWeather[0].status)
-print(weekWeather[0].rain)
+# print("API4")
+# print(weekWeather[0].temperature)
+# print(weekWeather[0].status)
+# print(weekWeather[0].rain)
