@@ -1,7 +1,7 @@
 # *************************************************************************************************** 
 # ****************************************** WEATHER API3 *******************************************
 # *************************************************************************************************** 
-# Source: https://open-meteo.com/en/docs
+# Source: https://weather.visualcrossing.com
 
 import requests,math
 from weatherAPIenum import WeatherStatus, DAYS, DayWeather
