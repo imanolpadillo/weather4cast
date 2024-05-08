@@ -14,7 +14,6 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIchange import ButtonStatus
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES

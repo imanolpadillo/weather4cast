@@ -17,6 +17,8 @@ Weather4cast works with the following weather APIs:
   - url: [https://api.tomorrow.io/](https://api.tomorrow.io/)
 5. API5: openweathermap -> requires API_KEY
   - url: [https://openweathermap.org/api](https://openweathermap.org/api)
+5. API6: meteoblue -> requires API_KEY
+  - url: [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
 
 ## 🎮 Raspi commands
 
@@ -56,4 +58,8 @@ For those APIs that requires an api-key it is necessary to include in parent pat
 api3_key = XXXXXX
 api4_key = XXXXXX
 ```
+
+## 🆕 Add new API
+ - Create 'weatherAPIX.py'
+ - In 'weather.py': a) import weatherAPIX b) modify api_weather_names and c) add new api output for all functions
 

@@ -2,7 +2,7 @@
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
 
-import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5
+import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5, weatherAPI6
 import wlogging
 from wlogging import LogType, LogMessage
 
@@ -12,7 +12,7 @@ from wlogging import LogType, LogMessage
 
 api_weather_id = 1
 api_weather_names = [weatherAPI1.api_name, weatherAPI2.api_name, weatherAPI3.api_name, 
-                     weatherAPI4.api_name, weatherAPI5.api_name]
+                     weatherAPI4.api_name, weatherAPI5.api_name, weatherAPI6.api_name]
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -36,9 +36,12 @@ def refresh():
         elif api_weather_id == 4:
             data = weatherAPI4.call_api()
             weatherAPI4.decode_json(data)
-        else:
+        elif api_weather_id == 5:
             data = weatherAPI5.call_api()
-            weatherAPI5.decode_json(data)    
+            weatherAPI5.decode_json(data)
+        else:
+            data = weatherAPI6.call_api()
+            weatherAPI6.decode_json(data)    
     except Exception as e:
         return
     
@@ -53,6 +56,8 @@ def change_weather_api():
         api_weather_id = 4
     elif api_weather_id == 4:
         api_weather_id = 5
+    elif api_weather_id == 5:
+        api_weather_id = 6
     else:
         api_weather_id = 1
 
@@ -74,9 +79,12 @@ def get_min_max_temperature (forecast_day):
     elif api_weather_id == 4:
         tmin = min(list(map(int, weatherAPI4.weekWeather[forecast_day].temperature)))
         tmax = max(list(map(int, weatherAPI4.weekWeather[forecast_day].temperature)))
-    else:
+    elif api_weather_id == 5:
         tmin = min(list(map(int, weatherAPI5.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI5.weekWeather[forecast_day].temperature)))    
+        tmax = max(list(map(int, weatherAPI5.weekWeather[forecast_day].temperature)))
+    else:
+        tmin = min(list(map(int, weatherAPI6.weekWeather[forecast_day].temperature)))
+        tmax = max(list(map(int, weatherAPI6.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
 def get_temperature (forecast_day, forecast_hour):
@@ -96,8 +104,10 @@ def get_temperature (forecast_day, forecast_hour):
         return weatherAPI3.weekWeather[forecast_day].temperature[forecast_hour]
     elif api_weather_id == 4:
         return weatherAPI4.weekWeather[forecast_day].temperature[forecast_hour]
-    else:
+    elif api_weather_id == 5:
         return weatherAPI5.weekWeather[forecast_day].temperature[forecast_hour]    
+    else:
+        return weatherAPI6.weekWeather[forecast_day].temperature[forecast_hour]  
 
 def get_rain (forecast_day, forecast_hour):
     """
@@ -116,8 +126,10 @@ def get_rain (forecast_day, forecast_hour):
         return weatherAPI3.weekWeather[forecast_day].rain[forecast_hour]
     elif api_weather_id == 4:
         return weatherAPI4.weekWeather[forecast_day].rain[forecast_hour]
-    else:
+    elif api_weather_id == 5:
         return weatherAPI5.weekWeather[forecast_day].rain[forecast_hour]
+    else:
+        return weatherAPI6.weekWeather[forecast_day].rain[forecast_hour]
 
 def get_status (forecast_day, forecast_hour):
     """
@@ -136,6 +148,8 @@ def get_status (forecast_day, forecast_hour):
         return weatherAPI3.weekWeather[forecast_day].status[forecast_hour]
     elif api_weather_id == 4:
         return weatherAPI4.weekWeather[forecast_day].status[forecast_hour]
-    else:
+    elif api_weather_id == 5:
         return weatherAPI5.weekWeather[forecast_day].status[forecast_hour]
+    else:
+        return weatherAPI6.weekWeather[forecast_day].status[forecast_hour]
   
