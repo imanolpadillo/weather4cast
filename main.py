@@ -34,6 +34,7 @@ prev_forecast_input = ForecastInput()
 # *************************************************************************************************** 
 # THREADS
 # *************************************************************************************************** 
+# Thread that calls API weather every WEATHER_API_REFRESH_TIME seconds
 def thread_weatherAPI(f_stop):
     log='API' + str(weather.api_weather_id) + ': ' + weather.api_weather_names[weather.api_weather_id-1]
     wlogging.log(LogType.INFO.value,LogMessage.API_UPD.name, log)
@@ -43,6 +44,7 @@ def thread_weatherAPI(f_stop):
     if not f_stop.is_set():
         threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
 
+# Thread that updates max7219 led matrix
 def thread_max7219_function():
     global thread_max7219_running
     while (thread_max7219_running):
@@ -53,7 +55,7 @@ def thread_max7219_function():
             max7219.show_level(max7219.level)
         time.sleep(max7219.timeout)
 
-# Function to handle pulse detection
+# Thread to change API when pushing button
 def thread_changeAPI_function():
     global weather_refresh_flag
     while True:
