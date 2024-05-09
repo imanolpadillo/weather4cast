@@ -18,32 +18,22 @@ api_weather_names = [weatherAPI1.api_name, weatherAPI2.api_name, weatherAPI3.api
 # FUNCTIONS
 # *************************************************************************************************** 
 
-def refresh():
-    """
-    calls REST-API and converts json into appropiate information for global variable
-    'weekStatus'
-    """
+def get_current_weather_api():
     try:
         if api_weather_id == 1:
-            data = weatherAPI1.call_api()
-            weatherAPI1.decode_json(data)
+            return weatherAPI1
         elif api_weather_id == 2:
-            data = weatherAPI2.call_api()
-            weatherAPI2.decode_json(data)
+            return weatherAPI2
         elif api_weather_id == 3:
-            data = weatherAPI3.call_api()
-            weatherAPI3.decode_json(data)
+            return weatherAPI3
         elif api_weather_id == 4:
-            data = weatherAPI4.call_api()
-            weatherAPI4.decode_json(data)
+            return weatherAPI4
         elif api_weather_id == 5:
-            data = weatherAPI5.call_api()
-            weatherAPI5.decode_json(data)
+            return weatherAPI5
         else:
-            data = weatherAPI6.call_api()
-            weatherAPI6.decode_json(data)    
+            return weatherAPI6  
     except Exception as e:
-        return
+        return 
     
 # Change weather api
 def change_weather_api():
@@ -61,30 +51,27 @@ def change_weather_api():
     else:
         api_weather_id = 1
 
+def refresh():
+    """
+    calls REST-API and converts json into appropiate information for global variable
+    'weekStatus'
+    """
+    try:
+        weatherAPI = get_current_weather_api()
+        data = weatherAPI.call_api()
+        weatherAPI.decode_json(data)    
+    except Exception as e:
+        return
+
 def get_min_max_temperature (forecast_day):
     """
     gets min and max temperature of input forecast day
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :return: [tmin,tmax]
     """
-    if api_weather_id == 1:
-        tmin = min(list(map(int, weatherAPI1.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI1.weekWeather[forecast_day].temperature)))
-    elif api_weather_id == 2:
-        tmin = min(list(map(int, weatherAPI2.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI2.weekWeather[forecast_day].temperature))) 
-    elif api_weather_id == 3:
-        tmin = min(list(map(int, weatherAPI3.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI3.weekWeather[forecast_day].temperature)))
-    elif api_weather_id == 4:
-        tmin = min(list(map(int, weatherAPI4.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI4.weekWeather[forecast_day].temperature)))
-    elif api_weather_id == 5:
-        tmin = min(list(map(int, weatherAPI5.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI5.weekWeather[forecast_day].temperature)))
-    else:
-        tmin = min(list(map(int, weatherAPI6.weekWeather[forecast_day].temperature)))
-        tmax = max(list(map(int, weatherAPI6.weekWeather[forecast_day].temperature)))    
+    weatherAPI = get_current_weather_api()
+    tmin = min(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))
+    tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
 def get_temperature (forecast_day, forecast_hour):
@@ -96,18 +83,8 @@ def get_temperature (forecast_day, forecast_hour):
     """
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if api_weather_id == 1:
-        return weatherAPI1.weekWeather[forecast_day].temperature[forecast_hour]
-    elif api_weather_id == 2:
-        return weatherAPI2.weekWeather[forecast_day].temperature[forecast_hour]
-    elif api_weather_id == 3:
-        return weatherAPI3.weekWeather[forecast_day].temperature[forecast_hour]
-    elif api_weather_id == 4:
-        return weatherAPI4.weekWeather[forecast_day].temperature[forecast_hour]
-    elif api_weather_id == 5:
-        return weatherAPI5.weekWeather[forecast_day].temperature[forecast_hour]    
-    else:
-        return weatherAPI6.weekWeather[forecast_day].temperature[forecast_hour]  
+    weatherAPI = get_current_weather_api()
+    return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
 
 def get_rain (forecast_day, forecast_hour):
     """
@@ -118,18 +95,8 @@ def get_rain (forecast_day, forecast_hour):
     """
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if api_weather_id == 1:
-        return weatherAPI1.weekWeather[forecast_day].rain[forecast_hour]
-    elif api_weather_id == 2:
-        return weatherAPI2.weekWeather[forecast_day].rain[forecast_hour]
-    elif api_weather_id == 3:
-        return weatherAPI3.weekWeather[forecast_day].rain[forecast_hour]
-    elif api_weather_id == 4:
-        return weatherAPI4.weekWeather[forecast_day].rain[forecast_hour]
-    elif api_weather_id == 5:
-        return weatherAPI5.weekWeather[forecast_day].rain[forecast_hour]
-    else:
-        return weatherAPI6.weekWeather[forecast_day].rain[forecast_hour]
+    weatherAPI = get_current_weather_api()
+    return weatherAPI.weekWeather[forecast_day].rain[forecast_hour]
 
 def get_status (forecast_day, forecast_hour):
     """
@@ -140,16 +107,16 @@ def get_status (forecast_day, forecast_hour):
     """
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if api_weather_id == 1:
-        return weatherAPI1.weekWeather[forecast_day].status[forecast_hour]
-    elif api_weather_id == 2:
-        return weatherAPI2.weekWeather[forecast_day].status[forecast_hour]
-    elif api_weather_id == 3:
-        return weatherAPI3.weekWeather[forecast_day].status[forecast_hour]
-    elif api_weather_id == 4:
-        return weatherAPI4.weekWeather[forecast_day].status[forecast_hour]
-    elif api_weather_id == 5:
-        return weatherAPI5.weekWeather[forecast_day].status[forecast_hour]
-    else:
-        return weatherAPI6.weekWeather[forecast_day].status[forecast_hour]
+    weatherAPI = get_current_weather_api()
+    return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
   
+def get_rainWarning(forecast_day, forecast_hour, rain_limit):
+    """
+    returns true, if rain value is higher than rain_limit in current day
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
+    :return: True if rain value is higher than rain_limit in current day
+    """
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
+    return True

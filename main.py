@@ -44,6 +44,12 @@ def thread_weatherAPI(f_stop):
     if not f_stop.is_set():
         threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
 
+# # Thread that blink rain icon if it rains during current day
+# def thread_rainWarning(f_stop):
+#     if weather.
+#     if not f_stop.is_set():
+#         threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
+
 # Thread that updates max7219 led matrix
 def thread_max7219_function():
     global thread_max7219_running

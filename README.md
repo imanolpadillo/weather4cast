@@ -61,5 +61,5 @@ api4_key = XXXXXX
 
 ## 🆕 Add new API
  - Create 'weatherAPIX.py'
- - In 'weather.py': a) import weatherAPIX b) modify api_weather_names and c) add new api output for all functions
+ - In 'weather.py': a) import weatherAPIX b) modify api_weather_names and c) add new api output in functions 'get_current_weather_api()' and 'change_weather_api()' 
 
