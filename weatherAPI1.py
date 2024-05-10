@@ -137,4 +137,4 @@ refresh() # get data first time
 # print("API1")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
-# print(weekWeather[0].rain)
+# print(weekWeather[1].rain)

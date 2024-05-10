@@ -76,14 +76,14 @@ def demo(flag):
     temperature_low.write("p5", value)
     temperature_low.write("p6", value)
     temperature_low.write("p7", value)
-    status.write("p0", value)
-    status.write("p1", value)
-    status.write("p2", value)
-    status.write("p3", value)
-    status.write("p4", value)
-    status.write("p5", value)
-    status.write("p6", value)
-    status.write("p7", value)
+    status.write("p0", value)  # sunny
+    status.write("p1", value)  # partly cloudy
+    status.write("p2", value)  # cloudy
+    status.write("p3", value)  # rainy
+    status.write("p4", value)  # foggy
+    status.write("p5", value)  # stormy
+    status.write("p6", value)  # snowy
+    status.write("p7", value)  # windy
     
 
 
@@ -226,3 +226,6 @@ def display_status(value):
         status.write("p6", "LOW")
     elif value == WeatherStatus.WINDY:
         status.write("p7", "LOW")
+
+def toggle_rain():
+    print (status.read("p3"))

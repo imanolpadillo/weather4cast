@@ -19,7 +19,11 @@ from wlogging import LogType, LogMessage
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 WEATHER_API_REFRESH_TIME = 1800 # in seconds
+RAIN_WARNING_REFRESH_TIME = 1   # in seconds
+RAIN_WARNING_MM = 1  # limit of rain mm
+RAIN_WARNING_TIME = 3   # limit of hours to check
 weather_refresh_flag = False
+rain_warning_flag = False
 thread_max7219_running = True
 
 class ForecastInput:
@@ -44,11 +48,13 @@ def thread_weatherAPI(f_stop):
     if not f_stop.is_set():
         threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
 
-# # Thread that blink rain icon if it rains during current day
-# def thread_rainWarning(f_stop):
-#     if weather.
-#     if not f_stop.is_set():
-#         threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
+# Thread that blink rain icon if it rains during current day
+def thread_rainWarning(f_stop):
+    global rain_warning_flag
+    if rain_warning_flag == True:
+        pcf8574.toggle_rain()
+    if not f_stop.is_set():
+        threading.Timer(RAIN_WARNING_REFRESH_TIME, thread_rainWarning, [f_stop]).start()
 
 # Thread that updates max7219 led matrix
 def thread_max7219_function():
@@ -155,6 +161,7 @@ demo(False)
 # start threads
 f_stop = threading.Event()
 thread_weatherAPI(f_stop)
+thread_rainWarning(f_stop)
 
 thread_max7219 = threading.Thread(target=thread_max7219_function)
 thread_max7219.start()
@@ -169,6 +176,8 @@ while True:
         try:
             weather_refresh_flag = False
             log=''
+            # lock rain_warning thread
+            rain_warning_flag = False
             # display min/max temperature
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day)
             tm1637l.show_temperature(tmin,tmax)
@@ -177,16 +186,20 @@ while True:
             t=weather.get_temperature(forecast_input.day, forecast_input.hour)
             pcf8574.display_temperature(int(t))
             log+='; t=' + str(t)
-            # display rain
-            rain=weather.get_rain(forecast_input.day, forecast_input.hour)
-            max7219.level = rain
-            log+='; rain=' + str(rain)
             # display status
             status=weather.get_status(forecast_input.day, forecast_input.hour)
             pcf8574.display_status(status)
             log+='; status=' + str(status)
+            # display rain
+            rain=weather.get_rain(forecast_input.day, forecast_input.hour)
+            max7219.level = rain
+            log+='; rain=' + str(rain)
+            # display rain warning
+            rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, RAIN_WARNING_MM, RAIN_WARNING_TIME)
+            log+='; rain_warning=' + str(rain_warning_flag)
+            # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
         except Exception as e:
             show_api_error()
-            wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value)
+            wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + str(e))
     time.sleep(1)

@@ -5,6 +5,7 @@
 import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5, weatherAPI6
 import wlogging
 from wlogging import LogType, LogMessage
+from weatherAPIenum import WeatherStatus, DAYS, DayWeather
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -110,13 +111,35 @@ def get_status (forecast_day, forecast_hour):
     weatherAPI = get_current_weather_api()
     return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
   
-def get_rainWarning(forecast_day, forecast_hour, rain_limit):
+def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     """
-    returns true, if rain value is higher than rain_limit in current day
+    returns true, if rain value is higher than rain_limit from next hour
+    to the next amount of hours defined by hour_limit
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
-    :return: True if rain value is higher than rain_limit in current day
+    :rain_limit: mm that are considered as rain warning
+    :hour_limit: hours to be monitored from forecast_day+forecast_hour
+    :return: True if it rains the following hours
     """
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    return True
+    weatherAPI = get_current_weather_api()
+    # join all temperature values
+    hour_counter=0
+    rain_data = []
+    for day in range(DAYS):
+        for hour in range(24):
+            rain_data.append(weatherAPI.weekWeather[day].rain[hour])
+            hour_counter+=1
+    # get current index
+    index = forecast_day * 24 + forecast_hour
+
+    # from index+1, check if it rains the following 'hour_limit' hours.
+    hour_counter=0
+    for hour in range(index + 1, len(rain_data)):
+        if hour_counter>=hour_limit:
+            return False
+        if rain_data[hour] >= rain_limit:
+            return True
+        hour_counter+=1
+    return False
