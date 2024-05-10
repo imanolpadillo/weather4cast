@@ -14,6 +14,7 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
+from weatherAPIenum import WeatherStatus
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -195,7 +196,10 @@ while True:
             max7219.level = rain
             log+='; rain=' + str(rain)
             # display rain warning
-            rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, RAIN_WARNING_MM, RAIN_WARNING_TIME)
+            if status == WeatherStatus.RAINY:
+                rain_warning_flag = False     # do not blink rain status, if it is raining 
+            else:
+                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, RAIN_WARNING_MM, RAIN_WARNING_TIME)
             log+='; rain_warning=' + str(rain_warning_flag)
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)

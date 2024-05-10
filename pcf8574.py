@@ -228,4 +228,12 @@ def display_status(value):
         status.write("p7", "LOW")
 
 def toggle_rain():
-    print (status.read("p3"))
+    """
+    Toogle rain status
+    """
+    rain_pin="p3"
+    if status.read(rain_pin) == True:
+        status.write(rain_pin, "LOW")
+    else:
+        status.write(rain_pin, "HIGH")
+
