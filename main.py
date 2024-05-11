@@ -192,7 +192,7 @@ while True:
             max7219.level = rain
             log+='; rain=' + str(rain)
             # display rain warning
-            if status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY:
+            if status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 
             else:
                 rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
