@@ -5,7 +5,7 @@
 # API renewal: https://www.meteoblue.com/en/weather-api/index/overview
 
 import requests, math
-from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
 from wlogging import LogType, LogMessage
@@ -60,7 +60,7 @@ dict_weather_status = [
                        {100: WeatherStatus.WINDY}
                     ]
 
-weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next days
+weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today + tomorrow + next days
 
 MAX_WIND_MS = 12
 
@@ -100,9 +100,9 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
     count = 0
-    for day in range(DAYS):
+    for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
             weekWeather[day].temperature[hour] = round(data['data_1h']['temperature'][count])
             weekWeather[day].rain[hour] = ceil_half(data['data_1h']['precipitation'][count])

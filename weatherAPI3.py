@@ -4,7 +4,7 @@
 # Source: https://weather.visualcrossing.com
 
 import requests,math
-from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
 from wlogging import LogType, LogMessage
@@ -39,7 +39,7 @@ dict_weather_status = [
                        {'showers-night': WeatherStatus.RAINY}
                     ]
 
-weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next days
+weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today + tomorrow + next days
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -77,8 +77,8 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
-    for day in range(DAYS):
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
+    for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
             weekWeather[day].temperature[hour] = round(data['days'][day]['hours'][hour]['temp'])
             weekWeather[day].rain[hour] = ceil_half(data['days'][day]['hours'][hour]['precip'])

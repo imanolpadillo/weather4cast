@@ -38,14 +38,20 @@ cd /home/pi/Documents/weather4cast
 python3 main.py
 ```
 
- 4. Program a cron for executing weather4cast on restart and delete logs every week
+ 4. Kill weather4cast program
+```
+ps aux | grep main.py
+kill -7 process_id
+```
+
+ 5. Program a cron for executing weather4cast on restart and delete logs every week
 ```
 sudo crontab -e -u pi
 @reboot sh /home/pi/Documents/weather4cast/launcher.sh >/home/pi/Documents/weather4cast/logs/cron.log 2>&1
 0 0 * * 0 /bin/rm -f /home/pi/Documents/weather4cast/logs/*
 ```
 
- 5. Read Raspi logs
+ 6. Read Raspi logs
 ```
 cd /home/pi/Documents/weather4cast/logs
 cat weather4cast.log

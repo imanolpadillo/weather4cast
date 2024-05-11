@@ -5,7 +5,7 @@
 import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5, weatherAPI6
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+from weatherAPIenum import WeatherConfig
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -127,7 +127,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     # join all temperature values
     hour_counter=0
     rain_data = []
-    for day in range(DAYS):
+    for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
             rain_data.append(weatherAPI.weekWeather[day].rain[hour])
             hour_counter+=1

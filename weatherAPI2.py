@@ -4,7 +4,7 @@
 # Source: https://www.el-tiempo.net/api
 
 import requests,math
-from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import wlogging
 from wlogging import LogType, LogMessage
 
@@ -37,7 +37,7 @@ dict_weather_status = [
                        {'nub': WeatherStatus.CLOUDY}
                     ]
 
-weekWeather = [DayWeather() for _ in range(DAYS)]  # today + tomorrow + next days
+weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today + tomorrow + next days
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -93,7 +93,7 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
     # TODAY WEATHER
     # A) Temperature
     weekWeather[0].temperature = data['pronostico']['hoy']['temperatura']
@@ -131,7 +131,7 @@ def decode_json(data):
     weekWeather[1].rain = [ceil_half(value) for value in tomorrow_rain]   
  
     # NEXT 4 DAYS
-    for x in range(DAYS-1):  #first 'next days' matches with tomorrow and is discarded
+    for x in range(WeatherConfig.DAYS.value-1):  #first 'next days' matches with tomorrow and is discarded
         if x==0: continue 
         # A) Temperature
         weekWeather[x+1].temperature = [data['proximos_dias'][x-1]['temperatura']['minima']]*8 + \

@@ -14,15 +14,11 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherStatus
+from weatherAPIenum import WeatherConfig, WeatherStatus
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-WEATHER_API_REFRESH_TIME = 1800 # in seconds
-RAIN_WARNING_REFRESH_TIME = 1   # in seconds
-RAIN_WARNING_MM = 1  # limit of rain mm
-RAIN_WARNING_TIME = 3   # limit of hours to check
 weather_refresh_flag = False
 rain_warning_flag = False
 thread_max7219_running = True
@@ -47,7 +43,7 @@ def thread_weatherAPI(f_stop):
     global weather_refresh_flag
     weather_refresh_flag = True
     if not f_stop.is_set():
-        threading.Timer(WEATHER_API_REFRESH_TIME, thread_weatherAPI, [f_stop]).start()
+        threading.Timer(WeatherConfig.WEATHER_API_REFRESH_TIME.value, thread_weatherAPI, [f_stop]).start()
 
 # Thread that blink rain icon if it rains during current day
 def thread_rainWarning(f_stop):
@@ -55,7 +51,7 @@ def thread_rainWarning(f_stop):
     if rain_warning_flag == True:
         pcf8574.toggle_rain()
     if not f_stop.is_set():
-        threading.Timer(RAIN_WARNING_REFRESH_TIME, thread_rainWarning, [f_stop]).start()
+        threading.Timer(WeatherConfig.RAIN_WARNING_REFRESH_TIME.value, thread_rainWarning, [f_stop]).start()
 
 # Thread that updates max7219 led matrix
 def thread_max7219_function():
@@ -196,10 +192,11 @@ while True:
             max7219.level = rain
             log+='; rain=' + str(rain)
             # display rain warning
-            if status == WeatherStatus.RAINY:
-                rain_warning_flag = False     # do not blink rain status, if it is raining 
+            if status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY:
+                rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 
             else:
-                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, RAIN_WARNING_MM, RAIN_WARNING_TIME)
+                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
+                                                             WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning=' + str(rain_warning_flag)
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)

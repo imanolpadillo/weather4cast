@@ -4,7 +4,7 @@
 # Source: https://openweathermap.org/api
 
 import requests, math
-from weatherAPIenum import WeatherStatus, DAYS, DayWeather
+from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
 from wlogging import LogType, LogMessage
@@ -29,7 +29,7 @@ dict_weather_status = [
                        {'clouds': WeatherStatus.CLOUDY}
                     ]
 
-weekWeather = [DayWeather() for _ in range(DAYS+1)]  
+weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -66,7 +66,7 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(DAYS+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
     first_temperature = ''
     first_status = ''
     counter=0
