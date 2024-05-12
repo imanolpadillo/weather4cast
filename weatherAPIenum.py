@@ -10,6 +10,7 @@ class WeatherConfig(Enum):
     RAIN_WARNING_REFRESH_TIME = 1   # in seconds
     RAIN_WARNING_MM = 1  # limit of rain mm
     RAIN_WARNING_TIME = 3   # limit of hours to check
+    MAX_WIND_MS = 12  # max wind speed
 
 class WeatherStatus(Enum):
     SUNNY = 1

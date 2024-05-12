@@ -2,7 +2,7 @@
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
 
-import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5, weatherAPI6
+import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5, weatherAPI6, weatherAPI7
 import wlogging
 from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig
@@ -13,7 +13,8 @@ from weatherAPIenum import WeatherConfig
 
 api_weather_id = 1
 api_weather_names = [weatherAPI1.api_name, weatherAPI2.api_name, weatherAPI3.api_name, 
-                     weatherAPI4.api_name, weatherAPI5.api_name, weatherAPI6.api_name]
+                     weatherAPI4.api_name, weatherAPI5.api_name, weatherAPI6.api_name,
+                     weatherAPI7.api_name]
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -31,8 +32,10 @@ def get_current_weather_api():
             return weatherAPI4
         elif api_weather_id == 5:
             return weatherAPI5
+        elif api_weather_id == 6:
+            return weatherAPI6
         else:
-            return weatherAPI6  
+            return weatherAPI7  
     except Exception as e:
         return 
     
@@ -49,6 +52,8 @@ def change_weather_api():
         api_weather_id = 5
     elif api_weather_id == 5:
         api_weather_id = 6
+    elif api_weather_id == 6:
+        api_weather_id = 7
     else:
         api_weather_id = 1
 

@@ -12,7 +12,7 @@ from wlogging import LogType, LogMessage
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
  
-api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=apparent_temperature,rain,weather_code,wind_speed_10m&timezone=auto'
+api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=temperature_2m,rain,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto'
 api_name = 'openmet '
 
 dict_weather_status = [
@@ -48,8 +48,6 @@ dict_weather_status = [
                     ]
 
 weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today + tomorrow + next days
-
-MAX_WIND_KMH = 50
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -91,9 +89,9 @@ def decode_json(data):
     count = 0
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
-            weekWeather[day].temperature[hour] = round(data['hourly']['apparent_temperature'][count])
+            weekWeather[day].temperature[hour] = round(data['hourly']['temperature_2m'][count])
             weekWeather[day].rain[hour] = ceil_half(data['hourly']['rain'][count])
-            if (data['hourly']['wind_speed_10m'][count]>MAX_WIND_KMH):
+            if (data['hourly']['wind_speed_10m'][count]>WeatherConfig.MAX_WIND_MS.value):
                 #wind status is not defined in 'weather code'
                 weekWeather[day].status[hour] = 100 # windy code
             else:

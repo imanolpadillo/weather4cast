@@ -19,8 +19,6 @@ api_key = config['secrets']['api4_key']
 api_url =  'https://api.tomorrow.io/v4/timelines?location=42.8597,-2.6818&fields=temperature,weatherCode,precipitationIntensity,windSpeed&units=metric&timesteps=1h&apikey=' + api_key
 api_name = 'tomorrow'
 
-WIND_MAX_MS = 12
-
 # Source: https://docs.tomorrow.io/reference/data-layers-weather-codes
 dict_weather_status = [
                        {1000:  WeatherStatus.SUNNY}, \
@@ -99,7 +97,7 @@ def decode_json(data):
             first_rain = ceil_half(round(float(item['values']['precipitationIntensity']), 1))
         hour = int(item['startTime'][11:13])
         weekWeather[day_index].temperature[hour] = round(item['values']['temperature'])
-        if int(item['values']['windSpeed']) > WIND_MAX_MS:
+        if int(item['values']['windSpeed']) > WeatherConfig.MAX_WIND_MS.value:
             weekWeather[day_index].status[hour] = 9999  #windy
         else:
             weekWeather[day_index].status[hour] = int(item['values']['weatherCode'])

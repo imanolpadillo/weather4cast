@@ -17,8 +17,10 @@ Weather4cast works with the following weather APIs:
   - url: [https://api.tomorrow.io/](https://api.tomorrow.io/)
 5. API5: openweathermap -> requires API_KEY
   - url: [https://openweathermap.org/api](https://openweathermap.org/api)
-5. API6: meteoblue -> requires API_KEY
+6. API6: meteoblue -> requires API_KEY
   - url: [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
+7. API7: meteomatics -> requires API_KEY
+  - url: [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/)
 
 ## 🎮 Raspi commands
 
