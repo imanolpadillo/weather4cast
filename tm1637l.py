@@ -37,7 +37,7 @@ def show_api_error():
     tmin.show(' err')
 
 def show_api_name():
-    api_name = weather.api_weather_names[weather.api_weather_id-1]
+    api_name = weather.get_current_weather_api_name()
     tmax.show(api_name[:4])   # first 4 characters
     tmin.show(api_name[4:8])  # next 4 characters
         

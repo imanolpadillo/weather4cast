@@ -37,13 +37,13 @@ prev_forecast_input = ForecastInput()
 # *************************************************************************************************** 
 # Thread that calls API weather every WEATHER_API_REFRESH_TIME seconds
 def thread_weatherAPI(f_stop):
-    log='API' + str(weather.api_weather_id) + ': ' + weather.api_weather_names[weather.api_weather_id-1]
+    log='API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()
     wlogging.log(LogType.INFO.value,LogMessage.API_UPD.name, log)
     weather.refresh()
     global weather_refresh_flag
     weather_refresh_flag = True
     if not f_stop.is_set():
-        threading.Timer(weather.api_weather_refresh_s[weather.api_weather_id-1], thread_weatherAPI, [f_stop]).start()
+        threading.Timer(weather.get_current_weather_api_refresh_s(), thread_weatherAPI, [f_stop]).start()
 
 # Thread that blink rain icon if it rains during current day
 def thread_rainWarning(f_stop):
@@ -80,7 +80,7 @@ def thread_changeAPI_function():
             weather.refresh()
             weather_refresh_flag = True
             # Log api update
-            log = 'API' + str(weather.api_weather_id) + ': ' + weather.api_weather_names[weather.api_weather_id-1]
+            log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()
             wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
         time.sleep(0.1)  
 

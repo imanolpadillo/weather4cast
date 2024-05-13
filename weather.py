@@ -11,21 +11,17 @@ from weatherAPIenum import WeatherConfig
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-
+MAX_APIS = 8
 api_weather_id = 1
-api_weather_names = [weatherAPI1.api_name, weatherAPI2.api_name, weatherAPI3.api_name, 
-                     weatherAPI4.api_name, weatherAPI5.api_name, weatherAPI6.api_name,
-                     weatherAPI7.api_name, weatherAPI8.api_name]
-api_weather_refresh_s = [weatherAPI1.api_refresh_s, weatherAPI2.api_refresh_s, 
-                            weatherAPI3.api_refresh_s, weatherAPI4.api_refresh_s, 
-                            weatherAPI5.api_refresh_s, weatherAPI6.api_refresh_s,
-                            weatherAPI7.api_refresh_s, weatherAPI8.api_refresh_s]
 
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
 
 def get_current_weather_api():
+    """
+    returns current weather api based on actived api_weather_id
+    """
     try:
         if api_weather_id == 1:
             return weatherAPI1
@@ -45,11 +41,25 @@ def get_current_weather_api():
             return weatherAPI8  
     except Exception as e:
         return 
-    
+
+def get_current_weather_api_name():
+    """
+    returns current weather api name based on actived api_weather_id
+    """
+    weatherAPI = get_current_weather_api()
+    return weatherAPI.api_name
+
+def get_current_weather_api_refresh_s():
+    """
+    returns current weather api refresh time based on actived api_weather_id
+    """
+    weatherAPI = get_current_weather_api()
+    return weatherAPI.api_refresh_s
+
 # Change weather api
 def change_weather_api():
     global api_weather_id
-    if api_weather_id < len(api_weather_names):
+    if api_weather_id < len(MAX_APIS):
         api_weather_id += 1
     else:
         api_weather_id = 1
