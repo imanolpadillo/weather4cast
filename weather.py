@@ -1,46 +1,46 @@
 # *************************************************************************************************** 
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
-
-import weatherAPI1, weatherAPI2, weatherAPI3, weatherAPI4, weatherAPI5, weatherAPI6, weatherAPI7, \
-       weatherAPI8
+import importlib, os
 import wlogging
 from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
-# *************************************************************************************************** 
-MAX_APIS = 8
+# ***************************************************************************************************
+def count_weather_apis():
+    directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory of main.py
+    count = 0
+    for filename in os.listdir(directory):
+        if (filename.startswith('weatherAPI') and 
+            not filename.startswith('weatherAPIenum') and 
+            not filename.startswith('weatherAPIchange') and 
+            os.path.isfile(os.path.join(directory, filename))):
+            count += 1
+    return count
+
+MAX_APIS = count_weather_apis()
 api_weather_id = 1
 
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
+def get_weather_module(module_number):
+    module_name = f"weatherAPI{module_number}"
+    try:
+        module = importlib.import_module(module_name)
+        return module
+    except ImportError:
+        print(f"Module {module_name} not found.")
+        return None
 
 def get_current_weather_api():
     """
     returns current weather api based on actived api_weather_id
     """
-    try:
-        if api_weather_id == 1:
-            return weatherAPI1
-        elif api_weather_id == 2:
-            return weatherAPI2
-        elif api_weather_id == 3:
-            return weatherAPI3
-        elif api_weather_id == 4:
-            return weatherAPI4
-        elif api_weather_id == 5:
-            return weatherAPI5
-        elif api_weather_id == 6:
-            return weatherAPI6
-        elif api_weather_id == 7:
-            return weatherAPI7
-        else:
-            return weatherAPI8  
-    except Exception as e:
-        return 
+    global api_weather_id
+    return get_weather_module(api_weather_id)
 
 def get_current_weather_api_name():
     """
@@ -59,7 +59,7 @@ def get_current_weather_api_refresh_s():
 # Change weather api
 def change_weather_api():
     global api_weather_id
-    if api_weather_id < len(MAX_APIS):
+    if api_weather_id < MAX_APIS:
         api_weather_id += 1
     else:
         api_weather_id = 1
