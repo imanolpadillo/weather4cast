@@ -43,7 +43,7 @@ def thread_weatherAPI(f_stop):
     global weather_refresh_flag
     weather_refresh_flag = True
     if not f_stop.is_set():
-        threading.Timer(WeatherConfig.WEATHER_API_REFRESH_TIME.value, thread_weatherAPI, [f_stop]).start()
+        threading.Timer(weather.api_weather_refresh_s[weather.api_weather_id-1], thread_weatherAPI, [f_stop]).start()
 
 # Thread that blink rain icon if it rains during current day
 def thread_rainWarning(f_stop):

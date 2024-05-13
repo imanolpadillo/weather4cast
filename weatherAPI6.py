@@ -19,6 +19,7 @@ config.read('secrets.ini')
 api_key = config['secrets']['api6_key']
 api_url =  'http://my.meteoblue.com/packagesV2/basic-1h?lat=42.85&lon=-2.6727&apikey=' + api_key
 api_name = 'meteblue'
+api_refresh_s = 1800
 
 #pictocode: https://content.meteoblue.com/es/investigacion-educacion/especificaciones/standards/simbolos-y-pictogramas
 dict_weather_status = [

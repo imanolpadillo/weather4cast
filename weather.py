@@ -16,6 +16,10 @@ api_weather_id = 1
 api_weather_names = [weatherAPI1.api_name, weatherAPI2.api_name, weatherAPI3.api_name, 
                      weatherAPI4.api_name, weatherAPI5.api_name, weatherAPI6.api_name,
                      weatherAPI7.api_name, weatherAPI8.api_name]
+api_weather_refresh_s = [weatherAPI1.api_refresh_s, weatherAPI2.api_refresh_s, 
+                            weatherAPI3.api_refresh_s, weatherAPI4.api_refresh_s, 
+                            weatherAPI5.api_refresh_s, weatherAPI6.api_refresh_s,
+                            weatherAPI7.api_refresh_s, weatherAPI8.api_refresh_s]
 
 # *************************************************************************************************** 
 # FUNCTIONS

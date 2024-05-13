@@ -18,6 +18,7 @@ config.read('secrets.ini')
 api_key = config['secrets']['api3_key']
 api_url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/vitoria-gasteiz?unitGroup=metric&include=hours&contentType=json&key=' + api_key 
 api_name = 'visucros'
+api_refresh_s = 1800
 
 #src: https://www.visualcrossing.com/resources/documentation/weather-api/defining-icon-set-in-the-weather-api/
 dict_weather_status = [

@@ -9,20 +9,28 @@ Weather4cast works with the following weather APIs:
 
 1. API1: open-meteo
   - url: [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs)
+  - refresh_time: 30min
 2. API2: el-tiempo.net
   - url: [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
+  - refresh_time: 30min
 3. API3: visualcrossing -> requires API_KEY
   - url: [https://www.visualcrossing.com](https://www.visualcrossing.com)
+  - refresh_time: 30min
 4. API4: api.tomorrow.io -> requires API_KEY
   - url: [https://api.tomorrow.io/](https://api.tomorrow.io/)
+  - refresh_time: 30min
 5. API5: openweathermap -> requires API_KEY
   - url: [https://openweathermap.org/api](https://openweathermap.org/api)
+  - refresh_time: 180min
 6. API6: meteoblue -> requires API_KEY
   - url: [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
+  - refresh_time: 30min
 7. API7: meteomatics -> requires API_KEY
   - url: [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/)
+  - refresh_time: 30min
 8. API8: meteostat -> requires API_KEY
   - url: [https://dev.meteostat.net/api/](https://dev.meteostat.net/api/)
+  - refresh_time: 90min
 
 
 ## 🎮 Raspi commands
@@ -72,5 +80,5 @@ api4_key = XXXXXX
 
 ## 🆕 Add new API
  - Create 'weatherAPIX.py'
- - In 'weather.py': a) import weatherAPIX b) modify api_weather_names and c) add new api output in function 'get_current_weather_api()'.
+ - In 'weather.py': a) import weatherAPIX b) modify api_weather_names, api_weather_refresh_s and c) add new api output in function 'get_current_weather_api()'.
 

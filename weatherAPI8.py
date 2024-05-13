@@ -19,6 +19,7 @@ config.read('secrets.ini')
 api_key = config['secrets']['api8_key']
 api_url = "https://meteostat.p.rapidapi.com/stations/hourly"
 api_name = 'metestat'
+api_refresh_s = 5400
 
 #status: https://dev.meteostat.net/formats.html#weather-condition-codes
 dict_weather_status = [
