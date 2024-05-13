@@ -21,6 +21,9 @@ Weather4cast works with the following weather APIs:
   - url: [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
 7. API7: meteomatics -> requires API_KEY
   - url: [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/)
+8. API8: meteostat -> requires API_KEY
+  - url: [https://dev.meteostat.net/api/](https://dev.meteostat.net/api/)
+
 
 ## 🎮 Raspi commands
 
@@ -69,5 +72,5 @@ api4_key = XXXXXX
 
 ## 🆕 Add new API
  - Create 'weatherAPIX.py'
- - In 'weather.py': a) import weatherAPIX b) modify api_weather_names and c) add new api output in functions 'get_current_weather_api()' and 'change_weather_api()' 
+ - In 'weather.py': a) import weatherAPIX b) modify api_weather_names and c) add new api output in function 'get_current_weather_api()'.
 
