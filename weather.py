@@ -2,13 +2,12 @@
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
 import importlib, os
-import wlogging
-from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # ***************************************************************************************************
+weatherAPI = None
 api_weather_id = 1
 # weatherAPI files are ordered alphabetically, and file names are saved in the following array.
 weatherAPInames = []
@@ -76,6 +75,7 @@ def refresh():
     'weekStatus'
     """
     try:
+        global weatherAPI
         weatherAPI = get_current_weather_api()
         data = weatherAPI.call_api()
         weatherAPI.decode_json(data)    
@@ -88,7 +88,7 @@ def get_min_max_temperature (forecast_day):
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :return: [tmin,tmax]
     """
-    weatherAPI = get_current_weather_api()
+    global weatherAPI
     tmin = min(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))
     tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
@@ -100,9 +100,9 @@ def get_temperature (forecast_day, forecast_hour):
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: [tmin,tmax]
     """
+    global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    weatherAPI = get_current_weather_api()
     return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
 
 def get_rain (forecast_day, forecast_hour):
@@ -112,9 +112,9 @@ def get_rain (forecast_day, forecast_hour):
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: [tmin,tmax]
     """
+    global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    weatherAPI = get_current_weather_api()
     return weatherAPI.weekWeather[forecast_day].rain[forecast_hour]
 
 def get_status (forecast_day, forecast_hour):
@@ -124,9 +124,9 @@ def get_status (forecast_day, forecast_hour):
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: [tmin,tmax]
     """
+    global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    weatherAPI = get_current_weather_api()
     return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
   
 def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
@@ -139,9 +139,9 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     :hour_limit: hours to be monitored from forecast_day+forecast_hour
     :return: True if it rains the following hours
     """
+    global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    weatherAPI = get_current_weather_api()
     # join all temperature values
     hour_counter=0
     rain_data = []

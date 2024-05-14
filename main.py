@@ -204,5 +204,5 @@ while True:
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
         except Exception as e:
             show_api_error()
-            wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + str(e))
+            wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + ': ' + str(e))
     time.sleep(1)
