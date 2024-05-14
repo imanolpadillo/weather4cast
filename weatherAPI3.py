@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API3 *******************************************
+# ************************************* WEATHER API: VISUCROS ***************************************
 # *************************************************************************************************** 
 # Source: https://weather.visualcrossing.com
 
@@ -12,13 +12,13 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
- 
 config = configparser.ConfigParser()
 config.read('secrets.ini')
-api_key = config['secrets']['api3_key']
-api_url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/vitoria-gasteiz?unitGroup=metric&include=hours&contentType=json&key=' + api_key 
+
 api_name = 'visucros'
 api_refresh_s = 1800
+api_key = config['secrets'][api_name]
+api_url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/vitoria-gasteiz?unitGroup=metric&include=hours&contentType=json&key=' + api_key 
 
 #src: https://www.visualcrossing.com/resources/documentation/weather-api/defining-icon-set-in-the-weather-api/
 dict_weather_status = [

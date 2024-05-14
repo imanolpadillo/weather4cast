@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API8 *******************************************
+# ************************************* WEATHER API: METESTAT ***************************************
 # *************************************************************************************************** 
 # Source: https://dev.meteostat.net/api/
 
@@ -13,13 +13,13 @@ from datetime import datetime, timedelta
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-
 config = configparser.ConfigParser()
 config.read('secrets.ini')
-api_key = config['secrets']['api8_key']
-api_url = "https://meteostat.p.rapidapi.com/stations/hourly"
+
 api_name = 'metestat'
 api_refresh_s = 5400
+api_key = config['secrets'][api_name]
+api_url = "https://meteostat.p.rapidapi.com/stations/hourly"
 
 #status: https://dev.meteostat.net/formats.html#weather-condition-codes
 dict_weather_status = [

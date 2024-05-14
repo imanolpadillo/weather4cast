@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API7 *******************************************
+# ************************************* WEATHER API: METEMATI ***************************************
 # *************************************************************************************************** 
 # Source: https://www.meteomatics.com/en/api/getting-started/
 
@@ -29,19 +29,18 @@ def get_current_day (day_offset):
     # Format the current date as YYYY-MM-DD
     return output_date.strftime("%Y-%m-%d")
 
-config = configparser.ConfigParser()
-config.read('secrets.ini')
-api_key = config['secrets']['api7_key']
-
 init_date = get_current_day(0)
 end_date = get_current_day(WeatherConfig.DAYS.value)
 
+api_name = 'metemati'
+api_refresh_s = 1800
+config = configparser.ConfigParser()
+config.read('secrets.ini')
+api_key = config['secrets'][api_name]
 #https://api.meteomatics.com/2024-05-12T00:00:00.000+02:00--2024-05-18T00:00:00.000+02:00:PT1H/t_2m:C,precip_1h:mm,weather_symbol_1h:idx,wind_speed_10m:ms/42.8465088,-2.6724025/json
 api_url =  'https://personalproject_caseof_usein:' + api_key + \
     '@api.meteomatics.com/' + init_date + 'T00:00:00.000+02:00--' + end_date + \
     'T00:00:00.000+02:00:PT1H/t_2m:C,precip_1h:mm,weather_symbol_1h:idx,wind_speed_10m:ms/42.8465088,-2.6724025/json'
-api_name = 'metemati'
-api_refresh_s = 1800
 
 #weather symbol: https://www.meteomatics.com/en/api/available-parameters/weather-parameter/general-weather-state/
 dict_weather_status = [

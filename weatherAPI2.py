@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API2 *******************************************
+# ************************************* WEATHER API: ELTIEMPO ***************************************
 # *************************************************************************************************** 
 # Source: https://www.el-tiempo.net/api
 
@@ -12,9 +12,9 @@ from wlogging import LogType, LogMessage
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
  
-api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
 api_name = 'eltiempo'
 api_refresh_s = 1800
+api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
 
 dict_weather_status = [
                        {'Despejado': WeatherStatus.SUNNY}, \

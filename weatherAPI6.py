@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ****************************************** WEATHER API6 *******************************************
+# ************************************* WEATHER API: METEBLUE ***************************************
 # *************************************************************************************************** 
 # Source: https://docs.meteoblue.com/en/weather-apis/packages-api/overview
 # API renewal: https://www.meteoblue.com/en/weather-api/index/overview
@@ -13,13 +13,13 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-
 config = configparser.ConfigParser()
 config.read('secrets.ini')
-api_key = config['secrets']['api6_key']
-api_url =  'http://my.meteoblue.com/packagesV2/basic-1h?lat=42.85&lon=-2.6727&apikey=' + api_key
+
 api_name = 'meteblue'
 api_refresh_s = 1800
+api_key = config['secrets'][api_name]
+api_url =  'http://my.meteoblue.com/packagesV2/basic-1h?lat=42.85&lon=-2.6727&apikey=' + api_key
 
 #pictocode: https://content.meteoblue.com/es/investigacion-educacion/especificaciones/standards/simbolos-y-pictogramas
 dict_weather_status = [

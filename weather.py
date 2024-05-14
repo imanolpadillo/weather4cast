@@ -9,25 +9,31 @@ from weatherAPIenum import WeatherConfig
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # ***************************************************************************************************
+api_weather_id = 1
+# weatherAPI files are ordered alphabetically, and file names are saved in the following array.
+weatherAPInames = []
+
 def count_weather_apis():
+    global weatherAPInames
     directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory of main.py
     count = 0
-    for filename in os.listdir(directory):
+    for filename in sorted(os.listdir(directory)):
         if (filename.startswith('weatherAPI') and 
             not filename.startswith('weatherAPIenum') and 
             not filename.startswith('weatherAPIchange') and 
             os.path.isfile(os.path.join(directory, filename))):
+            weatherAPInames.append(filename.split('.')[0]) # remove suffiy
             count += 1
     return count
 
 MAX_APIS = count_weather_apis()
-api_weather_id = 1
 
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
-def get_weather_module(module_number):
-    module_name = f"weatherAPI{module_number}"
+def get_weather_api_module(weather_api_index):
+    global weatherAPInames
+    module_name = weatherAPInames[weather_api_index-1]
     try:
         module = importlib.import_module(module_name)
         return module
@@ -40,7 +46,7 @@ def get_current_weather_api():
     returns current weather api based on actived api_weather_id
     """
     global api_weather_id
-    return get_weather_module(api_weather_id)
+    return get_weather_api_module(api_weather_id)
 
 def get_current_weather_api_name():
     """

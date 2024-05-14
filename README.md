@@ -74,8 +74,8 @@ cat weather4cast.log
 For those APIs that requires an api-key it is necessary to include in parent path a 'secrets.ini' including the following info:
 ```
 [secrets]
-api3_key = XXXXXX
-api4_key = XXXXXX
+visucros = XXXXXX
+tomorrow = XXXXXX
 ```
 
 ## 🆕 Add new API
