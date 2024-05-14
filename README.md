@@ -24,7 +24,7 @@ Weather4cast works with the following weather APIs:
   - refresh_time: 180min, api_calls_limit: 60 calls/min
 6. API6: meteoblue -> requires API_KEY
   - url: [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
-  - refresh_time: 30min, api_calls_limit: 13 calls/day
+  - refresh_time: 120min, api_calls_limit: 13 calls/day
 7. API7: meteomatics -> requires API_KEY
   - url: [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/)
   - refresh_time: 30min, api_calls_limit: 500 calls/day
