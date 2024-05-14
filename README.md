@@ -7,28 +7,28 @@ This project is focused on developing a weather forecast device based on a Raspb
 ## 🔌 Weather APIs
 Weather4cast works with the following weather APIs:
 
-1. API1: open-meteo
+1. open-meteo
   - url: [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs)
   - refresh_time: 30min, api_calls_limit: none
-2. API2: el-tiempo.net
+2. el-tiempo.net
   - url: [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
   - refresh_time: 30min, api_calls_limit: none
-3. API3: visualcrossing -> requires API_KEY
+3. visualcrossing -> requires API_KEY
   - url: [https://www.visualcrossing.com](https://www.visualcrossing.com)
   - refresh_time: 30min, api_calls_limit: 1000 calls/day
-4. API4: api.tomorrow.io -> requires API_KEY
+4. api.tomorrow.io -> requires API_KEY
   - url: [https://api.tomorrow.io/](https://api.tomorrow.io/)
   - refresh_time: 30min, api_calls_limit: 500 calls/day
-5. API5: openweathermap -> requires API_KEY
+5. openweathermap -> requires API_KEY
   - url: [https://openweathermap.org/api](https://openweathermap.org/api)
   - refresh_time: 180min, api_calls_limit: 60 calls/min
-6. API6: meteoblue -> requires API_KEY
+6. meteoblue -> requires API_KEY
   - url: [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
   - refresh_time: 120min, api_calls_limit: 13 calls/day
-7. API7: meteomatics -> requires API_KEY
+7. meteomatics -> requires API_KEY
   - url: [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/)
   - refresh_time: 30min, api_calls_limit: 500 calls/day
-8. API8: meteostat -> requires API_KEY
+8. meteostat -> requires API_KEY
   - url: [https://dev.meteostat.net/api/](https://dev.meteostat.net/api/)
   - refresh_time: 90min, api_calls_limit: 500 calls/month
 

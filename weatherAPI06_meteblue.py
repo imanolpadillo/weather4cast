@@ -17,7 +17,7 @@ config = configparser.ConfigParser()
 config.read('secrets.ini')
 
 api_name = 'meteblue'
-api_refresh_s = 1800
+api_refresh_s = 7200
 api_key = config['secrets'][api_name]
 api_url =  'http://my.meteoblue.com/packagesV2/basic-1h?lat=42.85&lon=-2.6727&apikey=' + api_key
 
