@@ -1,55 +1,50 @@
 # *************************************************************************************************** 
-# ************************************* WEATHER API: METESTAT ***************************************
+# ************************************* WEATHER API: OPENMET  ***************************************
 # *************************************************************************************************** 
-# Source: https://dev.meteostat.net/api/
+# Source: https://open-meteo.com/en/docs
 
-import requests,math
+import requests, math
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
-import configparser
 import wlogging
 from wlogging import LogType, LogMessage
-from datetime import datetime, timedelta
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-config = configparser.ConfigParser()
-config.read('secrets.ini')
+ 
+api_name = 'openmete'
+api_refresh_s = 900
+api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=apparent_temperature,rain,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto'
 
-api_name = 'metestat'
-api_refresh_s = 5400
-api_key = config['secrets'][api_name]
-api_url = "https://meteostat.p.rapidapi.com/stations/hourly"
-
-#status: https://dev.meteostat.net/formats.html#weather-condition-codes
 dict_weather_status = [
+                       {0: WeatherStatus.SUNNY}, \
                        {1: WeatherStatus.SUNNY}, \
-                       {2: WeatherStatus.SUNNY}, \
-                       {3: WeatherStatus.PARTLY_CLOUDY}, \
-                       {4: WeatherStatus.CLOUDY}, \
-                       {5: WeatherStatus.FOGGY}, \
-                       {6: WeatherStatus.FOGGY}, \
-                       {7: WeatherStatus.RAINY}, \
-                       {8: WeatherStatus.RAINY}, \
-                       {9: WeatherStatus.RAINY}, \
-                       {10: WeatherStatus.RAINY}, \
-                       {11: WeatherStatus.RAINY}, \
-                       {12: WeatherStatus.SNOWY}, \
-                       {13: WeatherStatus.SNOWY}, \
-                       {14: WeatherStatus.SNOWY}, \
-                       {15: WeatherStatus.SNOWY}, \
-                       {16: WeatherStatus.SNOWY}, \
-                       {17: WeatherStatus.RAINY}, \
-                       {18: WeatherStatus.RAINY}, \
-                       {19: WeatherStatus.SNOWY}, \
-                       {20: WeatherStatus.SNOWY}, \
-                       {21: WeatherStatus.SNOWY}, \
-                       {22: WeatherStatus.SNOWY}, \
-                       {23: WeatherStatus.STORMY}, \
-                       {24: WeatherStatus.STORMY}, \
-                       {25: WeatherStatus.STORMY}, \
-                       {26: WeatherStatus.STORMY}, \
-                       {27: WeatherStatus.STORMY}, \
+                       {2: WeatherStatus.PARTLY_CLOUDY}, \
+                       {3: WeatherStatus.CLOUDY}, \
+                       {45: WeatherStatus.FOGGY}, \
+                       {48: WeatherStatus.FOGGY}, \
+                       {51: WeatherStatus.RAINY}, \
+                       {53: WeatherStatus.RAINY}, \
+                       {55: WeatherStatus.RAINY}, \
+                       {56: WeatherStatus.RAINY}, \
+                       {57: WeatherStatus.RAINY}, \
+                       {61: WeatherStatus.RAINY}, \
+                       {63: WeatherStatus.RAINY}, \
+                       {65: WeatherStatus.RAINY}, \
+                       {66: WeatherStatus.RAINY}, \
+                       {67: WeatherStatus.RAINY}, \
+                       {71: WeatherStatus.SNOWY}, \
+                       {73: WeatherStatus.SNOWY}, \
+                       {75: WeatherStatus.SNOWY}, \
+                       {77: WeatherStatus.SNOWY}, \
+                       {80: WeatherStatus.RAINY}, \
+                       {81: WeatherStatus.RAINY}, \
+                       {82: WeatherStatus.RAINY}, \
+                       {85: WeatherStatus.SNOWY}, \
+                       {86: WeatherStatus.SNOWY}, \
+                       {95: WeatherStatus.STORMY}, \
+                       {96: WeatherStatus.STORMY}, \
+                       {99: WeatherStatus.STORMY}, \
                        {100: WeatherStatus.WINDY}
                     ]
 
@@ -58,21 +53,6 @@ weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today +
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
-
-def get_current_day (day_offset):
-    """
-    get current date + day offset in format 'YYYY-MM-DD'
-    :param day_offset: day offset
-    :return: date in format 'YYYY-MM-DD'
-    """ 
-    # Get the current date
-    current_date = datetime.now()
-
-    # Calculate the date for the day after tomorrow
-    output_date = current_date + timedelta(days=day_offset)
-
-    # Format the current date as YYYY-MM-DD
-    return output_date.strftime("%Y-%m-%d")
 
 def ceil_half(value):
     # Check if the fractional part is strictly greater than 0.5
@@ -92,13 +72,8 @@ def call_api():
     :return: json file
     """ 
     url = api_url
-    headers = {
-        'X-Rapidapi-Key': api_key,
-        'X-Rapidapi-Host': "meteostat.p.rapidapi.com"
-        }
-    querystring = {"station":"08080","start":get_current_day(0),"end":get_current_day(WeatherConfig.DAYS.value),"tz":"Europe/Berlin"}
-
-    response = requests.get(url, headers=headers, params=querystring)
+    headers = {'cache-control': "no-cache"}
+    response = requests.get(url, headers=headers)
     if response.status_code == 200:
         return response.json()
     else:
@@ -115,16 +90,13 @@ def decode_json(data):
     count = 0
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
-            weekWeather[day].temperature[hour] = round(data['data'][count]['temp'])
-            if data['data'][count]['prcp'] is None:
-                weekWeather[day].rain[hour] = 0.0
-            else:
-                weekWeather[day].rain[hour] = ceil_half(data['data'][count]['prcp'])
-            if (data['data'][count]['wspd'] * 1000 / 3600 >WeatherConfig.MAX_WIND_MS.value):
+            weekWeather[day].temperature[hour] = round(data['hourly']['apparent_temperature'][count])
+            weekWeather[day].rain[hour] = ceil_half(data['hourly']['rain'][count])
+            if (data['hourly']['wind_speed_10m'][count]>WeatherConfig.MAX_WIND_MS.value):
                 #wind status is not defined in 'weather code'
                 weekWeather[day].status[hour] = 100 # windy code
             else:
-                weekWeather[day].status[hour] = data['data'][count]['coco']
+                weekWeather[day].status[hour] = data['hourly']['weather_code'][count]
             count+=1  
    
     # Decode weather status
@@ -161,8 +133,7 @@ def refresh():
 
 
 refresh() # get data first time
-# print("API8")
+# print("API1")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)
-

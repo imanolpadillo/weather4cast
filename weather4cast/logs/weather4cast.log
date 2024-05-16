@@ -1,0 +1,12 @@
+ERROR:root:22:42:53 [ERR_API_CONN] Unable to connect with API: 'NoneType' object is not subscriptable
+ERROR:root:11:02:23 [ERR_API_CONN] Unable to connect with API: type dict doesn't define __round__ method
+ERROR:root:11:05:22 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:11:13:36 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:11:14:19 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:11:15:57 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:11:16:14 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:11:16:47 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:11:22:31 [ERR_API_CONN] Unable to connect with API: list index out of range
+ERROR:root:21:06:40 [ERR_API_CONN] Unable to connect with API: remove_yesterday_values() takes 1 positional argument but 2 were given
+ERROR:root:21:08:10 [ERR_API_CONN] Unable to connect with API: list indices must be integers or slices, not str
+ERROR:root:21:17:49 [ERR_API_CONN] Unable to connect with API: list indices must be integers or slices, not str

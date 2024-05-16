@@ -2,7 +2,7 @@
 # ******************************************** WLOGGING *********************************************
 # *************************************************************************************************** 
 
-import logging
+import logging, os
 import pytz
 from datetime import datetime
 from enum import Enum
@@ -27,7 +27,8 @@ class LogMessage(Enum):
     ERR_API_CONN = 'Unable to connect with API'
 
 # logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
-logging.basicConfig(filename='./logs/weather4cast.log', level=logging.INFO)
+current_path = os.path.dirname(os.path.abspath(__file__))
+logging.basicConfig(filename=current_path+'/logs/weather4cast.log', level=logging.INFO)
 
 # *************************************************************************************************** 
 # FUNCTIONS

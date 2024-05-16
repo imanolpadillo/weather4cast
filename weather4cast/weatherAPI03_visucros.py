@@ -1,10 +1,9 @@
 # *************************************************************************************************** 
-# ************************************* WEATHER API: METEBLUE ***************************************
+# ************************************* WEATHER API: VISUCROS ***************************************
 # *************************************************************************************************** 
-# Source: https://docs.meteoblue.com/en/weather-apis/packages-api/overview
-# API renewal: https://www.meteoblue.com/en/weather-api/index/overview
+# Source: https://weather.visualcrossing.com
 
-import requests, math
+import requests, math, os
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
@@ -13,52 +12,34 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+secrets_file_path = os.path.join(script_dir, 'secrets.ini')
 config = configparser.ConfigParser()
-config.read('secrets.ini')
+config.read(secrets_file_path)
 
-api_name = 'meteblue'
-api_refresh_s = 28800
+api_name = 'visucros'
+api_refresh_s = 900
 api_key = config['secrets'][api_name]
-api_url =  'http://my.meteoblue.com/packagesV2/basic-1h?lat=42.85&lon=-2.6727&apikey=' + api_key
+api_url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/vitoria-gasteiz?unitGroup=metric&include=hours&contentType=json&key=' + api_key 
 
-#pictocode: https://content.meteoblue.com/es/investigacion-educacion/especificaciones/standards/simbolos-y-pictogramas
+#src: https://www.visualcrossing.com/resources/documentation/weather-api/defining-icon-set-in-the-weather-api/
 dict_weather_status = [
-                       {1: WeatherStatus.SUNNY}, \
-                       {2: WeatherStatus.SUNNY}, \
-                       {3: WeatherStatus.SUNNY}, \
-                       {4: WeatherStatus.SUNNY}, \
-                       {5: WeatherStatus.SUNNY}, \
-                       {6: WeatherStatus.SUNNY}, \
-                       {7: WeatherStatus.PARTLY_CLOUDY}, \
-                       {8: WeatherStatus.PARTLY_CLOUDY}, \
-                       {9: WeatherStatus.PARTLY_CLOUDY}, \
-                       {10: WeatherStatus.STORMY}, \
-                       {11: WeatherStatus.STORMY}, \
-                       {12: WeatherStatus.STORMY}, \
-                       {13: WeatherStatus.FOGGY}, \
-                       {14: WeatherStatus.FOGGY}, \
-                       {15: WeatherStatus.FOGGY}, \
-                       {16: WeatherStatus.FOGGY}, \
-                       {17: WeatherStatus.FOGGY}, \
-                       {18: WeatherStatus.FOGGY}, \
-                       {19: WeatherStatus.CLOUDY}, \
-                       {20: WeatherStatus.CLOUDY}, \
-                       {21: WeatherStatus.CLOUDY}, \
-                       {22: WeatherStatus.CLOUDY}, \
-                       {23: WeatherStatus.RAINY}, \
-                       {24: WeatherStatus.SNOWY}, \
-                       {25: WeatherStatus.RAINY}, \
-                       {26: WeatherStatus.SNOWY}, \
-                       {27: WeatherStatus.STORMY}, \
-                       {28: WeatherStatus.STORMY}, \
-                       {29: WeatherStatus.SNOWY}, \
-                       {30: WeatherStatus.STORMY}, \
-                       {31: WeatherStatus.RAINY}, \
-                       {32: WeatherStatus.SNOWY}, \
-                       {33: WeatherStatus.RAINY}, \
-                       {34: WeatherStatus.FOGGY}, \
-                       {35: WeatherStatus.SNOWY}, \
-                       {100: WeatherStatus.WINDY}
+                       {'snow': WeatherStatus.SNOWY}, \
+                       {'snow-showers-day': WeatherStatus.SNOWY}, \
+                       {'snow-showers-night': WeatherStatus.SNOWY}, \
+                       {'rain': WeatherStatus.RAINY}, \
+                       {'fog': WeatherStatus.FOGGY}, \
+                       {'wind': WeatherStatus.WINDY}, \
+                       {'cloudy': WeatherStatus.CLOUDY}, \
+                       {'partly-cloudy-day': WeatherStatus.PARTLY_CLOUDY}, \
+                       {'partly-cloudy-night': WeatherStatus.PARTLY_CLOUDY}, \
+                       {'clear-day': WeatherStatus.SUNNY}, \
+                       {'clear-night': WeatherStatus.SUNNY}, \
+                       {'thunder-rain': WeatherStatus.STORMY}, \
+                       {'thunder-showers-day': WeatherStatus.STORMY}, \
+                       {'thunder-showers-night': WeatherStatus.STORMY}, \
+                       {'showers-day': WeatherStatus.RAINY}, \
+                       {'showers-night': WeatherStatus.RAINY}
                     ]
 
 weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today + tomorrow + next days
@@ -100,17 +81,11 @@ def decode_json(data):
     """ 
     global weekWeather
     weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
-    count = 0
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
-            weekWeather[day].temperature[hour] = round(data['data_1h']['temperature'][count])
-            weekWeather[day].rain[hour] = ceil_half(data['data_1h']['precipitation'][count])
-            if (data['data_1h']['windspeed'][count]>WeatherConfig.MAX_WIND_MS.value):
-                #wind status is not defined in 'weather code'
-                weekWeather[day].status[hour] = 100 # windy code
-            else:
-                weekWeather[day].status[hour] = int(data['data_1h']['pictocode'][count])
-            count+=1  
+            weekWeather[day].temperature[hour] = round(data['days'][day]['hours'][hour]['temp'])
+            weekWeather[day].rain[hour] = ceil_half(data['days'][day]['hours'][hour]['precip'])
+            weekWeather[day].status[hour] = data['days'][day]['hours'][hour]['icon']
    
     # Decode weather status
     for x in range(len(weekWeather)):
@@ -146,7 +121,7 @@ def refresh():
 
 
 refresh() # get data first time
-# print("API6")
+# print("API3")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

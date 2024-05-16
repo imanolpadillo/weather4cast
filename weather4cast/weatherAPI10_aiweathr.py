@@ -3,7 +3,7 @@
 # ***************************************************************************************************
 # Source: https://rapidapi.com/MeteosourceWeather/api/ai-weather-by-meteosource/
  
-import requests,math
+import requests, math, os
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
@@ -13,8 +13,10 @@ from datetime import datetime, timedelta
 # ***************************************************************************************************
 # CONSTANTS AND GLOBAL VARIABLES
 # ***************************************************************************************************
+script_dir = os.path.dirname(os.path.abspath(__file__))
+secrets_file_path = os.path.join(script_dir, 'secrets.ini')
 config = configparser.ConfigParser()
-config.read('secrets.ini')
+config.read(secrets_file_path)
  
 api_name = 'aiweathr'
 api_refresh_s = 28800
@@ -159,16 +161,15 @@ def refresh():
     """
     try:
         data = call_api()
-        print(data)
         decode_json(data)
     except Exception as e:
         wlogging.log(LogType.ERROR.value, LogMessage.ERR_API_CONN.name, LogMessage.ERR_API_CONN.value + ': ' + str(e))
  
 
 refresh() # get data first time
-print("API10")
-print(weekWeather[0].temperature)
-print(weekWeather[0].status)
-print(weekWeather[0].rain)
+# print("API10")
+# print(weekWeather[0].temperature)
+# print(weekWeather[0].status)
+# print(weekWeather[0].rain)
  
  

@@ -3,7 +3,7 @@
 # *************************************************************************************************** 
 # Source: https://www.el-tiempo.net/api
 
-import requests,math
+import requests, math
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import wlogging
 from wlogging import LogType, LogMessage

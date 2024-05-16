@@ -3,7 +3,7 @@
 # *************************************************************************************************** 
 # Source: https://www.meteomatics.com/en/api/getting-started/
 
-import requests, math
+import requests, math, os
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
@@ -32,10 +32,13 @@ def get_current_day (day_offset):
 init_date = get_current_day(0)
 end_date = get_current_day(WeatherConfig.DAYS.value)
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+secrets_file_path = os.path.join(script_dir, 'secrets.ini')
+config = configparser.ConfigParser()
+config.read(secrets_file_path)
+
 api_name = 'metemati'
 api_refresh_s = 900
-config = configparser.ConfigParser()
-config.read('secrets.ini')
 api_key = config['secrets'][api_name]
 #https://api.meteomatics.com/2024-05-12T00:00:00.000+02:00--2024-05-18T00:00:00.000+02:00:PT1H/t_2m:C,precip_1h:mm,weather_symbol_1h:idx,wind_speed_10m:ms/42.8465088,-2.6724025/json
 api_url =  'https://personalproject_caseof_usein:' + api_key + \

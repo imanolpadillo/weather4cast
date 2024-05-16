@@ -4,7 +4,7 @@
 # Source: https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather
 # Location: 103104499
 
-import requests,math
+import requests, math, os
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
@@ -14,8 +14,10 @@ from datetime import datetime, timedelta
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+secrets_file_path = os.path.join(script_dir, 'secrets.ini')
 config = configparser.ConfigParser()
-config.read('secrets.ini')
+config.read(secrets_file_path)
 
 api_name = 'forecapi'
 api_refresh_s = 900
@@ -128,7 +130,6 @@ def decode_json(data):
 
     # delete elements before current day at 00:00
     data=remove_yesterday_values(data['forecast'], current_day + 'T00:00')
-    print(data)
 
     count = 0
     for day in range(WeatherConfig.DAYS.value):
