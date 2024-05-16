@@ -16,7 +16,7 @@ config = configparser.ConfigParser()
 config.read('secrets.ini')
 
 api_name = 'oweatmap'
-api_refresh_s = 1800
+api_refresh_s = 900
 api_key = config['secrets'][api_name]
 api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=' + api_key
 

@@ -16,7 +16,7 @@ config = configparser.ConfigParser()
 config.read('secrets.ini')
 
 api_name = 'tomorrow'
-api_refresh_s = 1800
+api_refresh_s = 900
 api_key = config['secrets'][api_name]
 api_url =  'https://api.tomorrow.io/v4/timelines?location=42.8597,-2.6818&fields=temperature,weatherCode,precipitationIntensity,windSpeed&units=metric&timesteps=1h&apikey=' + api_key
 

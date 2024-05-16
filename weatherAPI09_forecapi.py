@@ -18,7 +18,7 @@ config = configparser.ConfigParser()
 config.read('secrets.ini')
 
 api_name = 'forecapi'
-api_refresh_s = 1800
+api_refresh_s = 900
 api_key = config['secrets'][api_name]
 api_url = "https://foreca-weather.p.rapidapi.com/forecast/hourly/103104499"
 #status: https://developer.foreca.com/resources
@@ -176,8 +176,8 @@ def refresh():
 
 
 refresh() # get data first time
-print("API9")
-print(weekWeather[0].temperature)
-print(weekWeather[0].status)
-print(weekWeather[0].rain)
+# print("API9")
+# print(weekWeather[0].temperature)
+# print(weekWeather[0].status)
+# print(weekWeather[0].rain)
 

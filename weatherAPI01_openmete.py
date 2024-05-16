@@ -13,7 +13,7 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
  
 api_name = 'openmete'
-api_refresh_s = 1800
+api_refresh_s = 900
 api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=apparent_temperature,rain,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto'
 
 dict_weather_status = [

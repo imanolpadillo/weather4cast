@@ -33,7 +33,7 @@ init_date = get_current_day(0)
 end_date = get_current_day(WeatherConfig.DAYS.value)
 
 api_name = 'metemati'
-api_refresh_s = 1800
+api_refresh_s = 900
 config = configparser.ConfigParser()
 config.read('secrets.ini')
 api_key = config['secrets'][api_name]
