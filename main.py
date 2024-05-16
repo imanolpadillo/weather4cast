@@ -75,7 +75,10 @@ def thread_changeAPI_function():
             # Display info about new api
             demo(False)
             tm1637l.show_api_name()
-            max7219.message='A' + str(weather.api_weather_id)
+            if len(str(weather.api_weather_id))==1:
+                max7219.message = '0' + str(weather.api_weather_id)
+            else:
+                max7219.message = str(weather.api_weather_id)
             time.sleep(max7219.timeout)
             # Update api data
             weather.refresh()
