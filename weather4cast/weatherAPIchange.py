@@ -42,6 +42,7 @@ def detect_button():
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  # Long click threshold (adjust as needed)
                 # print('longClick')
+                weather.api_weather_id = 0 # reset weather_id
                 return True
             time.sleep(0.01) 
         # print('shortClick')
