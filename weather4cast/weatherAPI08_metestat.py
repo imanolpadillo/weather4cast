@@ -162,7 +162,7 @@ def refresh():
         wlogging.log(LogType.ERROR.value, LogMessage.ERR_API_CONN.name, LogMessage.ERR_API_CONN.value + ': ' + str(e))
 
 
-refresh() # get data first time
+# refresh() # get data first time
 # print("API8")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
