@@ -8,7 +8,7 @@ from weatherAPIenum import WeatherConfig, RainTimeLine
 # CONSTANTS AND GLOBAL VARIABLES
 # ***************************************************************************************************
 weatherAPI = None
-api_weather_id = 3
+api_weather_id = 1
 # weatherAPI files are ordered alphabetically, and file names are saved in the following array.
 weatherAPInames = []
 weather_rain_timeline = RainTimeLine.T16
