@@ -22,7 +22,7 @@ from luma.core.legacy import text
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 timeout = 2
-level = 0
+level =  [0] * 16
 message = ""
 
 # create matrix device
@@ -38,9 +38,9 @@ def demo(flag):
     Activates/deactivates all leds depending on flag value
     """
     if flag == True:
-        show_level(8)  # all leds activated
+        show_level([8] * 16)  # all leds activated
     else:
-        show_level(0)  # all leds deactivated
+        show_level([0] * 16)  # all leds deactivated
     
 def show_message(message = message):
     """
@@ -52,24 +52,43 @@ def show_message(message = message):
     with canvas(device) as draw:
         text(draw, (0, 0), message, fill="white")
 
+# def show_level(level = level):
+#     """
+#     shows level
+#     :param level: 0-100
+#     :return: -
+#     """
+#     # Display the level
+#     level_array = []
+#     decimal_flag = False
+#     for row in reversed(range(8)):
+#         if (level -1) >= row:
+#             level_array = level_array + [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+#         else:
+#             if level % 1 == 0.5 and decimal_flag == False and (math.ceil(level)) == row+1:
+#                 decimal_flag = True
+#                 level_array = level_array + [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
+#             else:
+#                 level_array = level_array + [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+#     image = Image.new("1", (16, 8))
+#     image.putdata(level_array)
+#     device.display(image)
+
 def show_level(level = level):
     """
     shows level
-    :param level: 0-100
+    :param level: 16 array including precipitation probability
     :return: -
     """
     # Display the level
     level_array = []
-    decimal_flag = False
     for row in reversed(range(8)):
-        if (level -1) >= row:
-            level_array = level_array + [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-        else:
-            if level % 1 == 0.5 and decimal_flag == False and (math.ceil(level)) == row+1:
-                decimal_flag = True
-                level_array = level_array + [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]
+        limit = row * 0.5 + 0.5 #row_7 -> 4, row_6 -> 3.5 ... row_0 -> 0.5
+        for rain_hour in level:
+            if rain_hour >= limit:
+                level_array.append(1)
             else:
-                level_array = level_array + [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                level_array.append(0)
     image = Image.new("1", (16, 8))
     image.putdata(level_array)
     device.display(image)

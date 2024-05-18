@@ -14,7 +14,7 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherConfig, WeatherStatus
+from weatherAPIenum import WeatherConfig, WeatherStatus, RainTimeLine
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -193,7 +193,8 @@ while True:
             pcf8574.display_status(status)
             log+='; status=' + str(status)
             # display rain
-            rain=weather.get_rain(forecast_input.day, forecast_input.hour)
+            # rain=weather.get_rain(forecast_input.day, forecast_input.hour)
+            rain=weather.get_rain_forecast(forecast_input.day, forecast_input.hour, RainTimeLine.T16)
             max7219.level = rain
             log+='; rain=' + str(rain)
             # display rain warning
