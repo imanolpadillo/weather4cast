@@ -8,7 +8,7 @@ from weatherAPIenum import WeatherConfig
 # CONSTANTS AND GLOBAL VARIABLES
 # ***************************************************************************************************
 weatherAPI = None
-api_weather_id = 1
+api_weather_id = 3
 # weatherAPI files are ordered alphabetically, and file names are saved in the following array.
 weatherAPInames = []
 
@@ -116,6 +116,46 @@ def get_rain (forecast_day, forecast_hour):
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
     return weatherAPI.weekWeather[forecast_day].rain[forecast_hour]
+
+def get_rain_forecast (forecast_day, forecast_hour, time_16false_24true):
+    """
+    gets rain from input forecast day/hour
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
+    :return: [tmin,tmax]
+    """
+    global weatherAPI
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
+    hour_counter=0
+    rain_data = []
+    for day in range(WeatherConfig.DAYS.value):
+        # for hour in range(24):
+        for hour in range(len(weatherAPI.weekWeather[day].rain)):
+            rain_data.append(weatherAPI.weekWeather[day].rain[hour])
+            hour_counter+=1
+    # get current index
+    index=0
+    hour_limit=0
+    if time_16false_24true==False:
+        hour_limit=16
+        index = forecast_day * 24 + forecast_hour
+    else:
+        hour_limit=24
+        index = forecast_day * 24
+    
+    # from index count 16 or 24 rain values
+    rain_output = []
+    for hour in range(index, len(rain_data)):
+        if hour>=hour_limit+index:
+            break
+        rain_output.append(rain_data[hour])
+
+    # fill with '0.0' if array´s size is lower than hour limit
+    while(len(rain_output)<hour_limit):
+        rain_output.append(0.0)
+
+    return rain_output
 
 def get_status (forecast_day, forecast_hour):
     """
