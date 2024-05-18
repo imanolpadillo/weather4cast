@@ -123,7 +123,7 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  
 
     # get date from today
     current_day = get_current_day(0)
@@ -177,7 +177,7 @@ def refresh():
 
 
 # refresh() # get data first time
-# print("API9")
+# print("FORECAPI")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

@@ -69,7 +69,7 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  
     first_temperature = ''
     first_status = ''
     counter=0
@@ -209,7 +209,7 @@ def refresh():
         wlogging.log(LogType.ERROR.value, LogMessage.ERR_API_CONN.name, LogMessage.ERR_API_CONN.value + ': ' + str(e))
 
 # refresh() # get data first time
-# print("API5")
+# print("OWEATMAP")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

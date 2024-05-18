@@ -87,7 +87,7 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  
     first_temperature = 0
     first_status = 0
     first_rain = 0
@@ -151,7 +151,7 @@ def refresh():
         return
 
 # refresh() # get data first time
-# print("API4")
+# print("TOMORROW")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

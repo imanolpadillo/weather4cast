@@ -146,7 +146,8 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     hour_counter=0
     rain_data = []
     for day in range(WeatherConfig.DAYS.value):
-        for hour in range(24):
+        # for hour in range(24):
+        for hour in range(len(weatherAPI.weekWeather[day].rain)):
             rain_data.append(weatherAPI.weekWeather[day].rain[hour])
             hour_counter+=1
     # get current index

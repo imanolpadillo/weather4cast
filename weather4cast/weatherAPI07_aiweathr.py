@@ -104,7 +104,7 @@ def decode_json(data):
     :return: -
     """
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  
  
     # This API gets 120 values (5days) from current hour. That means that previous hours from today
     # must be set to current value, and next hours from today + 5 days must be set to value of
@@ -167,7 +167,7 @@ def refresh():
  
 
 # refresh() # get data first time
-# print("API10")
+# print("AIWEATHR")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)

@@ -80,7 +80,7 @@ def decode_json(data):
     :return: -
     """ 
     global weekWeather
-    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]  
+    weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
             weekWeather[day].temperature[hour] = round(data['days'][day]['hours'][hour]['temp'])
@@ -121,7 +121,7 @@ def refresh():
 
 
 # refresh() # get data first time
-# print("API3")
+# print("VISUCROS")
 # print(weekWeather[0].temperature)
 # print(weekWeather[0].status)
 # print(weekWeather[0].rain)
