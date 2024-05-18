@@ -108,7 +108,7 @@ def call_api():
         'X-Rapidapi-Key': api_key,
         'X-Rapidapi-Host': "foreca-weather.p.rapidapi.com"
         }
-    querystring = {"alt":"0","tempunit":"C","windunit":"MS","tz":"Europe/Madrid","periods":"168","dataset":"standard","history":"true"}
+    querystring = {"alt":"525","tempunit":"C","windunit":"MS","tz":"Europe/Madrid","periods":"168","dataset":"standard","history":"true"}
 
     response = requests.get(url, headers=headers, params=querystring)
     if response.status_code == 200:
