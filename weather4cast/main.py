@@ -14,7 +14,7 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherConfig, WeatherStatus, RainTimeLine
+from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherButton, RainTimeLine
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -69,7 +69,8 @@ def thread_max7219_function():
 def thread_changeAPI_function():
     global weather_refresh_flag
     while True:
-        if weatherAPIchange.detect_button() == True:
+        button_output = weatherAPIchange.detect_button()
+        if button_output == WeatherButton.ShortClick:
             # Update weather_api_id
             weather.change_weather_api()
             # Display info about new api
@@ -87,6 +88,9 @@ def thread_changeAPI_function():
             log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
                 ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
             wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+        elif button_output == WeatherButton.LongClick:
+            weather.weather_rain_timeline = RainTimeLine.T24
+            weather_refresh_flag = True
         time.sleep(0.1)  
 
 # *************************************************************************************************** 
@@ -193,10 +197,17 @@ while True:
             pcf8574.display_status(status)
             log+='; status=' + str(status)
             # display rain
-            # rain=weather.get_rain(forecast_input.day, forecast_input.hour)
-            rain=weather.get_rain_forecast(forecast_input.day, forecast_input.hour, RainTimeLine.T16)
+            rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_rain_timeline)
             max7219.level = rain
-            log+='; rain=' + str(rain)
+            if weather.weather_rain_timeline == RainTimeLine.T24:
+                # defined pressing long button
+                weather.weather_rain_timeline = RainTimeLine.T16
+                time.sleep(max7219.timeout)
+                weather_refresh_flag = True # required new loop for showing timeline 16h  
+                rain_tittle = 'rain24'
+            else:
+                rain_tittle = 'rain16'
+            log+='; ' + rain_tittle + '=' + str(rain)
             # display rain warning
             if status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 

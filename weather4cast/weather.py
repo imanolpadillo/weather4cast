@@ -11,6 +11,7 @@ weatherAPI = None
 api_weather_id = 3
 # weatherAPI files are ordered alphabetically, and file names are saved in the following array.
 weatherAPInames = []
+weather_rain_timeline = RainTimeLine.T16
 
 def count_weather_apis():
     global weatherAPInames
@@ -105,19 +106,7 @@ def get_temperature (forecast_day, forecast_hour):
     forecast_hour = int(forecast_hour)
     return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
 
-def get_rain (forecast_day, forecast_hour):
-    """
-    gets rain of input forecast day/hour
-    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
-    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
-    :return: [tmin,tmax]
-    """
-    global weatherAPI
-    forecast_day = int(forecast_day)
-    forecast_hour = int(forecast_hour)
-    return weatherAPI.weekWeather[forecast_day].rain[forecast_hour]
-
-def get_rain_forecast (forecast_day, forecast_hour, rain_time_line):
+def get_rain (forecast_day, forecast_hour, rain_time_line):
     """
     gets rain from input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)

@@ -8,6 +8,7 @@ from gpioenum import gpio
 import wlogging
 from wlogging import LogType, LogMessage
 from enum import Enum
+from weatherAPIenum import RainTimeLine, WeatherButton
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -41,14 +42,12 @@ def detect_button():
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  # Long click threshold (adjust as needed)
-                # print('longClick')
-                weather.api_weather_id = 0 # reset weather_id
-                return True
+                return WeatherButton.LongClick
             time.sleep(0.01) 
         # print('shortClick')
-        return True
+        return WeatherButton.ShortClick
     # print('noClick')
-    return False
+    return WeatherButton.NoClick
 
 
 

@@ -11,6 +11,7 @@ class WeatherConfig(Enum):
     RAIN_WARNING_MM = 1  # limit of rain mm
     RAIN_WARNING_TIME = 3   # limit of hours to check
     MAX_WIND_MS = 12  # max wind speed
+    RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
 
 class WeatherStatus(Enum):
     SUNNY = 1
@@ -25,6 +26,11 @@ class WeatherStatus(Enum):
 class RainTimeLine(Enum):
     T16 = 16
     T24 = 24
+
+class WeatherButton(Enum):
+    NoClick = 0
+    ShortClick = 1
+    LongClick = 2
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
