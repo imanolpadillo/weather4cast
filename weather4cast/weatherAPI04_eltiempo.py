@@ -29,11 +29,12 @@ dict_weather_status = [
                        {'Muy nuboso con lluvia escasa': WeatherStatus.CLOUDY}, \
                        {'Nuboso con lluvia': WeatherStatus.RAINY}, \
                        {'Muy nuboso con lluvia': WeatherStatus.RAINY}, \
+                       {'Niebla': WeatherStatus.FOGGY}, \
                        {'nie': WeatherStatus.SNOWY}, \
                        {'tor': WeatherStatus.STORMY}, \
                        {'sol': WeatherStatus.SUNNY}, \
                        {'llu': WeatherStatus.RAINY}, \
-                       {'vie': WeatherStatus.FOGGY}, \
+                       {'vie': WeatherStatus.WINDY}, \
                        {'cub': WeatherStatus.CLOUDY}, \
                        {'nub': WeatherStatus.CLOUDY}
                     ]

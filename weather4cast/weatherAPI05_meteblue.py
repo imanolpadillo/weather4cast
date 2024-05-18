@@ -28,9 +28,9 @@ dict_weather_status = [
                        {1: WeatherStatus.SUNNY}, \
                        {2: WeatherStatus.SUNNY}, \
                        {3: WeatherStatus.SUNNY}, \
-                       {4: WeatherStatus.SUNNY}, \
-                       {5: WeatherStatus.SUNNY}, \
-                       {6: WeatherStatus.SUNNY}, \
+                       {4: WeatherStatus.FOGGY}, \
+                       {5: WeatherStatus.FOGGY}, \
+                       {6: WeatherStatus.FOGGY}, \
                        {7: WeatherStatus.PARTLY_CLOUDY}, \
                        {8: WeatherStatus.PARTLY_CLOUDY}, \
                        {9: WeatherStatus.PARTLY_CLOUDY}, \
