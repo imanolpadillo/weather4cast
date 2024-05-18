@@ -22,6 +22,10 @@ class WeatherStatus(Enum):
     FOGGY = 7
     SNOWY = 8
 
+class RainTimeLine(Enum):
+    T16 = 16
+    T24 = 24
+
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
         self.status = status if status is not None else [None]*24

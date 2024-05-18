@@ -1,8 +1,8 @@
 # *************************************************************************************************** 
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
-import importlib, os
-from weatherAPIenum import WeatherConfig
+import importlib, os, math
+from weatherAPIenum import WeatherConfig, RainTimeLine
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -117,7 +117,7 @@ def get_rain (forecast_day, forecast_hour):
     forecast_hour = int(forecast_hour)
     return weatherAPI.weekWeather[forecast_day].rain[forecast_hour]
 
-def get_rain_forecast (forecast_day, forecast_hour, time_16false_24true):
+def get_rain_forecast (forecast_day, forecast_hour, rain_time_line):
     """
     gets rain from input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -137,7 +137,7 @@ def get_rain_forecast (forecast_day, forecast_hour, time_16false_24true):
     # get current index
     index=0
     hour_limit=0
-    if time_16false_24true==False:
+    if rain_time_line==RainTimeLine.T16:
         hour_limit=16
         index = forecast_day * 24 + forecast_hour
     else:
@@ -155,7 +155,38 @@ def get_rain_forecast (forecast_day, forecast_hour, time_16false_24true):
     while(len(rain_output)<hour_limit):
         rain_output.append(0.0)
 
+    # adjust rain array to size 16
+    if len(rain_output)==RainTimeLine.T24.value:
+        rain_output = rain_24_to_16_hours(rain_output)
+
     return rain_output
+
+def ceil_half(value):
+    # Check if the fractional part is strictly greater than 0.5
+    if value % 1 > 0.5:
+        return math.ceil(value)
+    # Check if the value is exactly 0.5 or 1.0
+    elif value % 1 == 0.5 or value % 1 == 0:
+        return value
+    # For all other cases, round up to the nearest half-integer
+    else:
+        return math.ceil(value * 2) / 2
+
+def rain_24_to_16_hours(input_array):
+    """
+    converts 24 array into 16 array
+    :param input_array: size 24
+    :return: array size 16
+    """
+    if len(input_array) != 24:
+        raise ValueError("Input array must have 24 elements.")
+    output_array = []
+    for i in range(0, len(input_array), 3):
+        # Calculate the average of each pair of 1.5 groups
+        avg1 = ceil_half((input_array[i] + input_array[i+1]) / 2)
+        avg2 = ceil_half((input_array[i+1] + input_array[i+2]) / 2)
+        output_array.extend([avg1, avg2])
+    return output_array
 
 def get_status (forecast_day, forecast_hour):
     """
