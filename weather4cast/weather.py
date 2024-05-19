@@ -3,6 +3,7 @@
 # *************************************************************************************************** 
 import importlib, os, math
 from weatherAPIenum import WeatherConfig, RainTimeLine
+from collections import Counter
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -82,6 +83,24 @@ def refresh():
         weatherAPI.decode_json(data)    
     except Exception as e:
         return
+    
+def get_status (forecast_day, forecast_hour, mode = False):
+    """
+    gets status of input forecast day/hour
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
+    :param mode: if True returns the mode value of the day
+    :return: status
+    """
+    global weatherAPI
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
+    if mode == False:
+        return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
+    else:
+        status_counts = Counter(weatherAPI.weekWeather[forecast_day].status)
+        most_common_element, most_common_count = status_counts.most_common(1)[0]
+        return most_common_element
 
 def get_min_max_temperature (forecast_day):
     """
@@ -99,7 +118,8 @@ def get_temperature (forecast_day, forecast_hour, average = False):
     gets temperature of input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
-    :return: [tmin,tmax]
+    :param average: if True returns the average value of the day
+    :return: temperature
     """
     global weatherAPI
     forecast_day = int(forecast_day)
@@ -181,18 +201,6 @@ def rain_24_to_16_hours(input_array):
         avg2 = ceil_half((input_array[i+1] + input_array[i+2]) / 2)
         output_array.extend([avg1, avg2])
     return output_array
-
-def get_status (forecast_day, forecast_hour):
-    """
-    gets status of input forecast day/hour
-    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
-    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
-    :return: [tmin,tmax]
-    """
-    global weatherAPI
-    forecast_day = int(forecast_day)
-    forecast_hour = int(forecast_hour)
-    return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
   
 def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     """

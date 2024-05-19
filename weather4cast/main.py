@@ -188,29 +188,30 @@ while True:
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day)
             tm1637l.show_temperature(tmin,tmax)
             log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
+            # flag 24h 
+            flag_24h = weather.weather_rain_timeline == RainTimeLine.T24
+            flag_24h_text = ''
+            if flag_24h == True: 
+                flag_24h_text = '24' 
             # display temperature
-            average_temperature_flag = weather.weather_rain_timeline == RainTimeLine.T24
-            t=weather.get_temperature(forecast_input.day, forecast_input.hour, average_temperature_flag)
+            t=weather.get_temperature(forecast_input.day, forecast_input.hour, flag_24h)
             pcf8574.display_temperature(int(t))
-            log+='; t=' + str(t)
+            log+='; t' + flag_24h_text + '=' + str(t)
             # display status
-            status=weather.get_status(forecast_input.day, forecast_input.hour)
+            status=weather.get_status(forecast_input.day, forecast_input.hour, flag_24h)
             pcf8574.display_status(status)
-            log+='; status=' + str(status)
+            log+='; status' + flag_24h_text + '=' + str(status)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_rain_timeline)
             max7219.level = rain
-            if weather.weather_rain_timeline == RainTimeLine.T24:
+            if flag_24h:
                 # defined pressing long button
                 weather.weather_rain_timeline = RainTimeLine.T16
                 time.sleep(max7219.timeout)
                 weather_refresh_flag = True # required new loop for showing timeline 16h  
-                rain_tittle = 'rain24'
-            else:
-                rain_tittle = 'rain16'
-            log+='; ' + rain_tittle + '=' + str(rain)
+            log+='; rain' + flag_24h_text + '=' + str(rain)
             # display rain warning
-            if status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
+            if flag_24h == True or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 
             else:
                 rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
