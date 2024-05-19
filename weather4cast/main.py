@@ -189,7 +189,8 @@ while True:
             tm1637l.show_temperature(tmin,tmax)
             log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
             # display temperature
-            t=weather.get_temperature(forecast_input.day, forecast_input.hour)
+            average_temperature_flag = weather.weather_rain_timeline == RainTimeLine.T24
+            t=weather.get_temperature(forecast_input.day, forecast_input.hour, average_temperature_flag)
             pcf8574.display_temperature(int(t))
             log+='; t=' + str(t)
             # display status

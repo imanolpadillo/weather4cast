@@ -94,7 +94,7 @@ def get_min_max_temperature (forecast_day):
     tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
-def get_temperature (forecast_day, forecast_hour):
+def get_temperature (forecast_day, forecast_hour, average = False):
     """
     gets temperature of input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -104,7 +104,12 @@ def get_temperature (forecast_day, forecast_hour):
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
+    if average == False:
+        return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
+    else:
+        temperature_arr = [int(element) for element in weatherAPI.weekWeather[forecast_day].temperature]
+        temperature_sum = sum(temperature_arr)
+        return int(temperature_sum/len(temperature_arr))
 
 def get_rain (forecast_day, forecast_hour, rain_time_line):
     """
