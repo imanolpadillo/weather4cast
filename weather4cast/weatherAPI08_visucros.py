@@ -48,16 +48,19 @@ weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today +
 # FUNCTIONS
 # *************************************************************************************************** 
 
-def ceil_half(value):
-    # Check if the fractional part is strictly greater than 0.5
-    if value % 1 > 0.5:
-        return math.ceil(value)
-    # Check if the value is exactly 0.5 or 1.0
-    elif value % 1 == 0.5 or value % 1 == 0:
-        return value
-    # For all other cases, round up to the nearest half-integer
+def round_half(value):
+    # Calculate the integer part of the number
+    integer_part = int(value)
+    # Calculate the fractional part of the number
+    fractional_part = value - integer_part
+    # Determine the rounding
+    if fractional_part < 0.25:
+        rounded_value = integer_part
+    elif fractional_part < 0.75:
+        rounded_value = integer_part + 0.5
     else:
-        return math.ceil(value * 2) / 2
+        rounded_value = integer_part + 1.0
+    return rounded_value
     
 
 def call_api():
@@ -84,7 +87,7 @@ def decode_json(data):
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
             weekWeather[day].temperature[hour] = round(data['days'][day]['hours'][hour]['temp'])
-            weekWeather[day].rain[hour] = ceil_half(data['days'][day]['hours'][hour]['precip'])
+            weekWeather[day].rain[hour] = round_half(data['days'][day]['hours'][hour]['precip'])
             weekWeather[day].status[hour] = data['days'][day]['hours'][hour]['icon']
    
     # Decode weather status

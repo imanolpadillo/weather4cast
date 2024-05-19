@@ -175,7 +175,7 @@ def get_rain (forecast_day, forecast_hour, weather_time_line):
 
     return rain_output
 
-def ceil_half(value):
+def round_half(value):
     # Check if the fractional part is strictly greater than 0.5
     if value % 1 > 0.5:
         return math.ceil(value)
@@ -197,8 +197,8 @@ def rain_24_to_16_hours(input_array):
     output_array = []
     for i in range(0, len(input_array), 3):
         # Calculate the average of each pair of 1.5 groups
-        avg1 = ceil_half((input_array[i] + input_array[i+1]) / 2)
-        avg2 = ceil_half((input_array[i+1] + input_array[i+2]) / 2)
+        avg1 = round_half((input_array[i] + input_array[i+1]) / 2)
+        avg2 = round_half((input_array[i+1] + input_array[i+2]) / 2)
         output_array.extend([avg1, avg2])
     return output_array
   

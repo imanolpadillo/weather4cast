@@ -45,16 +45,19 @@ weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  # today +
 # FUNCTIONS
 # *************************************************************************************************** 
 
-def ceil_half(value):
-    # Check if the fractional part is strictly greater than 0.5
-    if value % 1 > 0.5:
-        return math.ceil(value)
-    # Check if the value is exactly 0.5 or 1.0
-    elif value % 1 == 0.5 or value % 1 == 0:
-        return value
-    # For all other cases, round up to the nearest half-integer
+def round_half(value):
+    # Calculate the integer part of the number
+    integer_part = int(value)
+    # Calculate the fractional part of the number
+    fractional_part = value - integer_part
+    # Determine the rounding
+    if fractional_part < 0.25:
+        rounded_value = integer_part
+    elif fractional_part < 0.75:
+        rounded_value = integer_part + 0.5
     else:
-        return math.ceil(value * 2) / 2
+        rounded_value = integer_part + 1.0
+    return rounded_value
     
 def info_weather_to_rain_mm(day_index):
     """
@@ -117,7 +120,7 @@ def decode_json(data):
         weekWeather[0].status.insert(0,data['pronostico']['hoy']['estado_cielo_descripcion'][0])
     # C) Rain
     today_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['hoy']['precipitacion']]
-    weekWeather[0].rain = [ceil_half(value) for value in today_rain]   
+    weekWeather[0].rain = [round_half(value) for value in today_rain]   
     rain_len = len(weekWeather[0].rain)
     # - Fill previous hourly values with actual value
     for x in range(24 - rain_len):
@@ -130,7 +133,7 @@ def decode_json(data):
     weekWeather[1].status = data['pronostico']['manana']['estado_cielo_descripcion']
     # C) Rain
     tomorrow_rain = [float(x) if x.replace('.', '', 1).isdigit() else 0 for x in data['pronostico']['manana']['precipitacion']]
-    weekWeather[1].rain = [ceil_half(value) for value in tomorrow_rain]   
+    weekWeather[1].rain = [round_half(value) for value in tomorrow_rain]   
  
     # NEXT 4 DAYS
     for x in range(WeatherConfig.DAYS.value-1):  #first 'next days' matches with tomorrow and is discarded
