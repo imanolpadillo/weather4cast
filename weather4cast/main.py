@@ -207,7 +207,6 @@ while True:
             if flag_24h:
                 # defined pressing long button
                 weather.weather_rain_timeline = RainTimeLine.T16
-                time.sleep(max7219.timeout)
                 weather_refresh_flag = True # required new loop for showing timeline 16h  
             log+='; rain' + flag_24h_text + '=' + str(rain)
             # display rain warning
@@ -219,7 +218,10 @@ while True:
             log+='; rain_warning=' + str(rain_warning_flag)
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
+            # sleep in case of showing 24h data
+            if flag_24h:
+                time.sleep(5)
         except Exception as e:
             show_api_error()
             wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + ': ' + str(e))
-    time.sleep(1)
+    time.sleep(0.5)
