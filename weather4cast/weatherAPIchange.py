@@ -8,7 +8,7 @@ from gpioenum import gpio
 import wlogging
 from wlogging import LogType, LogMessage
 from enum import Enum
-from weatherAPIenum import RainTimeLine, WeatherButton
+from weatherAPIenum import WeatherTimeLine, WeatherButton
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES

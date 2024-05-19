@@ -23,7 +23,7 @@ class WeatherStatus(Enum):
     FOGGY = 7
     SNOWY = 8
 
-class RainTimeLine(Enum):
+class WeatherTimeLine(Enum):
     T16 = 16
     T24 = 24
 

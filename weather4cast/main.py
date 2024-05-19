@@ -14,7 +14,7 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherButton, RainTimeLine
+from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherButton, WeatherTimeLine
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -89,7 +89,7 @@ def thread_changeAPI_function():
                 ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
             wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
         elif button_output == WeatherButton.LongClick:
-            weather.weather_rain_timeline = RainTimeLine.T24
+            weather.weather_rain_timeline = WeatherTimeLine.T24
             weather_refresh_flag = True
         time.sleep(0.1)  
 
@@ -189,7 +189,7 @@ while True:
             tm1637l.show_temperature(tmin,tmax)
             log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
             # flag 24h 
-            flag_24h = weather.weather_rain_timeline == RainTimeLine.T24
+            flag_24h = weather.weather_rain_timeline == WeatherTimeLine.T24
             flag_24h_text = ''
             if flag_24h == True: 
                 flag_24h_text = '24' 
@@ -206,7 +206,7 @@ while True:
             max7219.level = rain
             if flag_24h:
                 # defined pressing long button
-                weather.weather_rain_timeline = RainTimeLine.T16
+                weather.weather_rain_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h  
             log+='; rain' + flag_24h_text + '=' + str(rain)
             # display rain warning

@@ -2,7 +2,7 @@
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
 import importlib, os, math
-from weatherAPIenum import WeatherConfig, RainTimeLine
+from weatherAPIenum import WeatherConfig, WeatherTimeLine
 from collections import Counter
 
 # *************************************************************************************************** 
@@ -12,7 +12,7 @@ weatherAPI = None
 api_weather_id = 1
 # weatherAPI files are ordered alphabetically, and file names are saved in the following array.
 weatherAPInames = []
-weather_rain_timeline = RainTimeLine.T16
+weather_rain_timeline = WeatherTimeLine.T16
 
 def count_weather_apis():
     global weatherAPInames
@@ -131,7 +131,7 @@ def get_temperature (forecast_day, forecast_hour, average = False):
         temperature_sum = sum(temperature_arr)
         return int(temperature_sum/len(temperature_arr))
 
-def get_rain (forecast_day, forecast_hour, rain_time_line):
+def get_rain (forecast_day, forecast_hour, weather_time_line):
     """
     gets rain from input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -151,7 +151,7 @@ def get_rain (forecast_day, forecast_hour, rain_time_line):
     # get current index
     index=0
     hour_limit=0
-    if rain_time_line==RainTimeLine.T16:
+    if weather_time_line==WeatherTimeLine.T16:
         hour_limit=16
         index = forecast_day * 24 + forecast_hour
     else:
@@ -170,7 +170,7 @@ def get_rain (forecast_day, forecast_hour, rain_time_line):
         rain_output.append(0.0)
 
     # adjust rain array to size 16
-    if len(rain_output)==RainTimeLine.T24.value:
+    if len(rain_output)==WeatherTimeLine.T24.value:
         rain_output = rain_24_to_16_hours(rain_output)
 
     return rain_output
