@@ -99,7 +99,7 @@ def get_status (forecast_day, forecast_hour, weather_rain_timeline = WeatherTime
         return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
     else:
         if weather_rain_timeline == WeatherTimeLine.T48:
-            if forecast_day<WeatherConfig.DAYS-1: forecast_day += 1
+            if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         status_counts = Counter(weatherAPI.weekWeather[forecast_day].status)
         most_common_element, most_common_count = status_counts.most_common(1)[0]
         return most_common_element
@@ -130,7 +130,7 @@ def get_temperature (forecast_day, forecast_hour, weather_rain_timeline = Weathe
         return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
     else:
         if weather_rain_timeline == WeatherTimeLine.T48:
-            if forecast_day<WeatherConfig.DAYS-1: forecast_day += 1
+            if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         temperature_arr = [int(element) for element in weatherAPI.weekWeather[forecast_day].temperature]
         temperature_sum = sum(temperature_arr)
         return int(temperature_sum/len(temperature_arr))
@@ -162,7 +162,7 @@ def get_rain (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLi
     else:
         hour_limit=24
         if weather_rain_timeline==WeatherTimeLine.T48:
-            if forecast_day<WeatherConfig.DAYS-1: forecast_day += 1
+            if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         index = forecast_day * 24
     
     # from index count 16 or 24 rain values
