@@ -4,6 +4,7 @@
 ## 🗞️ Introduction
 This project is focused on developing a weather forecast device based on a Raspberry Pi. More details about HW construction can be found in the following link: TBD.
 
+
 ## 🔌 Weather APIs
 Weather4cast works with the following weather APIs:
 
@@ -19,6 +20,7 @@ N. | Name | Name Id | API_KEY? | Refresh time | Calls limit | url
 8 | visualcrossing | visucros | yes | 900s (15min) | 1000 calls/day | [https://www.visualcrossing.com](https://www.visualcrossing.com)
 9 | tomorrow.io | tomorrow | yes | 900s (15min) | 500 calls/day | [https://api.tomorrow.io/](https://api.tomorrow.io/)
 10 | openweathermap | openweat | yes | 900s (15min) | 60 calls/min | [https://openweathermap.org/api](https://openweathermap.org/api)
+
 
 ## 🎮 Raspi commands
 
@@ -57,6 +59,7 @@ cd /home/pi/Documents/weather4cast/logs
 cat weather4cast.log
 ```
 
+
 ## 🔏 SECRETS
 For those APIs that requires an api-key it is necessary to include in parent path a 'secrets.ini' including the following info:
 ```
@@ -64,6 +67,7 @@ For those APIs that requires an api-key it is necessary to include in parent pat
 visucros = XXXXXX
 tomorrow = XXXXXX
 ```
+
 
 ## 🆕 Add new API
 Create 'weatherAPIX.py'. Every weatherAPIX file will be added alphabetically as a new weather API.
