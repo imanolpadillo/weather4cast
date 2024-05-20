@@ -30,7 +30,8 @@ class WeatherTimeLine(Enum):
 class WeatherButton(Enum):
     NoClick = 0
     ShortClick = 1
-    LongClick = 2
+    DoubleClick = 2
+    LongClick = 3
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
