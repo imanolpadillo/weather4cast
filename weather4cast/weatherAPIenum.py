@@ -24,8 +24,9 @@ class WeatherStatus(Enum):
     SNOWY = 8
 
 class WeatherTimeLine(Enum):
-    T16 = 16
-    T24 = 24
+    T16 = 16  # default
+    T24 = 24  # short click: daily 24h
+    T48 = 48  # double click: daily 24h of day+1
 
 class WeatherButton(Enum):
     NoClick = 0

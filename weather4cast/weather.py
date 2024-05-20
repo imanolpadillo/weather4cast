@@ -84,7 +84,7 @@ def refresh():
     except Exception as e:
         return
     
-def get_status (forecast_day, forecast_hour, mode = False):
+def get_status (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLine.T16):
     """
     gets status of input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -95,9 +95,11 @@ def get_status (forecast_day, forecast_hour, mode = False):
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if mode == False:
+    if weather_rain_timeline == WeatherTimeLine.T16:
         return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
     else:
+        if weather_rain_timeline == WeatherTimeLine.T48:
+            if forecast_day<WeatherConfig.DAYS-1: forecast_day += 1
         status_counts = Counter(weatherAPI.weekWeather[forecast_day].status)
         most_common_element, most_common_count = status_counts.most_common(1)[0]
         return most_common_element
@@ -113,7 +115,7 @@ def get_min_max_temperature (forecast_day):
     tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
-def get_temperature (forecast_day, forecast_hour, average = False):
+def get_temperature (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLine.T16):
     """
     gets temperature of input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -124,14 +126,17 @@ def get_temperature (forecast_day, forecast_hour, average = False):
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if average == False:
+    if weather_rain_timeline == WeatherTimeLine.T16:
         return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
     else:
+        if weather_rain_timeline == WeatherTimeLine.T48:
+            if forecast_day<WeatherConfig.DAYS-1: forecast_day += 1
         temperature_arr = [int(element) for element in weatherAPI.weekWeather[forecast_day].temperature]
         temperature_sum = sum(temperature_arr)
         return int(temperature_sum/len(temperature_arr))
 
-def get_rain (forecast_day, forecast_hour, weather_time_line):
+
+def get_rain (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLine.T16):
     """
     gets rain from input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -151,11 +156,13 @@ def get_rain (forecast_day, forecast_hour, weather_time_line):
     # get current index
     index=0
     hour_limit=0
-    if weather_time_line==WeatherTimeLine.T16:
+    if weather_rain_timeline==WeatherTimeLine.T16:
         hour_limit=16
         index = forecast_day * 24 + forecast_hour
     else:
         hour_limit=24
+        if weather_rain_timeline==WeatherTimeLine.T48:
+            if forecast_day<WeatherConfig.DAYS-1: forecast_day += 1
         index = forecast_day * 24
     
     # from index count 16 or 24 rain values
@@ -170,7 +177,7 @@ def get_rain (forecast_day, forecast_hour, weather_time_line):
         rain_output.append(0.0)
 
     # adjust rain array to size 16
-    if len(rain_output)==WeatherTimeLine.T24.value:
+    if len(rain_output)==24:
         rain_output = rain_24_to_16_hours(rain_output)
 
     return rain_output
