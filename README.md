@@ -85,5 +85,5 @@ tomorrow = XXXXXX
 ```
 
 ## 🆕 Add new API
- - Create 'weatherAPIX.py'. Every weatherAPIX file will be added alphabetically as a new weather API.
+Create 'weatherAPIX.py'. Every weatherAPIX file will be added alphabetically as a new weather API.
 
