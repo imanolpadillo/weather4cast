@@ -8,7 +8,7 @@ This project is focused on developing a weather forecast device based on a Raspb
 ## 🔌 Weather APIs
 Weather4cast works with the following weather APIs:
 
-N. | Name | Name Id | API_KEY? | Refresh time | Calls limit | url 
+N. | Name | Name Id | API_KEY? | Refresh | Calls limit | url 
 --- | --- | --- | --- |--- |--- |--- 
 1 | meteomatics | metemati | yes | 900s (15min) | 500 calls/day | [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/) 
 2 | foreca | forecapi | yes | 900s (15min) | 1000 calls/day | [https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather](https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather)
