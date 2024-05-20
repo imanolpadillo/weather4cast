@@ -187,16 +187,16 @@ while True:
             log=''
             # lock rain_warning thread
             rain_warning_flag = False
-            # display min/max temperature
-            [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day)
-            tm1637l.show_temperature(tmin,tmax)
-            log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
             # text suffix
             suffix_24_48h = ''
             if weather.weather_rain_timeline == WeatherTimeLine.T24: 
                 suffix_24_48h = '24' 
             elif weather.weather_rain_timeline == WeatherTimeLine.T48:
                 suffix_24_48h = '48' 
+            # display min/max temperature
+            [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day, weather.weather_rain_timeline)
+            tm1637l.show_temperature(tmin,tmax)
+            log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
             # display temperature
             t=weather.get_temperature(forecast_input.day, forecast_input.hour, weather.weather_rain_timeline)
             pcf8574.display_temperature(int(t))

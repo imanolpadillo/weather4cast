@@ -104,13 +104,15 @@ def get_status (forecast_day, forecast_hour, weather_rain_timeline = WeatherTime
         most_common_element, most_common_count = status_counts.most_common(1)[0]
         return most_common_element
 
-def get_min_max_temperature (forecast_day):
+def get_min_max_temperature (forecast_day, weather_rain_timeline = WeatherTimeLine.T16):
     """
     gets min and max temperature of input forecast day
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :return: [tmin,tmax]
     """
     global weatherAPI
+    if weather_rain_timeline == WeatherTimeLine.T48:
+        if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
     tmin = min(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))
     tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
