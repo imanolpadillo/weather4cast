@@ -85,6 +85,5 @@ tomorrow = XXXXXX
 ```
 
 ## 🆕 Add new API
- - Create 'weatherAPIX.py'
- - In 'weather.py': a) import weatherAPIX b) modify api_weather_names, api_weather_refresh_s and c) add new api output in function 'get_current_weather_api()'.
+ - Create 'weatherAPIX.py'. Every weatherAPIX file will be added alphabetically as a new weather API.
 
