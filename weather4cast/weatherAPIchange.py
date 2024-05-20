@@ -14,11 +14,6 @@ from weatherAPIenum import WeatherTimeLine, WeatherButton
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
-class ButtonStatus(Enum):
-    OFF = 1
-    SHORT_CLICK = 2
-    LONG_CLICK = 3
-
 # Set up GPIO using BCM numbering
 GPIO.setmode(GPIO.BCM)
 
@@ -41,11 +36,18 @@ def detect_button():
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
-            if time.time() - start_time >= 1.0:  # Long click threshold (adjust as needed)
+            if time.time() - start_time >= 1.0:  # Long click threshold 
+                # print('longClick')
                 return WeatherButton.LongClick
             time.sleep(0.01) 
-        # print('shortClick')
-        return WeatherButton.ShortClick
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 0:
+            if time.time() - start_time >= 0.5:  # Short click threshold 
+                # print('shortClick')
+                return WeatherButton.ShortClick   
+            time.sleep(0.01) 
+        # print('doubleClick')
+        return WeatherButton.DoubleClick
     # print('noClick')
     return WeatherButton.NoClick
 
