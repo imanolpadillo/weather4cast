@@ -11,7 +11,7 @@
 #       (optional) https://github.com/rm-hull/luma.led_matrix.git
 #       (optional) python3 ./luma.led_matrix/examples/matrix_demo.py --cascade=2 --block-orientation=-90
 
-from weatherAPIenum import WeatherConfig
+from weatherAPIenum import WeatherConfig, WeatherRainStep, WeatherTimeLine
 from PIL import Image
 from luma.led_matrix.device import max7219
 from luma.core.interface.serial import spi, noop
@@ -37,10 +37,28 @@ def demo(flag):
     """
     Activates/deactivates all leds depending on flag value
     """
+    global level
     if flag == True:
-        show_level([8] * 16)  # all leds activated
+        level = [8] * 16
+        show_level()  # all leds activated
     else:
-        show_level([0] * 16)  # all leds deactivated
+        level = [0] * 16
+        show_level()  # all leds deactivated
+
+def round_to_step(input_values, step = WeatherConfig.RAIN_STEP.value):
+    """
+    Rounds each value in input_values to the nearest multiple of the step.
+   
+    Args:
+    - step (float): The step size to round to.
+    - input_values (list of floats): The list of input values to round.
+   
+    Returns:
+    - list of floats: The rounded values.
+    """
+    rounded_values = [round(value / step) * step for value in input_values]
+    return rounded_values
+
     
 def show_message(message = message):
     """
@@ -53,21 +71,53 @@ def show_message(message = message):
         text(draw, (0, 0), message, fill="white")
 
 
-def show_level(level = level):
+def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16):
     """
     shows level
     :param level: 16 array including precipitation probability
     :return: -
     """
+    global level
+    # Get max value of array and adjust rain_step, activated_led, deactivated_led
+    activated_led = 1
+    deactivated_led = 0
+    rain_step = WeatherConfig.RAIN_STEP.value
+    if WeatherConfig.RAIN_STEP == WeatherRainStep.AUTO:
+        max_level = max(level)
+        if max_level > 8 * rain_step:
+            rain_step = rain_step * 2 
+            activated_led = 0
+            deactivated_led = 1
+
+    # Round values
+    input_level = round_to_step(input_level, rain_step)
+
     # Display the level
-    level_array = []
+    output_level = []
     for row in reversed(range(8)):
-        limit = row * WeatherConfig.RAIN_STEP.value + WeatherConfig.RAIN_STEP.value  #row_7 -> 4, row_6 -> 3.5 ... row_0 -> 0.5
-        for rain_hour in level:
+        limit = row * rain_step + rain_step  #row_7 -> 4, row_6 -> 3.5 ... row_0 -> 0.5
+        for rain_hour in input_level:
             if rain_hour >= limit:
-                level_array.append(1)
+                output_level.append(activated_led)
             else:
-                level_array.append(0)
+                output_level.append(deactivated_led)
+
+    # Set T24, T48 markers
+    if weather_timeline == WeatherTimeLine.T24:
+        print("T24")
+        # Toggle the value at position 15
+        output_level[15] = activated_led
+    elif weather_timeline == WeatherTimeLine.T48:
+        print("T48")
+        # Toggle the value at position 15
+        output_level[15] = activated_led
+        output_level[14] = activated_led
+    level = output_level
+
+
+
+def show_level():
+    global level
     image = Image.new("1", (16, 8))
-    image.putdata(level_array)
+    image.putdata(level)
     device.display(image)

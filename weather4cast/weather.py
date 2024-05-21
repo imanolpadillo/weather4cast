@@ -12,7 +12,7 @@ weatherAPI = None
 api_weather_id = 1
 # weatherAPI files are ordered alphabetically, and file names are saved in the following array.
 weatherAPInames = []
-weather_rain_timeline = WeatherTimeLine.T16
+weather_timeline = WeatherTimeLine.T16
 
 def count_weather_apis():
     global weatherAPInames
@@ -84,7 +84,7 @@ def refresh():
     except Exception as e:
         return
     
-def get_status (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLine.T16):
+def get_status (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T16):
     """
     gets status of input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -95,29 +95,29 @@ def get_status (forecast_day, forecast_hour, weather_rain_timeline = WeatherTime
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if weather_rain_timeline == WeatherTimeLine.T16:
+    if weather_timeline == WeatherTimeLine.T16:
         return weatherAPI.weekWeather[forecast_day].status[forecast_hour]
     else:
-        if weather_rain_timeline == WeatherTimeLine.T48:
+        if weather_timeline == WeatherTimeLine.T48:
             if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         status_counts = Counter(weatherAPI.weekWeather[forecast_day].status)
         most_common_element, most_common_count = status_counts.most_common(1)[0]
         return most_common_element
 
-def get_min_max_temperature (forecast_day, weather_rain_timeline = WeatherTimeLine.T16):
+def get_min_max_temperature (forecast_day, weather_timeline = WeatherTimeLine.T16):
     """
     gets min and max temperature of input forecast day
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :return: [tmin,tmax]
     """
     global weatherAPI
-    if weather_rain_timeline == WeatherTimeLine.T48:
+    if weather_timeline == WeatherTimeLine.T48:
         if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
     tmin = min(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))
     tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
     return [tmin, tmax]
 
-def get_temperature (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLine.T16):
+def get_temperature (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T16):
     """
     gets temperature of input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -128,17 +128,17 @@ def get_temperature (forecast_day, forecast_hour, weather_rain_timeline = Weathe
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if weather_rain_timeline == WeatherTimeLine.T16:
+    if weather_timeline == WeatherTimeLine.T16:
         return weatherAPI.weekWeather[forecast_day].temperature[forecast_hour]
     else:
-        if weather_rain_timeline == WeatherTimeLine.T48:
+        if weather_timeline == WeatherTimeLine.T48:
             if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         temperature_arr = [int(element) for element in weatherAPI.weekWeather[forecast_day].temperature]
         temperature_sum = sum(temperature_arr)
         return int(temperature_sum/len(temperature_arr))
 
 
-def get_rain (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLine.T16):
+def get_rain (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T16):
     """
     gets rain from input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
@@ -158,12 +158,12 @@ def get_rain (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLi
     # get current index
     index=0
     hour_limit=0
-    if weather_rain_timeline==WeatherTimeLine.T16:
+    if weather_timeline==WeatherTimeLine.T16:
         hour_limit=16
         index = forecast_day * 24 + forecast_hour
     else:
         hour_limit=24
-        if weather_rain_timeline==WeatherTimeLine.T48:
+        if weather_timeline==WeatherTimeLine.T48:
             if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         index = forecast_day * 24
     
@@ -184,17 +184,6 @@ def get_rain (forecast_day, forecast_hour, weather_rain_timeline = WeatherTimeLi
 
     return rain_output
 
-def round_half(value):
-    # Check if the fractional part is strictly greater than 0.5
-    if value % 1 > 0.5:
-        return math.ceil(value)
-    # Check if the value is exactly 0.5 or 1.0
-    elif value % 1 == 0.5 or value % 1 == 0:
-        return value
-    # For all other cases, round up to the nearest half-integer
-    else:
-        return math.ceil(value * 2) / 2
-
 def rain_24_to_16_hours(input_array):
     """
     converts 24 array into 16 array
@@ -206,8 +195,8 @@ def rain_24_to_16_hours(input_array):
     output_array = []
     for i in range(0, len(input_array), 3):
         # Calculate the average of each pair of 1.5 groups
-        avg1 = round_half((input_array[i] + input_array[i+1]) / 2)
-        avg2 = round_half((input_array[i+1] + input_array[i+2]) / 2)
+        avg1 = round((input_array[i] + input_array[i+1]) / 2,1)
+        avg2 = round((input_array[i+1] + input_array[i+2]) / 2,1)
         output_array.extend([avg1, avg2])
     return output_array
   

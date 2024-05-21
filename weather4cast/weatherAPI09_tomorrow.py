@@ -56,20 +56,6 @@ weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]
 # FUNCTIONS
 # *************************************************************************************************** 
 
-def round_half(value):
-    # Calculate the integer part of the number
-    integer_part = int(value)
-    # Calculate the fractional part of the number
-    fractional_part = value - integer_part
-    # Determine the rounding
-    if fractional_part < 0.25:
-        rounded_value = integer_part
-    elif fractional_part < 0.75:
-        rounded_value = integer_part + 0.5
-    else:
-        rounded_value = integer_part + 1.0
-    return rounded_value
-
 def call_api():
     """
     calls REST-API from "el-tiempo.net"
@@ -100,14 +86,14 @@ def decode_json(data):
         if counter == 0:
             first_temperature = round(item['values']['temperature'])
             first_status = int(item['values']['weatherCode'])
-            first_rain = round_half(round(float(item['values']['precipitationIntensity']), 1))
+            first_rain = round(float(item['values']['precipitationIntensity']), 1)
         hour = int(item['startTime'][11:13])
         weekWeather[day_index].temperature[hour] = round(item['values']['temperature'])
         if int(item['values']['windSpeed']) > WeatherConfig.MAX_WIND_MS.value:
             weekWeather[day_index].status[hour] = 9999  #windy
         else:
             weekWeather[day_index].status[hour] = int(item['values']['weatherCode'])
-        weekWeather[day_index].rain[hour] = round_half(round(float(item['values']['precipitationIntensity']), 1))
+        weekWeather[day_index].rain[hour] = round(float(item['values']['precipitationIntensity']), 1)
         counter+=1
         if hour == 23:
             day_index+=1

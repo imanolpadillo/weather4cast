@@ -76,21 +76,6 @@ def get_current_day (day_offset):
     # Format the current date as YYYY-MM-DD
     return output_date.strftime("%Y-%m-%d")
 
-def round_half(value):
-    # Calculate the integer part of the number
-    integer_part = int(value)
-    # Calculate the fractional part of the number
-    fractional_part = value - integer_part
-    # Determine the rounding
-    if fractional_part < 0.25:
-        rounded_value = integer_part
-    elif fractional_part < 0.75:
-        rounded_value = integer_part + 0.5
-    else:
-        rounded_value = integer_part + 1.0
-    return rounded_value
-    
-
 def call_api():
     """
     calls REST-API from "api.open-meteo.com"
@@ -124,7 +109,7 @@ def decode_json(data):
             if data['data'][count]['prcp'] is None:
                 weekWeather[day].rain[hour] = 0.0
             else:
-                weekWeather[day].rain[hour] = round_half(data['data'][count]['prcp'])
+                weekWeather[day].rain[hour] = round(data['data'][count]['prcp'],1)
             if (data['data'][count]['wspd'] * 1000 / 3600 >WeatherConfig.MAX_WIND_MS.value):
                 #wind status is not defined in 'weather code'
                 weekWeather[day].status[hour] = 100 # windy code

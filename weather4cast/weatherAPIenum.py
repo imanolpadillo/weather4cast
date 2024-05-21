@@ -4,6 +4,10 @@ from enum import Enum
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
+class WeatherRainStep(Enum):
+    FIXED = 0 # rain step is fixed by RAIN_STEP
+    AUTO = 1  # rain step is x2 when rain is > RAIN_STEP*8
+
 class WeatherConfig(Enum):
     DAYS = 6        # Number of day to be forecasted
     WEATHER_API_REFRESH_TIME = 1800 # in seconds
@@ -12,6 +16,7 @@ class WeatherConfig(Enum):
     RAIN_WARNING_TIME = 3   # limit of hours to check
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
+    RAIN_STEP_MODE = WeatherRainStep.AUTO  # auto adjust scale of rain
 
 class WeatherStatus(Enum):
     SUNNY = 1

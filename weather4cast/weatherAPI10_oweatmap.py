@@ -38,20 +38,6 @@ weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value+1)]
 # FUNCTIONS
 # *************************************************************************************************** 
 
-def round_half(value):
-    # Calculate the integer part of the number
-    integer_part = int(value)
-    # Calculate the fractional part of the number
-    fractional_part = value - integer_part
-    # Determine the rounding
-    if fractional_part < 0.25:
-        rounded_value = integer_part
-    elif fractional_part < 0.75:
-        rounded_value = integer_part + 0.5
-    else:
-        rounded_value = integer_part + 1.0
-    return rounded_value
-
 def call_api():
     """
     calls REST-API from "el-tiempo.net"
@@ -89,9 +75,9 @@ def decode_json(data):
             weekWeather[day_index].status[1] = item['weather'][0]['main']
             weekWeather[day_index].status[2] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[0] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[1] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[2] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[0] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[1] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[2] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "03":
             weekWeather[day_index].temperature[3] = round(item['main']['temp'])
             weekWeather[day_index].temperature[4] = round(item['main']['temp'])
@@ -100,9 +86,9 @@ def decode_json(data):
             weekWeather[day_index].status[4] = item['weather'][0]['main']
             weekWeather[day_index].status[5] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[3] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[4] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[5] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[3] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[4] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[5] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "06":
             weekWeather[day_index].temperature[6] = round(item['main']['temp'])
             weekWeather[day_index].temperature[7] = round(item['main']['temp'])
@@ -111,9 +97,9 @@ def decode_json(data):
             weekWeather[day_index].status[7] = item['weather'][0]['main']
             weekWeather[day_index].status[8] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[6] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[7] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[8] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[6] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[7] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[8] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "09":
             weekWeather[day_index].temperature[9] = round(item['main']['temp'])
             weekWeather[day_index].temperature[10] = round(item['main']['temp'])
@@ -122,9 +108,9 @@ def decode_json(data):
             weekWeather[day_index].status[10] = item['weather'][0]['main']
             weekWeather[day_index].status[11] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[9] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[10] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[11] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[9] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[10] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[11] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "12":
             weekWeather[day_index].temperature[12] = round(item['main']['temp'])
             weekWeather[day_index].temperature[13] = round(item['main']['temp'])
@@ -133,9 +119,9 @@ def decode_json(data):
             weekWeather[day_index].status[13] = item['weather'][0]['main']
             weekWeather[day_index].status[14] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[12] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[13] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[14] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[12] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[13] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[14] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "15":
             weekWeather[day_index].temperature[15] = round(item['main']['temp'])
             weekWeather[day_index].temperature[16] = round(item['main']['temp'])
@@ -144,9 +130,9 @@ def decode_json(data):
             weekWeather[day_index].status[16] = item['weather'][0]['main']
             weekWeather[day_index].status[17] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[15] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[16] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[17] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[15] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[16] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[17] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "18":
             weekWeather[day_index].temperature[18] = round(item['main']['temp'])
             weekWeather[day_index].temperature[19] = round(item['main']['temp'])
@@ -155,9 +141,9 @@ def decode_json(data):
             weekWeather[day_index].status[19] = item['weather'][0]['main']
             weekWeather[day_index].status[20] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[18] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[19] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[20] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[18] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[19] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[20] = round(item['rain']['3h'],1)
         elif item['dt_txt'][11:13] == "21":
             weekWeather[day_index].temperature[21] = round(item['main']['temp'])
             weekWeather[day_index].temperature[22] = round(item['main']['temp'])
@@ -166,9 +152,9 @@ def decode_json(data):
             weekWeather[day_index].status[22] = item['weather'][0]['main']
             weekWeather[day_index].status[23] = item['weather'][0]['main']
             if 'rain' in item:
-                weekWeather[day_index].rain[21] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[22] = round_half(item['rain']['3h'])
-                weekWeather[day_index].rain[23] = round_half(item['rain']['3h'])
+                weekWeather[day_index].rain[21] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[22] = round(item['rain']['3h'],1)
+                weekWeather[day_index].rain[23] = round(item['rain']['3h'],1)
             day_index+=1
         counter+=1
 

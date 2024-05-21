@@ -62,7 +62,7 @@ def thread_max7219_function():
             max7219.show_message(max7219.message)
             max7219.message = ""
         else:
-            max7219.show_level(max7219.level)
+            max7219.show_level()
         time.sleep(max7219.timeout)
 
 # Thread to change API when pushing button
@@ -89,10 +89,10 @@ def thread_changeAPI_function():
                 ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
             wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
         elif button_output == WeatherButton.ShortClick:
-            weather.weather_rain_timeline = WeatherTimeLine.T24
+            weather.weather_timeline = WeatherTimeLine.T24
             weather_refresh_flag = True
         elif button_output == WeatherButton.DoubleClick:
-            weather.weather_rain_timeline = WeatherTimeLine.T48
+            weather.weather_timeline = WeatherTimeLine.T48
             weather_refresh_flag = True
         time.sleep(0.1)  
 
@@ -189,28 +189,28 @@ while True:
             rain_warning_flag = False
             # text suffix
             suffix_24_48h = ''
-            if weather.weather_rain_timeline == WeatherTimeLine.T24: 
+            if weather.weather_timeline == WeatherTimeLine.T24: 
                 suffix_24_48h = '24' 
-            elif weather.weather_rain_timeline == WeatherTimeLine.T48:
+            elif weather.weather_timeline == WeatherTimeLine.T48:
                 suffix_24_48h = '48' 
             # display min/max temperature
-            [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day, weather.weather_rain_timeline)
+            [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day, weather.weather_timeline)
             tm1637l.show_temperature(tmin,tmax)
             log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
             # display temperature
-            t=weather.get_temperature(forecast_input.day, forecast_input.hour, weather.weather_rain_timeline)
+            t=weather.get_temperature(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_temperature(int(t))
             log+='; t' + suffix_24_48h + '=' + str(t)
             # display status
-            status=weather.get_status(forecast_input.day, forecast_input.hour, weather.weather_rain_timeline)
+            status=weather.get_status(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_status(status)
             log+='; status' + suffix_24_48h + '=' + str(status)
             # display rain
-            rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_rain_timeline)
-            max7219.level = rain
+            rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
+            max7219.calculate_level(rain,weather.weather_timeline)
             log+='; rain' + suffix_24_48h + '=' + str(rain)
             # display rain warning
-            if weather.weather_rain_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
+            if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 
             else:
                 rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
@@ -219,8 +219,8 @@ while True:
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data
-            if weather.weather_rain_timeline != WeatherTimeLine.T16:
-                weather.weather_rain_timeline = WeatherTimeLine.T16
+            if weather.weather_timeline != WeatherTimeLine.T16:
+                weather.weather_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h  
                 time.sleep(5)
         except Exception as e:
