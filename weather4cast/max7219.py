@@ -82,8 +82,8 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16):
     activated_led = 1
     deactivated_led = 0
     rain_step = WeatherConfig.RAIN_STEP.value
-    if WeatherConfig.RAIN_STEP == WeatherRainStep.AUTO:
-        max_level = max(level)
+    if WeatherConfig.RAIN_STEP_MODE.value == WeatherRainStep.AUTO.value:
+        max_level = max(input_level)
         if max_level > 8 * rain_step:
             rain_step = rain_step * 2 
             activated_led = 0

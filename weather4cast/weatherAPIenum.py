@@ -16,7 +16,7 @@ class WeatherConfig(Enum):
     RAIN_WARNING_TIME = 3   # limit of hours to check
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
-    RAIN_STEP_MODE = WeatherRainStep.AUTO  # auto adjust scale of rain
+    RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
 
 class WeatherStatus(Enum):
     SUNNY = 1
