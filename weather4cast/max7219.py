@@ -104,14 +104,19 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16):
 
     # Set T24, T48 markers
     if weather_timeline == WeatherTimeLine.T24:
-        print("T24")
         # Toggle the value at position 15
         output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
     elif weather_timeline == WeatherTimeLine.T48:
-        print("T48")
         # Toggle the value at position 15
         output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
         output_level[14] ^= 1  # XOR operation to toggle between 0 and 1
+    elif weather_timeline == WeatherTimeLine.T120:
+        # Toggle the value at position 15
+        output_level[0] ^= 1  # XOR operation to toggle between 0 and 1
+        output_level[3] ^= 1  # XOR operation to toggle between 0 and 1
+        output_level[6] ^= 1  # XOR operation to toggle between 0 and 1
+        output_level[9] ^= 1  # XOR operation to toggle between 0 and 1
+        output_level[12] ^= 1  # XOR operation to toggle between 0 and 1
     level = output_level
 
 

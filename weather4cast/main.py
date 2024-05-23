@@ -94,6 +94,9 @@ def thread_changeAPI_function():
         elif button_output == WeatherButton.DoubleClick:
             weather.weather_timeline = WeatherTimeLine.T48
             weather_refresh_flag = True
+        elif button_output == WeatherButton.TrippleClick:
+            weather.weather_timeline = WeatherTimeLine.T120
+            weather_refresh_flag = True
         
         # avoid button overlapping
         if button_output != WeatherButton.NoClick:
@@ -195,11 +198,13 @@ while True:
             # lock rain_warning thread
             rain_warning_flag = False
             # text suffix
-            suffix_24_48h = ''
+            suffix_24_48_120h = ''
             if weather.weather_timeline == WeatherTimeLine.T24: 
-                suffix_24_48h = '24' 
+                suffix_24_48_120h = '24' 
             elif weather.weather_timeline == WeatherTimeLine.T48:
-                suffix_24_48h = '48' 
+                suffix_24_48_120h = '48' 
+            elif weather.weather_timeline == WeatherTimeLine.T120:
+                suffix_24_48_120h = '120' 
             # display min/max temperature
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day, weather.weather_timeline)
             tm1637l.show_temperature(tmin,tmax)
@@ -207,15 +212,15 @@ while True:
             # display temperature
             t=weather.get_temperature(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_temperature(int(t))
-            log+='; t' + suffix_24_48h + '=' + str(t)
+            log+='; t' + suffix_24_48_120h + '=' + str(t)
             # display status
             status=weather.get_status(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_status(status)
-            log+='; status' + suffix_24_48h + '=' + str(status)
+            log+='; status' + suffix_24_48_120h + '=' + str(status)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             max7219.calculate_level(rain,weather.weather_timeline)
-            log+='; rain' + suffix_24_48h + '=' + str(rain)
+            log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 

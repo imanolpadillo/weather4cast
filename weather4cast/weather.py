@@ -93,6 +93,7 @@ def get_status (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.
     :return: status
     """
     global weatherAPI
+    status_arr = []
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
     if weather_timeline == WeatherTimeLine.T16:
@@ -100,7 +101,14 @@ def get_status (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.
     else:
         if weather_timeline == WeatherTimeLine.T48:
             if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
-        status_counts = Counter(weatherAPI.weekWeather[forecast_day].status)
+
+        if weather_timeline != WeatherTimeLine.T120:
+            status_arr = weatherAPI.weekWeather[forecast_day].status
+        else:
+            for day in range(1,WeatherConfig.DAYS.value):
+                status_arr+=weatherAPI.weekWeather[day].status 
+
+        status_counts = Counter(status_arr)
         most_common_element, most_common_count = status_counts.most_common(1)[0]
         return most_common_element
 
@@ -111,10 +119,18 @@ def get_min_max_temperature (forecast_day, weather_timeline = WeatherTimeLine.T1
     :return: [tmin,tmax]
     """
     global weatherAPI
+    temperature_arr = []
     if weather_timeline == WeatherTimeLine.T48:
         if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
-    tmin = min(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))
-    tmax = max(list(map(int, weatherAPI.weekWeather[forecast_day].temperature)))    
+
+    if weather_timeline != WeatherTimeLine.T120:
+        temperature_arr = weatherAPI.weekWeather[forecast_day].temperature
+    else:
+        for day in range(1,WeatherConfig.DAYS.value):
+            temperature_arr+=weatherAPI.weekWeather[day].temperature 
+    
+    tmin = min(list(map(int, temperature_arr)))
+    tmax = max(list(map(int, temperature_arr)))    
     return [tmin, tmax]
 
 def get_temperature (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T16):
@@ -126,6 +142,7 @@ def get_temperature (forecast_day, forecast_hour, weather_timeline = WeatherTime
     :return: temperature
     """
     global weatherAPI
+    temperature_arr = []
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
     if weather_timeline == WeatherTimeLine.T16:
@@ -133,9 +150,16 @@ def get_temperature (forecast_day, forecast_hour, weather_timeline = WeatherTime
     else:
         if weather_timeline == WeatherTimeLine.T48:
             if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
-        temperature_arr = [int(element) for element in weatherAPI.weekWeather[forecast_day].temperature]
-        temperature_sum = sum(temperature_arr)
-        return int(temperature_sum/len(temperature_arr))
+
+        if weather_timeline != WeatherTimeLine.T120:
+            temperature_arr = weatherAPI.weekWeather[forecast_day].temperature
+        else:
+            for day in range(1,WeatherConfig.DAYS.value):
+                temperature_arr+=weatherAPI.weekWeather[day].temperature 
+
+        temperature_arr_int = [int(element) for element in temperature_arr]
+        temperature_sum = sum(temperature_arr_int)
+        return int(temperature_sum/len(temperature_arr_int))
 
 
 def get_rain (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T16):
@@ -161,13 +185,16 @@ def get_rain (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T1
     if weather_timeline==WeatherTimeLine.T16:
         hour_limit=16
         index = forecast_day * 24 + forecast_hour
-    else:
+    elif weather_timeline==WeatherTimeLine.T120:
+        hour_limit=120
+        index = 24
+    else: #T24 + T48
         hour_limit=24
         if weather_timeline==WeatherTimeLine.T48:
             if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         index = forecast_day * 24
     
-    # from index count 16 or 24 rain values
+    # from index count 16, 24 or 120 rain values
     rain_output = []
     for hour in range(index, len(rain_data)):
         if hour>=hour_limit+index:
@@ -181,6 +208,8 @@ def get_rain (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T1
     # adjust rain array to size 16
     if len(rain_output)==24:
         rain_output = rain_24_to_16_hours(rain_output)
+    elif len(rain_output)==120:
+        rain_output = rain_120_to_16_hours(rain_output)
 
     return rain_output
 
@@ -198,6 +227,25 @@ def rain_24_to_16_hours(input_array):
         avg1 = round((input_array[i] + input_array[i+1]) / 2,1)
         avg2 = round((input_array[i+1] + input_array[i+2]) / 2,1)
         output_array.extend([avg1, avg2])
+    return output_array
+
+def rain_120_to_16_hours(input_array):
+    """
+    converts 120 array into 16 array
+    :param input_array: size 120
+    :return: array size 16
+    """
+    if len(input_array) != 120:
+        raise ValueError("Input array must have exactly 120 fields.")
+    
+    output_array = []
+    for i in range(0, len(input_array), 8):
+        chunk = input_array[i:i+8]
+        chunk_average = sum(chunk) / len(chunk)
+        output_array.append(chunk_average)
+    # Append 0 at the end of the output array
+    output_array.append(0)
+
     return output_array
   
 def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
