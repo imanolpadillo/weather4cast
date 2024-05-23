@@ -29,15 +29,17 @@ class WeatherStatus(Enum):
     SNOWY = 8
 
 class WeatherTimeLine(Enum):
-    T16 = 16  # default
-    T24 = 24  # short click: daily 24h
-    T48 = 48  # double click: daily 24h of day+1
+    T16 = 16    # default
+    T24 = 24    # short click: daily 24h
+    T48 = 48    # double click: daily 24h of day+1
+    T120 = 120  # tripple click: next 5 days
 
 class WeatherButton(Enum):
     NoClick = 0
     ShortClick = 1
     DoubleClick = 2
-    LongClick = 3
+    TrippleClick = 3
+    LongClick = 4
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
