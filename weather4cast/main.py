@@ -94,7 +94,12 @@ def thread_changeAPI_function():
         elif button_output == WeatherButton.DoubleClick:
             weather.weather_timeline = WeatherTimeLine.T48
             weather_refresh_flag = True
-        time.sleep(0.1)  
+        
+        # avoid button overlapping
+        if button_output != WeatherButton.NoClick:
+            time.sleep(2)
+        else:
+            time.sleep(0.1)  
 
 # *************************************************************************************************** 
 # FUNCTIONS
