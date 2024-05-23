@@ -178,6 +178,8 @@ thread_max7219.start()
 thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
 thread_changeAPI.start()
 
+time.sleep(1)
+
 # infinite loop
 while True:
     input_data_refresh()
