@@ -186,7 +186,7 @@ thread_max7219.start()
 thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
 thread_changeAPI.start()
 
-time.sleep(1)
+time.sleep(2)
 
 # infinite loop
 while True:

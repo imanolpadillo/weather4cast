@@ -81,6 +81,7 @@ def decode_json(data):
     first_status = 0
     first_rain = 0
     counter=0
+    hour=0
     day_index=0
     for item in data['data']['timelines'][0]['intervals']:
         if counter == 0:
@@ -98,12 +99,20 @@ def decode_json(data):
         if hour == 23:
             day_index+=1
 
-    # Replace empy temperature + rain + status by first_temperature, first_status and first_rain
+    # Replace empty temperature + rain + status by first_temperature, first_status and first_rain
     for ycount, yvalue in enumerate(weekWeather[0].status):
         if weekWeather[0].status[ycount] is None:
             weekWeather[0].status[ycount] = first_status
             weekWeather[0].temperature[ycount] = first_temperature
             weekWeather[0].rain[ycount] = first_rain
+
+    # Replace empty temperature + rain + status by last_temperature, last_status and last_rain
+    for day in range(WeatherConfig.DAYS.value):
+        for ycount, yvalue in enumerate(weekWeather[0].status):
+            if weekWeather[day].status[ycount] is None:
+                weekWeather[day].status[ycount] = weekWeather[day_index].status[hour]
+                weekWeather[day].temperature[ycount] = weekWeather[day_index].temperature[hour]
+                weekWeather[day].rain[ycount] = weekWeather[day_index].rain[hour]
             
 
     # Decode weather status

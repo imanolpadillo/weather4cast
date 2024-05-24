@@ -61,12 +61,17 @@ def decode_json(data):
     weekWeather = [DayWeather() for _ in range(WeatherConfig.DAYS.value)]  
     first_temperature = ''
     first_status = ''
+    last_temperature = ''
+    last_status = ''
     counter=0
     day_index=0
     for item in data['list']:
         if counter == 0:
             first_temperature = round(item['main']['temp'])
             first_status = item['weather'][0]['main']
+        else:
+            last_temperature = round(item['main']['temp'])
+            last_status = item['weather'][0]['main']
         if item['dt_txt'][11:13] == "00":
             weekWeather[day_index].temperature[0] = round(item['main']['temp'])
             weekWeather[day_index].temperature[1] = round(item['main']['temp'])
@@ -158,12 +163,18 @@ def decode_json(data):
             day_index+=1
         counter+=1
 
-    # Replace empy temperature + status by first_temperature and first_status
+    # Replace empty temperature + status by first_temperature and first_status
     for ycount, yvalue in enumerate(weekWeather[0].status):
         if weekWeather[0].status[ycount] is None:
             weekWeather[0].status[ycount] = first_status
             weekWeather[0].temperature[ycount] = first_temperature
-            
+
+    # Replace empty temperature + rain + status by last_temperature, last_status and last_rain
+    for day in range(WeatherConfig.DAYS.value):
+        for ycount, yvalue in enumerate(weekWeather[0].status):
+            if weekWeather[day].status[ycount] is None:
+                weekWeather[day].status[ycount] = last_status
+                weekWeather[day].temperature[ycount] = last_temperature
 
     # Decode weather status
     for x in range(len(weekWeather)):
