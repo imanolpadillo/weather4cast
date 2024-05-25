@@ -39,10 +39,10 @@ def demo(flag):
     """
     global level
     if flag == True:
-        level = [8] * 16
+        level = [1] * 16 * 8
         show_level()  # all leds activated
     else:
-        level = [0] * 16
+        level = [0] * 16 * 8
         show_level()  # all leds deactivated
 
 def round_to_step(input_values, step = WeatherConfig.RAIN_STEP.value):
