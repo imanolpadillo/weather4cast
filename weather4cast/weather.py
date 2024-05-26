@@ -242,7 +242,7 @@ def rain_120_to_16_hours(input_array):
     for i in range(0, len(input_array), 8):
         chunk = input_array[i:i+8]
         chunk_average = sum(chunk) / len(chunk)
-        output_array.append(chunk_average)
+        output_array.append(round(chunk_average,1))
     # Append 0 at the end of the output array
     output_array.append(0)
 
