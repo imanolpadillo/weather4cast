@@ -128,6 +128,8 @@ def input_data_refresh():
     """
     change_flag = False
     global weather_refresh_flag
+    global forecast_input
+    global prev_forecast_input
     switch.update()
     forecast_input.dayFlag = switch.forecast_day_flag
     forecast_input.hourFlag = switch.forecast_hour_flag
