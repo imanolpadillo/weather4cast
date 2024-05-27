@@ -13,6 +13,8 @@ from weatherAPIenum import WeatherTimeLine, WeatherButton
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
+# When button is pressed>1second, this flag is activated.
+super_long_click_flag = False
 
 # Set up GPIO using BCM numbering
 GPIO.setmode(GPIO.BCM)
@@ -30,14 +32,17 @@ GPIO.setup(PULSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Function to detect click
 def detect_button():
+    global super_long_click_flag
     click = 'none'
     if GPIO.input(PULSE_PIN) == 0:
+        super_long_click_flag = False
         while GPIO.input(PULSE_PIN) == 0:
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  # Long click threshold 
                 # print('longClick')
+                super_long_click_flag = True
                 return WeatherButton.LongClick
             time.sleep(0.01) 
         start_time = time.time()
@@ -56,6 +61,14 @@ def detect_button():
             time.sleep(0.01) 
         # print('trippleClick')
         return WeatherButton.TrippleClick
+    elif super_long_click_flag == True:
+        # long click remains
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 4.0:  # Super long click threshold 
+                # print('superLongClick')
+                super_long_click_flag = False
+                return WeatherButton.SuperLongClick        
     # print('noClick')
     return WeatherButton.NoClick
 
