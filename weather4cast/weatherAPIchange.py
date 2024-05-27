@@ -65,7 +65,7 @@ def detect_button():
         # long click remains
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
-            if time.time() - start_time >= 4.0:  # Super long click threshold 
+            if time.time() - start_time >= 2.0:  # Super long click threshold 
                 # print('superLongClick')
                 super_long_click_flag = False
                 return WeatherButton.SuperLongClick        
