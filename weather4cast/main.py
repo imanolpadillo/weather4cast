@@ -88,6 +88,17 @@ def thread_changeAPI_function():
             log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
                 ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
             wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+        elif button_output == WeatherButton.SuperLongClick:
+            # Set weather_api_id to the first api
+            weather.api_weather_id = 1
+            # Reset leds
+            reset_leds()
+            # Update api data
+            weather.refresh()
+            weather_refresh_flag = True
+            # Log api update
+            log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
+                ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         elif button_output == WeatherButton.ShortClick:
             weather.weather_timeline = WeatherTimeLine.T24
             weather_refresh_flag = True
@@ -107,6 +118,14 @@ def thread_changeAPI_function():
 # *************************************************************************************************** 
 # FUNCTIONS
 # *************************************************************************************************** 
+def reset_leds():
+    """
+    Deactivates and activates all leds
+    """  
+    demo(True)
+    time.sleep(3)
+    demo(False)
+
 def demo(flag):
     """
     Activates/deactivates all leds depending on flag value
@@ -173,9 +192,7 @@ def input_data_refresh():
 
 # demo functionality for checking all leds
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
-demo(True)
-time.sleep(3)
-demo(False)
+reset_leds()
 
 # start threads
 f_stop = threading.Event()
