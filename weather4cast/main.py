@@ -73,21 +73,18 @@ def thread_changeAPI_function():
         if button_output == WeatherButton.LongClick:
             change_weather_api(False)
         elif button_output == WeatherButton.SuperLongClick:
-            # Reset leds
             reset_leds()
             change_weather_api(True)
         elif button_output == WeatherButton.ShortClick:
             weather.weather_timeline = WeatherTimeLine.T24
-            weather_refresh_flag = True
         elif button_output == WeatherButton.DoubleClick:
             weather.weather_timeline = WeatherTimeLine.T48
-            weather_refresh_flag = True
         elif button_output == WeatherButton.TrippleClick:
             weather.weather_timeline = WeatherTimeLine.T120
-            weather_refresh_flag = True
-       
+            
         # avoid button overlapping
         if button_output != WeatherButton.NoClick:
+            weather_refresh_flag = True
             time.sleep(2)
         else:
             time.sleep(0.1) 
