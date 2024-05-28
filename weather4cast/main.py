@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# *************************************************************************************************** 
+# ***************************************************************************************************
 # ************************************************ MAIN *********************************************
-# *************************************************************************************************** 
+# ***************************************************************************************************
 import weather, weatherAPIchange
 import max7219
 import tm1637l
@@ -15,14 +15,14 @@ from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherButton, WeatherTimeLine
-
-# *************************************************************************************************** 
+ 
+# ***************************************************************************************************
 # CONSTANTS AND GLOBAL VARIABLES
-# *************************************************************************************************** 
+# ***************************************************************************************************
 weather_refresh_flag = False
 rain_warning_flag = False
 thread_max7219_running = True
-
+ 
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
         self.dayFlag = dayFlag
@@ -31,10 +31,10 @@ class ForecastInput:
         self.hour = hour
 forecast_input = ForecastInput()
 prev_forecast_input = ForecastInput()
-
-# *************************************************************************************************** 
+ 
+# ***************************************************************************************************
 # THREADS
-# *************************************************************************************************** 
+# ***************************************************************************************************
 # Thread that calls API weather every WEATHER_API_REFRESH_TIME seconds
 def thread_weatherAPI(f_stop):
     log='API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name() + \
@@ -45,7 +45,7 @@ def thread_weatherAPI(f_stop):
     weather_refresh_flag = True
     if not f_stop.is_set():
         threading.Timer(weather.get_current_weather_api_refresh_s(), thread_weatherAPI, [f_stop]).start()
-
+ 
 # Thread that blink rain icon if it rains during current day
 def thread_rainWarning(f_stop):
     global rain_warning_flag
@@ -53,7 +53,7 @@ def thread_rainWarning(f_stop):
         pcf8574.toggle_rain()
     if not f_stop.is_set():
         threading.Timer(WeatherConfig.RAIN_WARNING_REFRESH_TIME.value, thread_rainWarning, [f_stop]).start()
-
+ 
 # Thread that updates max7219 led matrix
 def thread_max7219_function():
     global thread_max7219_running
@@ -64,42 +64,18 @@ def thread_max7219_function():
         else:
             max7219.show_level()
         time.sleep(max7219.timeout)
-
+ 
 # Thread to change API when pushing button
 def thread_changeAPI_function():
     global weather_refresh_flag
     while True:
         button_output = weatherAPIchange.detect_button()
         if button_output == WeatherButton.LongClick:
-            # Update weather_api_id
-            weather.change_weather_api()
-            # Display info about new api
-            demo(False)
-            tm1637l.show_api_name()
-            if len(str(weather.api_weather_id))==1:
-                max7219.message = '0' + str(weather.api_weather_id)
-            else:
-                max7219.message = str(weather.api_weather_id)
-            time.sleep(max7219.timeout)
-            # Update api data
-            weather.refresh()
-            weather_refresh_flag = True
-            # Log api update
-            log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
-                ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
-            wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+            change_weather_api(False)
         elif button_output == WeatherButton.SuperLongClick:
-            # Set weather_api_id to the first api
-            weather.api_weather_id = 1
             # Reset leds
             reset_leds()
-            # Update api data
-            weather.refresh()
-            weather_refresh_flag = True
-            # Log api update
-            log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
-                ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
-            wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+            change_weather_api(True)
         elif button_output == WeatherButton.ShortClick:
             weather.weather_timeline = WeatherTimeLine.T24
             weather_refresh_flag = True
@@ -109,24 +85,24 @@ def thread_changeAPI_function():
         elif button_output == WeatherButton.TrippleClick:
             weather.weather_timeline = WeatherTimeLine.T120
             weather_refresh_flag = True
-        
+       
         # avoid button overlapping
         if button_output != WeatherButton.NoClick:
             time.sleep(2)
         else:
-            time.sleep(0.1)  
-
-# *************************************************************************************************** 
+            time.sleep(0.1) 
+ 
+# ***************************************************************************************************
 # FUNCTIONS
-# *************************************************************************************************** 
+# ***************************************************************************************************
 def reset_leds():
     """
-    Deactivates and activates all leds
-    """  
+    Deactivates and activates all leds, and set weather_api_id to 1
+    """ 
     demo(True)
     time.sleep(3)
     demo(False)
-
+ 
 def demo(flag):
     """
     Activates/deactivates all leds depending on flag value
@@ -134,14 +110,36 @@ def demo(flag):
     max7219.demo(flag)
     pcf8574.demo(flag)
     tm1637l.demo(flag)
-
+ 
 def show_api_error():
     """
     Deactivate all leds, except the message "api err" in tm1637
     """
     demo(False)
     tm1637l.show_api_error()
-
+ 
+def change_weather_api(reset_api_id = False):
+    global weather_refresh_flag
+    if reset_api_id == True:
+        weather.api_weather_id = 0
+    # Update weather_api_id
+    weather.change_weather_api()
+    # Display info about new api
+    demo(False)
+    tm1637l.show_api_name()
+    if len(str(weather.api_weather_id))==1:
+        max7219.message = '0' + str(weather.api_weather_id)
+    else:
+        max7219.message = str(weather.api_weather_id)
+    time.sleep(max7219.timeout)
+    # Update api data
+    weather.refresh()
+    weather_refresh_flag = True
+    # Log api update
+    log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
+        ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
+    wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+ 
 def input_data_refresh():
     """
     Checks when control input changes (new day/hour)
@@ -164,7 +162,7 @@ def input_data_refresh():
         forecast_input.hour = now.strftime("%H")
     else:
         forecast_input.hour = ky040.forecast_hour
-
+ 
     if forecast_input.dayFlag != prev_forecast_input.dayFlag:
         change_flag = True
     if forecast_input.hourFlag != prev_forecast_input.hourFlag:
@@ -173,41 +171,42 @@ def input_data_refresh():
         change_flag = True
     if forecast_input.dayFlag == True and (forecast_input.day != prev_forecast_input.day):
         change_flag = True
-
+ 
     if change_flag == True:
         log="day_flag=" + str(forecast_input.dayFlag) + \
               ", hour_flag=" + str(forecast_input.hourFlag) + \
               ", day=" + str(forecast_input.day) + ", hour=" + str(forecast_input.hour)
         wlogging.log(LogType.INFO.value,LogMessage.INDATA_CHG.name,log)
         weather_refresh_flag = True
-
+ 
     prev_forecast_input.dayFlag = forecast_input.dayFlag
     prev_forecast_input.hourFlag = forecast_input.hourFlag
     prev_forecast_input.day = forecast_input.day
     prev_forecast_input.hour = forecast_input.hour
-
-
-# *************************************************************************************************** 
+ 
+ 
+# ***************************************************************************************************
 # main
-# *************************************************************************************************** 
-
+# ***************************************************************************************************
+ 
 # demo functionality for checking all leds
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
 reset_leds()
-
+change_weather_api(True)
+ 
 # start threads
 f_stop = threading.Event()
 thread_weatherAPI(f_stop)
 thread_rainWarning(f_stop)
-
+ 
 thread_max7219 = threading.Thread(target=thread_max7219_function)
 thread_max7219.start()
-
+ 
 thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
 thread_changeAPI.start()
-
+ 
 time.sleep(2)
-
+ 
 # infinite loop
 while True:
     input_data_refresh()
@@ -219,12 +218,12 @@ while True:
             rain_warning_flag = False
             # text suffix
             suffix_24_48_120h = ''
-            if weather.weather_timeline == WeatherTimeLine.T24: 
-                suffix_24_48_120h = '24' 
+            if weather.weather_timeline == WeatherTimeLine.T24:
+                suffix_24_48_120h = '24'
             elif weather.weather_timeline == WeatherTimeLine.T48:
-                suffix_24_48_120h = '48' 
+                suffix_24_48_120h = '48'
             elif weather.weather_timeline == WeatherTimeLine.T120:
-                suffix_24_48_120h = '120' 
+                suffix_24_48_120h = '120'
             # display min/max temperature
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day, weather.weather_timeline)
             tm1637l.show_temperature(tmin,tmax)
@@ -243,9 +242,9 @@ while True:
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
-                rain_warning_flag = False     # do not blink rain status, if it is raining or snowing 
+                rain_warning_flag = False     # do not blink rain status, if it is raining or snowing
             else:
-                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
+                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
                                                              WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning=' + str(rain_warning_flag)
             # logging
@@ -253,7 +252,7 @@ while True:
             # sleep in case of showing 24h/48h data
             if weather.weather_timeline != WeatherTimeLine.T16:
                 weather.weather_timeline = WeatherTimeLine.T16
-                weather_refresh_flag = True # required new loop for showing timeline 16h  
+                weather_refresh_flag = True # required new loop for showing timeline 16h 
                 time.sleep(5)
         except Exception as e:
             show_api_error()
