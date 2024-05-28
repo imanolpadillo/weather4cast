@@ -115,7 +115,7 @@ def show_api_error():
     demo(False)
     tm1637l.show_api_error()
  
-def change_weather_api(reset_api_id = False):
+def change_weather_api(reset_api_id = False, refresh = True):
     global weather_refresh_flag
     if reset_api_id == True:
         weather.api_weather_id = 0
@@ -129,13 +129,14 @@ def change_weather_api(reset_api_id = False):
     else:
         max7219.message = str(weather.api_weather_id)
     time.sleep(max7219.timeout)
+    if refresh == True:
     # Update api data
-    weather.refresh()
-    weather_refresh_flag = True
-    # Log api update
-    log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
-        ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
-    wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+        weather.refresh()
+        weather_refresh_flag = True
+        # Log api update
+        log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
+            ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
+        wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
  
 def input_data_refresh():
     """
@@ -189,7 +190,7 @@ def input_data_refresh():
 # demo functionality for checking all leds
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
 reset_leds()
-change_weather_api(True)
+change_weather_api(True, False)
  
 # start threads
 f_stop = threading.Event()
