@@ -282,4 +282,3 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
         hour_counter+=1
     return False
 
-refresh()

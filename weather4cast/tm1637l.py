@@ -9,12 +9,15 @@
 import tm1637
 import weather
 from gpioenum import gpio
+from weatherAPIenum import WeatherConfig
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 tmin = tm1637.TM1637(clk=gpio.TM1637_TMIN_CLK.value, dio=gpio.TM1637_TMIN_DIO.value)
 tmax = tm1637.TM1637(clk=gpio.TM1637_TMAX_CLK.value, dio=gpio.TM1637_TMAX_DIO.value)
+tmin.brightness(WeatherConfig.INTENSITY_7LED.value)
+tmax.brightness(WeatherConfig.INTENSITY_7LED.value)
 
 # *************************************************************************************************** 
 # FUNCTIONS

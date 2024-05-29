@@ -17,6 +17,8 @@ class WeatherConfig(Enum):
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
+    INTENSITY_7LED = 3  # 7led intensity
+    INTENSITY_LED_MATRIX = 10  # led matrix intensity
 
 class WeatherStatus(Enum):
     SUNNY = 1

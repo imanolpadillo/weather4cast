@@ -29,6 +29,7 @@ message = ""
 serial = spi(port=0, device=0, gpio=noop())
 device = max7219(serial, cascaded=2, block_orientation=-90,
                     rotate=0, blocks_arranged_in_reverse_order=False)
+device.contrast(WeatherConfig.INTENSITY_LED_MATRIX.value)
 
 # *************************************************************************************************** 
 # FUNCTIONS
