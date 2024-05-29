@@ -187,6 +187,9 @@ def input_data_refresh():
 # main
 # ***************************************************************************************************
  
+# start weatherAPI
+weather.refresh()
+
 # demo functionality for checking all leds
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
 reset_leds()
