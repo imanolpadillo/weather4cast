@@ -188,7 +188,14 @@ def input_data_refresh():
 # ***************************************************************************************************
  
 # start weatherAPI
-weather.refresh()
+counter = 0
+while counter < 5:
+    weather.refresh()
+    if weather.weatherAPI.weekWeather[0].status[0] is None:
+        wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,'weatherAPI Counter: ' + str(counter))
+        time.sleep(2)
+    else:
+        break
 
 # demo functionality for checking all leds
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
@@ -205,8 +212,6 @@ thread_max7219.start()
  
 thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
 thread_changeAPI.start()
- 
-time.sleep(2)
  
 # infinite loop
 while True:
