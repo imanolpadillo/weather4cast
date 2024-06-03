@@ -188,14 +188,7 @@ def input_data_refresh():
 # ***************************************************************************************************
  
 # start weatherAPI
-counter = 0
-while counter < 5:
-    weather.refresh()
-    if weather.weatherAPI.weekWeather[0].status[0] is None:
-        wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,'weatherAPI Counter: ' + str(counter))
-        time.sleep(2)
-    else:
-        break
+weather.refresh()
 
 # demo functionality for checking all leds
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
