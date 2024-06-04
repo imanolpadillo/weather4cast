@@ -282,3 +282,22 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
         hour_counter+=1
     return False
 
+def get_rain_next_day(forecast_day, rain_limit):
+    """
+    returns true, if max rain value from forecast_day is higher than rain_limit
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :rain_limit: mm that are considered as rain warning
+    :return: True if it rains next day
+    """
+    global weatherAPI
+    forecast_day = int(forecast_day)
+
+    if forecast_day >= WeatherConfig.DAYS.value -1:
+        return False
+    else:
+        tomorrow_rain = weatherAPI.weekWeather[forecast_day + 1].rain    
+    rain_max = max(list(map(int, tomorrow_rain)))
+    if rain_max > rain_limit:
+        return True
+    else:
+        return False
