@@ -192,8 +192,8 @@ def input_data_refresh():
     prev_forecast_input.hourFlag = forecast_input.hourFlag
     prev_forecast_input.day = forecast_input.day
     prev_forecast_input.hour = forecast_input.hour
- 
- 
+
+
 # ***************************************************************************************************
 # main
 # ***************************************************************************************************
@@ -224,10 +224,13 @@ while True:
         try:
             weather_refresh_flag = False
             log=''
-            # check tomorrow rain
+            # check if it rains next day
             if rain_next_day_flag == True:
                 rain_next_day_flag = False
-                pcf8574.tomorrow_rain(weather.get_rain_next_day(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value))
+                rain_next_day_output = weather.get_rain_next_day(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
+                pcf8574.tomorrow_rain(rain_next_day_output)
+                if rain_next_day_output == True:
+                    wlogging.log(LogType.INFO.value,LogMessage.NEXTDAY_RAIN.name,LogMessage.NEXTDAY_RAIN.value)
             # lock rain_warning thread
             rain_warning_flag = False
             # text suffix
