@@ -227,7 +227,7 @@ while True:
             # check tomorrow rain
             if rain_next_day_flag == True:
                 rain_next_day_flag = False
-                pcf8574.tomorrow_rain(weather.get_rain_next_day())
+                pcf8574.tomorrow_rain(weather.get_rain_next_day(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value))
             # lock rain_warning thread
             rain_warning_flag = False
             # text suffix
