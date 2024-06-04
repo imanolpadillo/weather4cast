@@ -67,7 +67,7 @@ def demo(flag):
     temperature_high.write("p4", value)
     temperature_high.write("p5", value)
     temperature_high.write("p6", value)
-    temperature_high.write("p7", value)
+    temperature_high.write("p7", value)   # minus sign
     temperature_low.write("p0", value)
     temperature_low.write("p1", value)
     temperature_low.write("p2", value)
@@ -75,7 +75,7 @@ def demo(flag):
     temperature_low.write("p4", value)
     temperature_low.write("p5", value)
     temperature_low.write("p6", value)
-    temperature_low.write("p7", value)
+    temperature_low.write("p7", value)   # tomorrow rain led
     status.write("p0", value)  # sunny
     status.write("p1", value)  # partly cloudy
     status.write("p2", value)  # cloudy
@@ -194,8 +194,6 @@ def display_temperature (value):
         temperature_high.write("p7", "LOW")
     else:
         temperature_high.write("p7", "HIGH")
-    # Display grad symbol
-    temperature_low.write("p7", "LOW")
 
 def display_status(value):
     """
@@ -237,3 +235,12 @@ def toggle_rain():
     else:
         status.write(rain_pin, "HIGH")
 
+def tomorrow_rain(flag):
+    """
+    tomorrow_rain_pin is activated or not depending on flag value
+    """
+    tomorrow_rain_pin="p7"
+    if flag == True:
+        temperature_low.write(tomorrow_rain_pin, "LOW")
+    else:
+        temperature_low.write(tomorrow_rain_pin, "HIGH")
