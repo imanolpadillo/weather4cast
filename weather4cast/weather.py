@@ -10,11 +10,14 @@ from collections import Counter
 # ***************************************************************************************************
 weatherAPI = None
 api_weather_id = 1
-# weatherAPI files are ordered alphabetically, and file names are saved in the following array.
-weatherAPInames = []
+weatherAPInames = []  # weatherAPI files are ordered alphabetically. Names are saved in this array.
 weather_timeline = WeatherTimeLine.T16
 
 def count_weather_apis():
+    """
+    counts the amount of weatherAPI files (files in current path starting with 'weatherAPI').
+    :return: number of weatherAPIs
+    """
     global weatherAPInames
     directory = os.path.dirname(os.path.abspath(__file__))  # Get the directory of main.py
     count = 0
@@ -33,6 +36,11 @@ MAX_APIS = count_weather_apis()
 # FUNCTIONS
 # *************************************************************************************************** 
 def get_weather_api_module(weather_api_index):
+    """
+    imports a weatherAPI file depending on input index.
+    :param weather_api_index: integer indicating weatherAPI index
+    :return: weatherAPI module
+    """
     global weatherAPInames
     module_name = weatherAPInames[weather_api_index-1]
     try:
@@ -65,6 +73,9 @@ def get_current_weather_api_refresh_s():
 
 # Change weather api
 def change_weather_api():
+    """
+    increases weather_api_id
+    """
     global api_weather_id
     if api_weather_id < MAX_APIS:
         api_weather_id += 1
@@ -284,7 +295,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
 
 def get_rain_next_day(forecast_day, rain_limit):
     """
-    returns true, if max rain value from forecast_day is higher than rain_limit
+    returns true, if max rain value for day after forecast_day is higher than rain_limit
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :rain_limit: mm that are considered as rain warning
     :return: True if it rains next day
