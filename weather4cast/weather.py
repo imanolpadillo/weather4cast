@@ -308,7 +308,7 @@ def get_rain_next_day(forecast_day, rain_limit):
     else:
         tomorrow_rain = weatherAPI.weekWeather[forecast_day + 1].rain    
     rain_max = max(list(map(float, tomorrow_rain)))
-    if rain_max > rain_limit:
+    if rain_max >= rain_limit:
         return True
     else:
         return False
