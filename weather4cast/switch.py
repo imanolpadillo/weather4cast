@@ -28,6 +28,9 @@ def switch_state(PIN):
     return GPIO.input(PIN) == GPIO.HIGH
 
 def update():
+    """
+    updates switch current value.
+    """
     global forecast_day_flag, forecast_hour_flag
     forecast_day_flag = switch_state(DAY_PIN)
     forecast_hour_flag = switch_state(HOUR_PIN)
