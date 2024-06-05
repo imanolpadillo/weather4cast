@@ -13,7 +13,7 @@ from gpioenum import gpio
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
-forecast_day = 0   # 0=today, 1=tomorrow...
+forecast_day = 1   # 0=today, 1=tomorrow...
 forecast_hour = 0  # 0=00:00, 1=01:00 ... 23=23:00
 
 HourDialCLK = gpio.KY040_HOUR_CLK.value
@@ -51,7 +51,7 @@ def dayDialPushed():
     """
     day_dial.stop()
     day_dial.start()
-    setForecastDay(0)
+    setForecastDay(1)
     # print("reset day")
 
 def dayDialChanged(count):
