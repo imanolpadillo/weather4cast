@@ -34,12 +34,21 @@ lastWasInc = False
 
 ## Define DAY-Callback functions
 def dayDialTurnInc():
+    """
+    Incremental change detected
+    """
     print("") #+day
 
 def dayDialTurnDec():
+    """
+    Decremental change detected
+    """
     print("") #-day
 
 def dayDialPushed():
+    """
+    Push button activated
+    """
     day_dial.stop()
     day_dial.start()
     setForecastDay(0)
@@ -85,7 +94,7 @@ def hourDialPushed():
     # print("reset hour")
 
 def hourDialChanged(count):
-    print(count) ## Current Counter value
+    # print(count) ## Current Counter value
     setForecastHour(count)
 
 def setForecastHour(count):
