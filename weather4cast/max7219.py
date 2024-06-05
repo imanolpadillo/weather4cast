@@ -123,6 +123,9 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16):
 
 
 def show_level():
+    """
+    displays level global value in led matrix.
+    """
     global level
     image = Image.new("1", (16, 8))
     image.putdata(level)
