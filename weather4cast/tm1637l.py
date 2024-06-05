@@ -36,10 +36,16 @@ def demo(flag):
         tmax.write([0, 0, 0, 0])
 
 def show_api_error():
+    """
+    displays 'api err' in 7-segment displays.
+    """
     tmax.show(' api')
     tmin.show(' err')
 
 def show_api_name():
+    """
+    displays current weather api name in 7-segment displays.
+    """
     api_name = weather.get_current_weather_api_name()
     tmax.show(api_name[:4])   # first 4 characters
     tmin.show(api_name[4:8])  # next 4 characters
@@ -49,7 +55,6 @@ def show_temperature(min, max):
     shows min and max temperature
     :param min: min temperature
     :param max: max temperature
-    :return: -
     """
     tmin.temperature(int(min))
     tmax.temperature(int(max))
