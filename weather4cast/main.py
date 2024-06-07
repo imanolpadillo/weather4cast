@@ -165,6 +165,8 @@ def input_data_refresh():
         madrid_tz = pytz.timezone('Europe/Madrid')
         now = datetime.now(madrid_tz)
         forecast_input.hour = now.strftime("%H")
+        if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
+            check_rain_next_day_flag = True   # new day at 00:00:00
     else:
         forecast_input.hour = ky040.forecast_hour
  
@@ -178,8 +180,6 @@ def input_data_refresh():
     if forecast_input.dayFlag == True and (forecast_input.day != prev_forecast_input.day):
         change_flag = True
         check_rain_next_day_flag = True   # change day from select day
-    if forecast_input.dayFlag == False and forecast_input.hourFlag == False and (forecast_input.day != prev_forecast_input.day):
-        check_rain_next_day_flag = True   # new day
  
     if change_flag == True:
         log="day_flag=" + str(forecast_input.dayFlag) + \
