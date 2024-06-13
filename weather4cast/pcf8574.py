@@ -93,18 +93,27 @@ def demo(flag):
 #         p6
 #      p4    p2
 #         p3       p7
-def display_number(temperature_digit, value):
+def display_number(temperature_digit, value, disable_zero = False):
     """
     Activates leds for generating corresponding number
     """
     if value == 0:
-        temperature_digit.write("p0", "LOW")
-        temperature_digit.write("p1", "LOW")
-        temperature_digit.write("p2", "LOW")
-        temperature_digit.write("p3", "LOW")
-        temperature_digit.write("p4", "LOW")
-        temperature_digit.write("p5", "LOW")
-        temperature_digit.write("p6", "HIGH")
+        if disable_zero == False:
+            temperature_digit.write("p0", "LOW")
+            temperature_digit.write("p1", "LOW")
+            temperature_digit.write("p2", "LOW")
+            temperature_digit.write("p3", "LOW")
+            temperature_digit.write("p4", "LOW")
+            temperature_digit.write("p5", "LOW")
+            temperature_digit.write("p6", "HIGH")
+        else:
+            temperature_digit.write("p0", "HIGH")
+            temperature_digit.write("p1", "HIGH")
+            temperature_digit.write("p2", "HIGH")
+            temperature_digit.write("p3", "HIGH")
+            temperature_digit.write("p4", "HIGH")
+            temperature_digit.write("p5", "HIGH")
+            temperature_digit.write("p6", "HIGH")
     elif value == 1:
         temperature_digit.write("p0", "HIGH")
         temperature_digit.write("p1", "LOW")
@@ -187,7 +196,7 @@ def display_temperature (value):
     # Extract tens and units digits
     tens = value // 10
     units = value % 10
-    display_number(temperature_high, tens)
+    display_number(temperature_high, tens, True)
     display_number(temperature_low, units)
     # Display sign
     if value < 0:
