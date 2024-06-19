@@ -293,7 +293,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
         hour_counter+=1
     return False
 
-def get_rain_next_day(forecast_day, rain_limit):
+def get_tomorrow_rain(forecast_day, rain_limit):
     """
     returns true, if max rain value for day after forecast_day is higher than rain_limit
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
