@@ -21,7 +21,7 @@ from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherButton, WeatherT
 # ***************************************************************************************************
 weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
-check_rain_next_day_flag = True    # activated to check next day rain
+check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
  
 class ForecastInput:
@@ -69,7 +69,7 @@ def thread_max7219_function():
 # Thread to change API when pushing button
 def thread_changeAPI_function():
     global weather_refresh_flag
-    global check_rain_next_day_flag  # disabled with double/tripple click
+    global check_tomorrow_rain_flag  # disabled with double/tripple click
     while True:
         button_output = weatherAPIchange.detect_button()
         if button_output == WeatherButton.LongClick:
@@ -80,9 +80,11 @@ def thread_changeAPI_function():
         elif button_output == WeatherButton.ShortClick:
             weather.weather_timeline = WeatherTimeLine.T24
         elif button_output == WeatherButton.DoubleClick:
+            check_tomorrow_rain_flag = False
             pcf8574.tomorrow_rain(False)
             weather.weather_timeline = WeatherTimeLine.T48
         elif button_output == WeatherButton.TrippleClick:
+            check_tomorrow_rain_flag = False
             pcf8574.tomorrow_rain(False)
             weather.weather_timeline = WeatherTimeLine.T120
             
@@ -121,8 +123,8 @@ def show_api_error():
  
 def change_weather_api(reset_api_id = False, refresh = True):
     global weather_refresh_flag
-    global check_rain_next_day_flag
-    check_rain_next_day_flag = True
+    global check_tomorrow_rain_flag
+    check_tomorrow_rain_flag = True
     if reset_api_id == True:
         weather.api_weather_id = 0
     # Update weather_api_id
@@ -150,7 +152,7 @@ def input_data_refresh():
     """
     change_flag = False
     global weather_refresh_flag
-    global check_rain_next_day_flag
+    global check_tomorrow_rain_flag
     global forecast_input
     global prev_forecast_input
     switch.update()
@@ -165,21 +167,21 @@ def input_data_refresh():
         madrid_tz = pytz.timezone('Europe/Madrid')
         now = datetime.now(madrid_tz)
         forecast_input.hour = now.strftime("%H")
-        if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 5 and int(now.strftime("%S")) == 0:
-            check_rain_next_day_flag = True   # new day at 00:00:00
+        if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
+            check_tomorrow_rain_flag = True   # new day at 00:00:00
     else:
         forecast_input.hour = ky040.forecast_hour
  
     if forecast_input.dayFlag != prev_forecast_input.dayFlag:
         change_flag = True
-        check_rain_next_day_flag = True   # change from today to select day and viceversa
+        check_tomorrow_rain_flag = True   # change from today to select day and viceversa
     if forecast_input.hourFlag != prev_forecast_input.hourFlag:
         change_flag = True
     if forecast_input.hour != prev_forecast_input.hour:
         change_flag = True
     if forecast_input.dayFlag == True and (forecast_input.day != prev_forecast_input.day):
         change_flag = True
-        check_rain_next_day_flag = True   # change day from select day
+        check_tomorrow_rain_flag = True   # change day from select day
  
     if change_flag == True:
         log="day_flag=" + str(forecast_input.dayFlag) + \
@@ -193,24 +195,22 @@ def input_data_refresh():
     prev_forecast_input.day = forecast_input.day
     prev_forecast_input.hour = forecast_input.hour
 
-def check_rain_next_day():
+def check_tomorrow_rain():
     """
-    if 'check_rain_next_day_flag' is activated:
+    if 'check_tomorrow_rain_flag' is activated:
         - when day switch is changed
         - when day dial is modified with day switch activated
         - when day is changed with switches deactivated
     'get_rain_next_day()' is called to check if next day rains. In that case
     tomorrow_rain led is activated.
     """
-    global check_rain_next_day_flag
+    global check_tomorrow_rain_flag
     global forecast_input
-    if check_rain_next_day_flag == True:
-        check_rain_next_day_flag = False
-        rain_flag = weather.get_rain_next_day(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
+    rain_flag = False
+    if check_tomorrow_rain_flag == True:
+        rain_flag = weather.get_tomorrow_rain(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
         pcf8574.tomorrow_rain(rain_flag)
-        if rain_flag == True:
-            wlogging.log(LogType.INFO.value,LogMessage.NEXTDAY_RAIN.name,LogMessage.NEXTDAY_RAIN.value)
-
+    return rain_flag
 
 # ***************************************************************************************************
 # main
@@ -242,8 +242,6 @@ while True:
         try:
             weather_refresh_flag = False
             log=''
-            # check if it rains next day
-            check_rain_next_day()
             # lock rain_warning thread
             rain_warning_flag = False
             # text suffix
@@ -277,6 +275,9 @@ while True:
                 rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
                                                              WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning=' + str(rain_warning_flag)
+            # display tomorrow rain
+            tomorrow_rain = check_tomorrow_rain()
+            log+='; tomorrow_rain=' + str(tomorrow_rain)
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data
