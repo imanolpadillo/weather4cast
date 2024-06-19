@@ -21,7 +21,6 @@ class LogMessage(Enum):
     SWITCH_ON =    'Starting weather4cast!'
     INDATA_CHG =   'INDATA_CHG'
     OUTDATA_CHG =  'OUTDATA_CHG'
-    NEXTDAY_RAIN = 'Next day rains warning!'
     API_CHG =      'API_CHG'
     API_UPD =      'API_UPD'
     ERR_API_DATA = 'No API data'
