@@ -203,14 +203,18 @@ def check_tomorrow_rain():
         - when day is changed with switches deactivated
     'get_rain_next_day()' is called to check if next day rains. In that case
     tomorrow_rain led is activated.
+    returns:
+        - 'Disabled': when user doble/triple clicked action button
+        - 'True': tomorrow rains
+        - 'False': tomorrow does not rain
     """
     global check_tomorrow_rain_flag
     global forecast_input
-    rain_flag = False
+    rain_flag = 'Disabled'
     if check_tomorrow_rain_flag == True:
         rain_flag = weather.get_tomorrow_rain(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
         pcf8574.tomorrow_rain(rain_flag)
-    return rain_flag
+    return str(rain_flag)
 
 # ***************************************************************************************************
 # main
