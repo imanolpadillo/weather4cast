@@ -44,10 +44,6 @@ class WeatherButton(Enum):
     LongClick = 4
     SuperLongClick = 5
 
-class WeatherTomorrowRain(Enum):
-    Enabled = 1
-    Disabled = 2
-
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
         self.status = status if status is not None else [None]*24
