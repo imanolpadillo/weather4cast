@@ -19,6 +19,9 @@ class WeatherConfig(Enum):
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
     INTENSITY_7LED = 3  # 7led intensity
     INTENSITY_LED_MATRIX = 10  # led matrix intensity
+    ECO_MODE_ON = True  # in 'eco mode' keds are switched off in eco time
+    ECO_MODE_INIT_HOUR = 22  # 'eco mode' init hour
+    ECO_MODE_END_HOUR = 7  # 'eco mode' end hour 
 
 class WeatherStatus(Enum):
     SUNNY = 1

@@ -23,6 +23,7 @@ weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
+eco_mode_flag = False              # in eco mode, all leds are switched off
  
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
@@ -70,6 +71,7 @@ def thread_max7219_function():
 def thread_changeAPI_function():
     global weather_refresh_flag
     global check_tomorrow_rain_flag  # disabled with double/tripple click
+    global eco_mode_flag
     while True:
         button_output = weatherAPIchange.detect_button()
         if button_output == WeatherButton.LongClick:
@@ -90,6 +92,7 @@ def thread_changeAPI_function():
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick:
+            eco_mode_flag = False
             weather_refresh_flag = True
             time.sleep(2)
         else:
@@ -155,6 +158,7 @@ def input_data_refresh():
     global check_tomorrow_rain_flag
     global forecast_input
     global prev_forecast_input
+    global eco_mode_flag
     switch.update()
     forecast_input.dayFlag = switch.forecast_day_flag
     forecast_input.hourFlag = switch.forecast_hour_flag
@@ -167,8 +171,24 @@ def input_data_refresh():
         madrid_tz = pytz.timezone('Europe/Madrid')
         now = datetime.now(madrid_tz)
         forecast_input.hour = now.strftime("%H")
+        # Reset check_tomorrow_rain_flag at 00:00:00
         if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
             check_tomorrow_rain_flag = True   # new day at 00:00:00
+        if WeatherConfig.ECO_MODE_ON.value == True:
+            # Set eco_mode_flag at eco_init_hour
+            if int(now.strftime("%H")) == WeatherConfig.ECO_MODE_INIT_HOUR.value and int(now.strftime("%M")) == 0 and \
+                int(now.strftime("%S")) == 0 and eco_mode_flag == False:
+                demo(False)  # reset all leds
+                eco_mode_flag = True
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
+            # Reset eco_mode_flag at eco_end_hour
+            if int(now.strftime("%H")) == WeatherConfig.ECO_MODE_END_HOUR.value and int(now.strftime("%M")) == 0 and \
+                int(now.strftime("%S")) == 0 and eco_mode_flag == True:
+                eco_mode_flag = False
+                weather_refresh_flag = True
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
+        else:
+            eco_mode_flag = False
     else:
         forecast_input.hour = ky040.forecast_hour
  
@@ -242,7 +262,7 @@ thread_changeAPI.start()
 # infinite loop
 while True:
     input_data_refresh()
-    if weather_refresh_flag == True:
+    if eco_mode_flag == False and weather_refresh_flag == True:
         try:
             weather_refresh_flag = False
             log=''
@@ -277,7 +297,7 @@ while True:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing
             else:
                 rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
-                                                             WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                                                            WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning=' + str(rain_warning_flag)
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()

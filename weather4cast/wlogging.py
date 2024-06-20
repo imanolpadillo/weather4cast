@@ -25,6 +25,8 @@ class LogMessage(Enum):
     API_UPD =      'API_UPD'
     ERR_API_DATA = 'No API data'
     ERR_API_CONN = 'Unable to connect with API'
+    ECO_MODE_ON =  'ECO MODE activated'
+    ECO_MODE_OFF = 'ECO MODE deactivated'
 
 # logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
 current_path = os.path.dirname(os.path.abspath(__file__))
