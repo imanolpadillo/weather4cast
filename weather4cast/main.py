@@ -67,8 +67,16 @@ def thread_max7219_function():
             max7219.show_level()
         time.sleep(max7219.timeout)
  
-# Thread to change API when pushing button
-def thread_changeAPI_function():
+# Thread to activate action button functionalities
+def thread_actionButton_function():
+    '''
+    _____ RST  : Reset system
+    __    API+ : API change +1
+    _ __  API- : API change -1
+    _     24H  : Display 24H weather
+    _ _   48H  : Display tomorrow weather
+    _ _ _ 120H : Display next 5 day weather
+    '''
     global weather_refresh_flag
     global check_tomorrow_rain_flag  # disabled with double/tripple click
     global eco_mode_flag
@@ -258,8 +266,8 @@ thread_rainWarning(f_stop)
 thread_max7219 = threading.Thread(target=thread_max7219_function)
 thread_max7219.start()
  
-thread_changeAPI = threading.Thread(target=thread_changeAPI_function)
-thread_changeAPI.start()
+thread_actionButton = threading.Thread(target=thread_actionButton_function)
+thread_actionButton.start()
  
 # infinite loop
 while True:

@@ -32,6 +32,14 @@ GPIO.setup(PULSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Function to detect click
 def detect_button():
+    '''
+    _____ Super long click
+    __    Long click
+    _ __  Short click + long click
+    _     Short click
+    _ _   Double click
+    _ _ _ Triple click
+    '''
     global super_long_click_flag
     click = 'none'
     if GPIO.input(PULSE_PIN) == 0:
@@ -40,38 +48,38 @@ def detect_button():
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
-            if time.time() - start_time >= 1.0:  # Long click threshold 
+            if time.time() - start_time >= 1.0:  
                 # print('longClick')
                 super_long_click_flag = True
-                return WeatherButton.LongClick
+                return WeatherButton.LongClick       # Long click threshold 
             time.sleep(0.01) 
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
-            if time.time() - start_time >= 0.5:  # Short click threshold 
+            if time.time() - start_time >= 0.5:  
                 # print('shortClick')
-                return WeatherButton.ShortClick   
+                return WeatherButton.ShortClick      # Short click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
-            if time.time() - start_time >= 1.0:  # Short click - long click threshold 
+            if time.time() - start_time >= 1.0:  
                 # print('shortLongClick')
-                return WeatherButton.ShortLongClick
+                return WeatherButton.ShortLongClick  # Short click + long click threshold 
             time.sleep(0.01) 
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
-            if time.time() - start_time >= 0.5:  # Double click threshold 
+            if time.time() - start_time >= 0.5:  
                 # print('doubleClick')
-                return WeatherButton.DoubleClick   
+                return WeatherButton.DoubleClick     # Double click threshold 
             time.sleep(0.01) 
         # print('trippleClick')
-        return WeatherButton.TrippleClick
+        return WeatherButton.TrippleClick            # Tripple click threshold 
     elif super_long_click_flag == True:
         # long click remains
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
-            if time.time() - start_time >= 2.0:  # Super long click threshold 
+            if time.time() - start_time >= 2.0:  
                 # print('superLongClick')
                 super_long_click_flag = False
-                return WeatherButton.SuperLongClick        
+                return WeatherButton.SuperLongClick  # Super long click threshold       
     # print('noClick')
     return WeatherButton.NoClick
 
