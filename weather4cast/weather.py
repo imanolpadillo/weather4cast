@@ -72,15 +72,21 @@ def get_current_weather_api_refresh_s():
     return weatherAPI.api_refresh_s
 
 # Change weather api
-def change_weather_api():
+def change_weather_api(increase = True):
     """
     increases weather_api_id
     """
     global api_weather_id
-    if api_weather_id < MAX_APIS:
-        api_weather_id += 1
+    if increase == True:
+        if api_weather_id < MAX_APIS:
+            api_weather_id += 1
+        else:
+            api_weather_id = 1
     else:
-        api_weather_id = 1
+        if api_weather_id <= 1:
+            api_weather_id = MAX_APIS
+        else:
+            api_weather_id -= 1
 
 def refresh():
     """

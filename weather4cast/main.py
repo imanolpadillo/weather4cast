@@ -75,7 +75,9 @@ def thread_changeAPI_function():
     while True:
         button_output = weatherAPIchange.detect_button()
         if button_output == WeatherButton.LongClick:
-            change_weather_api(False)
+            change_weather_api(False, True, True)
+        elif button_output == WeatherButton.ShortLongClick:
+            change_weather_api(False, True, False)
         elif button_output == WeatherButton.SuperLongClick:
             reset_leds()
             change_weather_api(True)
@@ -124,14 +126,14 @@ def show_api_error():
     demo(False)
     tm1637l.show_api_error()
  
-def change_weather_api(reset_api_id = False, refresh = True):
+def change_weather_api(reset_api_id = False, refresh = True, increase = True):
     global weather_refresh_flag
     global check_tomorrow_rain_flag
     check_tomorrow_rain_flag = True
     if reset_api_id == True:
         weather.api_weather_id = 0
     # Update weather_api_id
-    weather.change_weather_api()
+    weather.change_weather_api(increase)
     # Display info about new api
     demo(False)
     tm1637l.show_api_name()

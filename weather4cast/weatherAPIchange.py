@@ -52,10 +52,13 @@ def detect_button():
                 return WeatherButton.ShortClick   
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 1.0:  # Short click - long click threshold 
+                # print('shortLongClick')
+                return WeatherButton.ShortLongClick
             time.sleep(0.01) 
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
-            if time.time() - start_time >= 0.5:  # Short click threshold 
+            if time.time() - start_time >= 0.5:  # Double click threshold 
                 # print('doubleClick')
                 return WeatherButton.DoubleClick   
             time.sleep(0.01) 
