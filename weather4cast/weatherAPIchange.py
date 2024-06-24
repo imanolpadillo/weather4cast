@@ -15,6 +15,7 @@ from weatherAPIenum import WeatherTimeLine, WeatherButton
 # *************************************************************************************************** 
 # When button is pressed>1second, this flag is activated.
 super_long_click_flag = False
+ultra_long_click_flag = False
 
 # Set up GPIO using BCM numbering
 GPIO.setmode(GPIO.BCM)
@@ -33,7 +34,8 @@ GPIO.setup(PULSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 # Function to detect click
 def detect_button():
     '''
-    _____ Super long click
+    _____ Ultra long click
+    ___   Super long click
     __    Long click
     _ __  Short click + long click
     _     Short click
@@ -41,7 +43,7 @@ def detect_button():
     _ _ _ Triple click
     '''
     global super_long_click_flag
-    click = 'none'
+    global ultra_long_click_flag
     if GPIO.input(PULSE_PIN) == 0:
         super_long_click_flag = False
         while GPIO.input(PULSE_PIN) == 0:
@@ -77,9 +79,23 @@ def detect_button():
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 2.0:  
-                # print('superLongClick')
                 super_long_click_flag = False
-                return WeatherButton.SuperLongClick  # Super long click threshold       
+                ultra_long_click_flag = True
+                # print('superLongClick')
+                return WeatherButton.SuperLongClick  # Super long click threshold 
+        super_long_click_flag = False
+        ultra_long_click_flag = True 
+        return WeatherButton.NoClick
+    elif ultra_long_click_flag == True:
+        # long click remains
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 2.0:  
+                # print('ultraLongClick')
+                ultra_long_click_flag = False
+                return WeatherButton.UltraLongClick  # Ultra long click threshold  
+        ultra_long_click_flag = False
+        return WeatherButton.NoClick                   
     # print('noClick')
     return WeatherButton.NoClick
 

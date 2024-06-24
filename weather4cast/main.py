@@ -71,6 +71,7 @@ def thread_max7219_function():
 def thread_actionButton_function():
     '''
     _____ RST  : Reset system
+    ___   ECO  : Activate ECO
     __    API+ : API change +1
     _ __  API- : API change -1
     _     24H  : Display 24H weather
@@ -83,25 +84,43 @@ def thread_actionButton_function():
     while True:
         button_output = weatherAPIchange.detect_button()
         if button_output == WeatherButton.LongClick:
+            # __    API+ : API change +1
+            # print('API+')
             change_weather_api(False, True, True)
         elif button_output == WeatherButton.ShortLongClick:
+            # _ __  API- : API change -1
+            # print('API-')
             change_weather_api(False, True, False)
         elif button_output == WeatherButton.SuperLongClick:
+            # ___   ECO  : Activate ECO
+            # print('ECO')
+            demo(False)
+            eco_mode_flag = True
+        elif button_output == WeatherButton.UltraLongClick:
+            # _____ RST  : Reset system
+            # print('RST')
             reset_leds()
             change_weather_api(True)
         elif button_output == WeatherButton.ShortClick:
+            # _     24H  : Display 24H weather
+            # print('24H')
             weather.weather_timeline = WeatherTimeLine.T24
         elif button_output == WeatherButton.DoubleClick:
+            # _ _   48H  : Display tomorrow weather
+            # print('48H')
             check_tomorrow_rain_flag = False
             pcf8574.tomorrow_rain(False)
             weather.weather_timeline = WeatherTimeLine.T48
         elif button_output == WeatherButton.TrippleClick:
+            # _ _ _ 120H : Display next 5 day weather
+            # print('120H')
             check_tomorrow_rain_flag = False
             pcf8574.tomorrow_rain(False)
             weather.weather_timeline = WeatherTimeLine.T120
             
         # avoid button overlapping
-        if button_output != WeatherButton.NoClick:
+        if button_output != WeatherButton.NoClick and button_output != WeatherButton.SuperLongClick:
+            print('REFRESH')
             eco_mode_flag = False
             weather_refresh_flag = True
             time.sleep(2)
