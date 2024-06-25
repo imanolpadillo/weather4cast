@@ -44,10 +44,10 @@ class WeatherButton(Enum):
     ShortClick = 1
     DoubleClick = 2
     TrippleClick = 3
-    LongClick = 4
-    ShortLongClick = 5
-    SuperLongClick = 6
-    UltraLongClick = 7
+    ShortLongClick = 4
+    ShortShortLongClick = 5
+    LongClick = 6
+    SuperLongClick = 7
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
