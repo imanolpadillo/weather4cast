@@ -323,6 +323,7 @@ while True:
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
                 lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
+                wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             max7219.calculate_level(rain,weather.weather_timeline)
