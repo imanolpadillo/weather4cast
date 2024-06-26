@@ -31,7 +31,7 @@ def rgb_to_hex(r, g, b):
     '''
     return f"#{r:02x}{g:02x}{b:02x}"
 
-def set_lifx_color(r, g, b):
+def set_lifx_color(r, g, b, s):
     '''
     Function to set LIFX color from RGB input
     '''
@@ -40,7 +40,7 @@ def set_lifx_color(r, g, b):
     # The payload to set the color to blue
     payload = {
         # "power": "on",           # Turn the light on
-        "color": hex_color + " saturation:0.8",      # Set the color
+        "color": hex_color + " saturation:" + str(s),      # Set the color
         "brightness": 1.0,       # Set brightness (0.0 to 1.0)
         "duration": 1.0          # Duration of the transition in seconds
     }
@@ -48,10 +48,10 @@ def set_lifx_color(r, g, b):
     # Make the request to the LIFX API to change the light color
     response = requests.put(BASE_URL, headers=headers, json=payload)
 
-    # Check the response
-    if response.status_code == 207:  # Multi-Status
-        print("The color has been set.")
-    else:
-        print(f"Failed to set color: {response.status_code} - {response.text}")
+    # # Check the response
+    # if response.status_code == 207:  # Multi-Status
+    #     print("The color has been set.")
+    # else:
+    #     print(f"Failed to set color: {response.status_code} - {response.text}")
 
-set_lifx_color(20,200,0)
+# set_lifx_color(0, 0, 200, 0.8)

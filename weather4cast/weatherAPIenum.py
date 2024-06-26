@@ -34,14 +34,14 @@ class WeatherStatus(Enum):
     SNOWY = 8
 
 class WeatherLifxColor(Enum):
-    SUNNY = (255, 0, 0)
-    PARTLY_CLOUDY = (0, 255, 0)
-    CLOUDY = (255, 0, 0)
-    RAINY = (255, 0, 0)
-    STORMY = (255, 0, 0)
-    WINDY = (255, 0, 0)
-    FOGGY = (255, 0, 0)
-    SNOWY = (255, 0, 0)
+    SUNNY = (249, 192, 120, 0.5)
+    PARTLY_CLOUDY = (249, 192, 120, 0.1)
+    CLOUDY = (215, 244, 250, 0.2)
+    RAINY = (14, 3, 251, 1.0)
+    STORMY = (74, 14, 245, 0.5)
+    WINDY = (17, 151, 126, 0.5)
+    FOGGY = (1, 23, 33, 0.2)
+    SNOWY = (53, 228, 240, 0.9)
 
 class WeatherTimeLine(Enum):
     T16 = 16    # default
