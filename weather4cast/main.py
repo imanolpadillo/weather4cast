@@ -122,7 +122,7 @@ def thread_actionButton_function():
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and button_output != WeatherButton.LongClick:
-            print('REFRESH')
+            # print('REFRESH')
             eco_mode_flag = False
             weather_refresh_flag = True
             time.sleep(2)
