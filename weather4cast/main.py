@@ -320,7 +320,7 @@ while True:
             pcf8574.display_status(status)
             log+='; status' + suffix_24_48_120h + '=' + str(status)
             # change lifx color
-            if status != last_status:
+            if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
                 lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
             # display rain
