@@ -41,7 +41,7 @@ def set_lifx_color(r, g, b, s):
     payload = {
         # "power": "on",           # Turn the light on
         "color": hex_color + " saturation:" + str(s),      # Set the color
-        "brightness": 1.0,       # Set brightness (0.0 to 1.0)
+        # "brightness": 1.0,       # Set brightness (0.0 to 1.0)
         "duration": 1.0          # Duration of the transition in seconds
     }
 
