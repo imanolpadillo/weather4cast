@@ -8,13 +8,14 @@ import tm1637l
 import ky040
 import pcf8574
 import switch
+import lifx
 from time import strftime
 import threading, time
 import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherButton, WeatherTimeLine
+from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxColor, WeatherButton, WeatherTimeLine
  
 # ***************************************************************************************************
 # CONSTANTS AND GLOBAL VARIABLES
@@ -24,6 +25,7 @@ rain_warning_flag = False          # activated if it starts raining in following
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
 eco_mode_flag = False              # in eco mode, all leds are switched off
+last_status = None                 # if last_status != current_status, LIFX color changes
  
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
@@ -317,6 +319,10 @@ while True:
             status=weather.get_status(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_status(status)
             log+='; status' + suffix_24_48_120h + '=' + str(status)
+            # change lifx color
+            if status != last_status:
+                last_status = status
+                lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             max7219.calculate_level(rain,weather.weather_timeline)

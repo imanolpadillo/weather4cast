@@ -33,6 +33,16 @@ class WeatherStatus(Enum):
     FOGGY = 7
     SNOWY = 8
 
+class WeatherLifxColor(Enum):
+    SUNNY = (255, 0, 0)
+    PARTLY_CLOUDY = (0, 255, 0)
+    CLOUDY = (255, 0, 0)
+    RAINY = (255, 0, 0)
+    STORMY = (255, 0, 0)
+    WINDY = (255, 0, 0)
+    FOGGY = (255, 0, 0)
+    SNOWY = (255, 0, 0)
+
 class WeatherTimeLine(Enum):
     T16 = 16    # default
     T24 = 24    # short click: daily 24h
