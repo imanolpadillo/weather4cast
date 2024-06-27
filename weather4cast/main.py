@@ -320,12 +320,6 @@ while True:
             status=weather.get_status(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_status(status)
             log+='; status' + suffix_24_48_120h + '=' + str(status)
-            # change lifx color
-            if WeatherConfig.LIFX_ON.value == True and status != last_status:
-                last_status = status
-                #lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
-                lifx.set_lifx_scene(WeatherLifxScenes[status.name].value)
-                wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             max7219.calculate_level(rain,weather.weather_timeline)
@@ -340,6 +334,12 @@ while True:
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()
             log+='; tomorrow_rain=' + str(tomorrow_rain)
+            # change lifx color
+            if WeatherConfig.LIFX_ON.value == True and status != last_status:
+                last_status = status
+                #lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
+                lifx.set_lifx_scene(WeatherLifxScenes[status.name].value)
+                wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data
