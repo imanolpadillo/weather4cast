@@ -15,7 +15,8 @@ import pytz
 from datetime import datetime
 import wlogging
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxColor, WeatherButton, WeatherTimeLine
+from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxColor, WeatherLifxScenes, \
+WeatherButton, WeatherTimeLine
  
 # ***************************************************************************************************
 # CONSTANTS AND GLOBAL VARIABLES
@@ -322,7 +323,8 @@ while True:
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
-                lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
+                #lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
+                lifx.set_lifx_scene(*WeatherLifxScenes[status.name].value)
                 wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
