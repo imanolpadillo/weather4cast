@@ -53,7 +53,12 @@ def set_lifx_scene(scene_name):
         scene_uuid = scene['uuid']
         url = f"https://api.lifx.com/v1/scenes/scene_id:{scene_uuid}/activate"
 
-        activate_response = requests.post(url, headers=headers)
+        # The payload to set the color to blue
+        data = {
+            "ignore": ["power"]
+        }
+
+        activate_response = requests.put(url, headers=headers, json=data)
 
         if activate_response.status_code != 207:
             print(f"Failed to activate scene '{scene_name}'. Status code: {activate_response.status_code}")
@@ -93,6 +98,6 @@ def set_lifx_color(r, g, b, s):
 
 lifx_scenes = get_lifx_scenes()
 # set_lifx_color(0, 0, 200, 0.8)
-# set_lifx_scene('stormy')
+set_lifx_scene('stormy')
 
 
