@@ -44,6 +44,16 @@ class WeatherLifxColor(Enum):
     FOGGY = (1, 23, 33, 0.2)
     SNOWY = (53, 228, 240, 0.9)
 
+class WeatherLifxScenes(Enum):
+    SUNNY = 'sunny'
+    PARTLY_CLOUDY = 'partly_cloudy'
+    CLOUDY = 'cloudy'
+    RAINY = 'rainy' 
+    STORMY = 'stormy'
+    WINDY = 'windy'
+    FOGGY = 'foggy'
+    SNOWY = 'snowy'
+
 class WeatherTimeLine(Enum):
     T16 = 16    # default
     T24 = 24    # short click: daily 24h
