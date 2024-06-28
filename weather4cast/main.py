@@ -25,7 +25,8 @@ weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
-eco_mode_flag = False              # in eco mode, all leds are switched off
+eco_mode_flag = False              # in eco mode, all leds are switched off until eco end time
+eco_manual_flag = False            # in manual eco, all leds are switched off until manual disabling
 last_status = None                 # if last_status != current_status, LIFX color changes
  
 class ForecastInput:
@@ -84,6 +85,7 @@ def thread_actionButton_function():
     global weather_refresh_flag
     global check_tomorrow_rain_flag  # disabled with double/tripple click
     global eco_mode_flag
+    global eco_manual_flag
     while True:
         button_output = weatherAPIchange.detect_button()
         if button_output == WeatherButton.ShortLongClick:
@@ -98,7 +100,9 @@ def thread_actionButton_function():
             # _   ECO     : Activate ECO
             # print('ECO')
             demo(False)
-            eco_mode_flag = True
+            eco_manual_flag = True
+            wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
+            # eco_mode_flag = True
         elif button_output == WeatherButton.SuperLongClick:
             # __  RST     : Reset system
             # print('RST')
@@ -123,7 +127,9 @@ def thread_actionButton_function():
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and button_output != WeatherButton.LongClick:
-            # print('REFRESH')
+            if eco_manual_flag == True or eco_mode_flag == True:
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
+            eco_manual_flag = False
             eco_mode_flag = False
             weather_refresh_flag = True
             time.sleep(2)
@@ -294,7 +300,7 @@ thread_actionButton.start()
 # infinite loop
 while True:
     input_data_refresh()
-    if eco_mode_flag == False and weather_refresh_flag == True:
+    if eco_manual_flag == False and eco_mode_flag == False and weather_refresh_flag == True:
         try:
             weather_refresh_flag = False
             log=''
