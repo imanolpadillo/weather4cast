@@ -26,7 +26,9 @@ class LogMessage(Enum):
     ERR_API_DATA = 'No API data'
     ERR_API_CONN = 'Unable to connect with API'
     ECO_MODE_ON =  'ECO MODE activated'
+    ECO_MODE_MON = 'ECO MODE manually activated'
     ECO_MODE_OFF = 'ECO MODE deactivated'
+    ECO_MODE_MOFF ='ECO MODE manually deactivated'
     LIFX_CHG =     'LIFX_CHG'
 
 # logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)

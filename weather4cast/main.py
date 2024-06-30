@@ -101,7 +101,7 @@ def thread_actionButton_function():
             # print('ECO')
             demo(False)
             eco_manual_flag = True
-            wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
+            wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MON.name,LogMessage.ECO_MODE_MON.value)
             # eco_mode_flag = True
         elif button_output == WeatherButton.SuperLongClick:
             # __  RST     : Reset system
@@ -128,7 +128,7 @@ def thread_actionButton_function():
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and button_output != WeatherButton.LongClick:
             if eco_manual_flag == True or eco_mode_flag == True:
-                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MOFF.name,LogMessage.ECO_MODE_MOFF.value)
             eco_manual_flag = False
             eco_mode_flag = False
             weather_refresh_flag = True
