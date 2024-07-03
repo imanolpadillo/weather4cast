@@ -317,7 +317,7 @@ while True:
             # display min/max temperature
             [tmin,tmax]=weather.get_min_max_temperature(forecast_input.day, weather.weather_timeline)
             tm1637l.show_temperature(tmin,tmax)
-            log+='tmin=' + str(tmin) + '; tmax=' + str(tmax)
+            log+='tmin' + suffix_24_48_120h + '=' + str(tmin) + '; tmax' + suffix_24_48_120h + '=' + str(tmax)
             # display temperature
             t=weather.get_temperature(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_temperature(int(t))
@@ -336,10 +336,10 @@ while True:
             else:
                 rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
                                                             WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
-            log+='; rain_warning=' + str(rain_warning_flag)
+            log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()
-            log+='; tomorrow_rain=' + str(tomorrow_rain)
+            log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
