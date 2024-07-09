@@ -50,7 +50,8 @@ kill -7 process_id
 ```
 sudo crontab -e -u pi
 @reboot sh /home/pi/Documents/weather4cast/launcher.sh >/home/pi/Documents/weather4cast/logs/cron.log 2>&1
-0 0 * * 0 /bin/rm -f /home/pi/Documents/weather4cast/logs/*
+0 0 * * 0 > /home/pi/Documents/weather4cast/logs/weather.log
+0 0 * * 0 > /home/pi/Documents/weather4cast/logs/cron.log
 ```
 
  6. Read Raspi logs
