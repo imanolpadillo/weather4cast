@@ -21,7 +21,7 @@ class WeatherConfig(Enum):
     INTENSITY_LED_MATRIX = 10  # led matrix intensity
     ECO_MODE_ON = True  # in 'eco mode' keds are switched off in eco time
     ECO_MODE_INIT_HOUR = 22  # 'eco mode' init hour
-    ECO_MODE_END_HOUR = 7  # 'eco mode' end hour 
+    ECO_MODE_END_HOUR = 6  # 'eco mode' end hour 
     LIFX_ON = True  # If True LIFX color changes with status change
 
 class WeatherStatus(Enum):
