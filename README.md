@@ -26,7 +26,7 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 
  1.  Raspi ssh access
 ```
-ssh pi@192.168.0.41
+ssh pi@192.168.0.25
 ```
 
  2. Copy files from PC to Raspi
