@@ -72,3 +72,21 @@ tomorrow = XXXXXX
 ## 🆕 Add new API
 Create 'weatherAPIX.py'. Every weatherAPIX file will be added alphabetically as a new weather API.
 
+
+## 🛜 How to deal WIFI change?
+Enter into the following file:
+```
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+```
+Add at the end of the file the new WIFI network and password
+```
+network={
+    ssid="Network1"
+    psk="password1"
+}
+
+network={
+    ssid="Network2"
+    psk="password2"
+}
+```
