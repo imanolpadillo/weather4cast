@@ -229,8 +229,9 @@ def input_data_refresh():
         # Reset check_tomorrow_rain_flag at 00:00:00
         if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
             check_tomorrow_rain_flag = True   # new day at 00:00:00
+        # Check eco_mode every 5 minutes
         if WeatherConfig.ECO_MODE_ON.value == True:
-            if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  # check eco_mode every 5 minutes
+            if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  
                 eco_scheduled = get_eco_flag(WeatherConfig.ECO_MODE_INIT_TIME.value, WeatherConfig.ECO_MODE_END_TIME.value)
                 # Set eco_mode_flag at eco_mode_init_time
                 if eco_scheduled == True and eco_mode_flag == False:
