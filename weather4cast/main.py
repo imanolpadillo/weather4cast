@@ -186,6 +186,23 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
         log = 'API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name()+ \
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
+
+def get_eco_flag (start_time_str, end_time_str):
+    """
+    check if current time is between eco scheduled init and end times
+    """
+    # Parse the input time strings into datetime objects
+    start_time = datetime.datetime.strptime(start_time_str, '%H:%M').time()
+    end_time = datetime.datetime.strptime(end_time_str, '%H:%M').time()
+    
+    # Get the current time
+    current_time = datetime.datetime.now().time()
+    
+    # Check if the current time is between the start and end times
+    if start_time < end_time:
+        return start_time <= current_time <= end_time
+    else:  # Over midnight case
+        return current_time >= start_time or current_time <= end_time
  
 def input_data_refresh():
     """
@@ -213,21 +230,18 @@ def input_data_refresh():
         if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
             check_tomorrow_rain_flag = True   # new day at 00:00:00
         if WeatherConfig.ECO_MODE_ON.value == True:
-            # Get eco init/end hour and minutes
-            eco_mode_init_hour, eco_mode_init_minutes = WeatherConfig.ECO_MODE_INIT_TIME.value.split(':')
-            eco_mode_end_hour, eco_mode_end_minutes = WeatherConfig.ECO_MODE_END_TIME.value.split(':')
-            # Set eco_mode_flag at eco_mode_init_time
-            if int(now.strftime("%H")) == int(eco_mode_init_hour) and int(now.strftime("%M")) == int(eco_mode_init_minutes) and \
-                int(now.strftime("%S")) == 0 and eco_mode_flag == False:
-                demo(False)  # reset all leds
-                eco_mode_flag = True
-                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
-            # Reset eco_mode_flag at eco_mode_end_time
-            if int(now.strftime("%H")) == int(eco_mode_end_hour) and int(now.strftime("%M")) == int(eco_mode_end_minutes) and \
-                int(now.strftime("%S")) == 0 and eco_mode_flag == True:
-                eco_mode_flag = False
-                weather_refresh_flag = True
-                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
+            if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  # check eco_mode every 5 minutes
+                eco_scheduled = get_eco_flag(WeatherConfig.ECO_MODE_INIT_TIME.value, WeatherConfig.ECO_MODE_END_TIME.value)
+                # Set eco_mode_flag at eco_mode_init_time
+                if eco_scheduled == True and eco_mode_flag == False:
+                    demo(False)  # reset all leds
+                    eco_mode_flag = True
+                    wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
+                # Reset eco_mode_flag at eco_mode_end_time
+                if eco_scheduled == False and eco_mode_flag == True:
+                    eco_mode_flag = False
+                    weather_refresh_flag = True
+                    wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
         else:
             eco_mode_flag = False
     else:
