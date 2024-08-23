@@ -217,13 +217,13 @@ def input_data_refresh():
             eco_mode_init_hour, eco_mode_init_minutes = WeatherConfig.ECO_MODE_INIT_TIME.value.split(':')
             eco_mode_end_hour, eco_mode_end_minutes = WeatherConfig.ECO_MODE_END_TIME.value.split(':')
             # Set eco_mode_flag at eco_mode_init_time
-            if int(now.strftime("%H")) == eco_mode_init_hour and int(now.strftime("%M")) == eco_mode_init_minutes and \
+            if int(now.strftime("%H")) == int(eco_mode_init_hour) and int(now.strftime("%M")) == int(eco_mode_init_minutes) and \
                 int(now.strftime("%S")) == 0 and eco_mode_flag == False:
                 demo(False)  # reset all leds
                 eco_mode_flag = True
                 wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
             # Reset eco_mode_flag at eco_mode_end_time
-            if int(now.strftime("%H")) == eco_mode_end_hour and int(now.strftime("%M")) == eco_mode_end_minutes and \
+            if int(now.strftime("%H")) == int(eco_mode_end_hour) and int(now.strftime("%M")) == int(eco_mode_end_minutes) and \
                 int(now.strftime("%S")) == 0 and eco_mode_flag == True:
                 eco_mode_flag = False
                 weather_refresh_flag = True
