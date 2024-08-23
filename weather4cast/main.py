@@ -192,11 +192,11 @@ def get_eco_flag (start_time_str, end_time_str):
     check if current time is between eco scheduled init and end times
     """
     # Parse the input time strings into datetime objects
-    start_time = datetime.datetime.strptime(start_time_str, '%H:%M').time()
-    end_time = datetime.datetime.strptime(end_time_str, '%H:%M').time()
+    start_time = datetime.strptime(start_time_str, '%H:%M').time()
+    end_time = datetime.strptime(end_time_str, '%H:%M').time()
     
     # Get the current time
-    current_time = datetime.datetime.now().time()
+    current_time = datetime.now().time()
     
     # Check if the current time is between the start and end times
     if start_time < end_time:
