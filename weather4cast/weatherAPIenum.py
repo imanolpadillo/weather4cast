@@ -19,7 +19,7 @@ class WeatherConfig(Enum):
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
     INTENSITY_7LED = 3  # 7led intensity
     INTENSITY_LED_MATRIX = 10  # led matrix intensity
-    ECO_MODE_ON = True  # in 'eco mode' keds are switched off in eco time
+    ECO_MODE_ON = True  # in 'eco mode' leds are switched off in eco time
     ECO_MODE_INIT_TIME = "22:00"  # 'eco mode' init time
     ECO_MODE_END_TIME = "06:00"  # 'eco mode' end time
     LIFX_ON = True  # If True LIFX color changes with status change
