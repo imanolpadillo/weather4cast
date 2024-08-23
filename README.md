@@ -26,12 +26,12 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 
  1.  Raspi ssh access
 ```
-ssh pi@192.168.0.25
+ssh pi@192.168.0.37
 ```
 
  2. Copy files from PC to Raspi
 ```
-scp /Users/imanolpadillo/Documents/weather4cast/weather4cast/*.* pi@192.168.0.25:/home/pi/Documents/weather4cast
+scp /Users/imanolpadillo/Documents/weather4cast/weather4cast/*.* pi@192.168.0.37:/home/pi/Documents/weather4cast
 ````
 
  3. Execute weather4cast manually from Raspi
