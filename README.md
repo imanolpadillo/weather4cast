@@ -24,6 +24,11 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 
 ## 🎮 Raspi commands
 
+ 0. Get raspi ip
+```
+ping weather4cast.local
+```
+
  1.  Raspi ssh access
 ```
 ssh pi@192.168.0.37
