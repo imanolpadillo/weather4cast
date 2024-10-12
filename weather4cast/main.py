@@ -187,23 +187,19 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
 
-def get_eco_flag (start_time_str, end_time_str):
+def get_eco_flag (current_day, current_hour):
     """
     check if current time is between eco scheduled init and end times
     """
-    # Parse the input time strings into datetime objects
-    start_time = datetime.strptime(start_time_str, '%H:%M').time()
-    end_time = datetime.strptime(end_time_str, '%H:%M').time()
-    
-    # Get the current time
-    madrid_tz = pytz.timezone('Europe/Madrid')
-    current_time = datetime.now(madrid_tz).time()
-    
-    # Check if the current time is between the start and end times
-    if start_time < end_time:
-        return start_time <= current_time <= end_time
-    else:  # Over midnight case
-        return current_time >= start_time or current_time <= end_time
+    try:
+        today_schedule = WeatherConfig.ECO_MODE_SCHEDULE[current_day]
+        eco_flag = today_schedule[current_hour]
+        if eco_flag == 1:
+            return True  # on
+        else:
+            return False # off
+    except:
+        return True      # on
  
 def input_data_refresh():
     """
@@ -233,7 +229,7 @@ def input_data_refresh():
         # Check eco_mode every 5 minutes
         if WeatherConfig.ECO_MODE_ON.value == True:
             if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  
-                eco_scheduled = get_eco_flag(WeatherConfig.ECO_MODE_INIT_TIME.value, WeatherConfig.ECO_MODE_END_TIME.value)
+                eco_scheduled = get_eco_flag(now.weekday(),now.time().hour)
                 # Set eco_mode_flag at eco_mode_init_time
                 if eco_scheduled == True and eco_mode_flag == False:
                     demo(False)  # reset all leds
