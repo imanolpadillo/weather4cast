@@ -343,7 +343,7 @@ while True:
             log+='; status' + suffix_24_48_120h + '=' + str(status)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
-            max7219.calculate_level(rain,weather.weather_timeline)
+            max7219.calculate_level(rain, weather.weather_timeline, forecast_input.day, forecast_input.hourFlag, forecast_input.hour)
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:

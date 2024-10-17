@@ -72,7 +72,7 @@ def show_message(message = message):
         text(draw, (0, 0), message, fill="white")
 
 
-def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16):
+def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, day = 0, hourFlag = False, hour = 0):
     """
     shows level
     :param level: 16 array including precipitation probability
@@ -103,21 +103,36 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16):
             else:
                 output_level.append(deactivated_led)
 
-    # Set T24, T48 markers
+    # Set extra markers markers
     if weather_timeline == WeatherTimeLine.T24:
-        # Toggle the value at position 15
+        # x1 mark at top right corner
         output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
     elif weather_timeline == WeatherTimeLine.T48:
-        # Toggle the value at position 15
-        output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
-        output_level[14] ^= 1  # XOR operation to toggle between 0 and 1
+        # x2 mark at top right corner
+        output_level[15] ^= 1  
+        output_level[14] ^= 1  
     elif weather_timeline == WeatherTimeLine.T120:
-        # Toggle the value at position 15
-        output_level[0] ^= 1  # XOR operation to toggle between 0 and 1
-        output_level[3] ^= 1  # XOR operation to toggle between 0 and 1
-        output_level[6] ^= 1  # XOR operation to toggle between 0 and 1
-        output_level[9] ^= 1  # XOR operation to toggle between 0 and 1
-        output_level[12] ^= 1  # XOR operation to toggle between 0 and 1
+        # x5 mark at top row indicating day init
+        output_level[0] ^= 1  
+        output_level[3] ^= 1  
+        output_level[6] ^= 1  
+        output_level[9] ^= 1  
+        output_level[12] ^= 1  
+    elif weather_timeline == WeatherTimeLine.T16:
+        if day != 0:
+            # x1 to x5 at top left corner indicating the actived tomorrow day
+            for x in range(day):
+                output_level[x] ^= 1
+        if hourFlag == True:
+            # at top row set the 4 leds in the middle, depending on hour
+            output_level[6] ^= 1 
+            if int(hour) >= 6:
+                output_level[7] ^= 1
+            if int(hour) >= 12:
+                output_level[8] ^= 1
+            if int(hour) >= 18:
+                output_level[9] ^= 1
+
     level = output_level
 
 
