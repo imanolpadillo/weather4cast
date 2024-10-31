@@ -187,13 +187,19 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
 
-def get_eco_flag (current_day, current_hour):
+def get_eco_flag (current_date, current_day, current_hour):
     """
+    check if current date is holiday
     check if current time is between eco scheduled init and end times
     """
     try:
-        today_schedule = WeatherConfig.ECO_MODE_SCHEDULE[current_day]
-        eco_flag = today_schedule[current_hour]
+        today_tuple = (current_date.month, current_date.day)
+        if today_tuple in WeatherConfig.ECO_MODE_HOLIDAYS:
+            eco_flag = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE[current_hour]
+        else:
+            # No holiday
+            today_schedule = WeatherConfig.ECO_MODE_SCHEDULE[current_day]
+            eco_flag = today_schedule[current_hour]
         if eco_flag == 1:
             return True  # on
         else:
@@ -229,7 +235,7 @@ def input_data_refresh():
         # Check eco_mode every 5 minutes
         if WeatherConfig.ECO_MODE_ON.value == True:
             if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  
-                eco_scheduled = get_eco_flag(now.weekday(),now.time().hour)
+                eco_scheduled = get_eco_flag(now.today(),now.weekday(),now.time().hour)
                 # Set eco_mode_flag at eco_mode_init_time
                 if eco_scheduled == True and eco_mode_flag == False:
                     demo(False)  # reset all leds
