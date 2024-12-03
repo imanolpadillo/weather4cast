@@ -89,9 +89,9 @@ def demo(flag):
 
 #   7-segment digit led position
 #         p0
-#      p5    p1
+#      p1    p5
 #         p6
-#      p4    p2
+#      p2    p4
 #         p3       p7
 def display_number(temperature_digit, value, disable_zero = False):
     """
@@ -116,13 +116,37 @@ def display_number(temperature_digit, value, disable_zero = False):
             temperature_digit.write("p6", "HIGH")
     elif value == 1:
         temperature_digit.write("p0", "HIGH")
-        temperature_digit.write("p1", "LOW")
-        temperature_digit.write("p2", "LOW")
+        temperature_digit.write("p1", "HIGH")
+        temperature_digit.write("p2", "HIGH")
         temperature_digit.write("p3", "HIGH")
-        temperature_digit.write("p4", "HIGH")
-        temperature_digit.write("p5", "HIGH")
+        temperature_digit.write("p4", "LOW")
+        temperature_digit.write("p5", "LOW")
         temperature_digit.write("p6", "HIGH")
     elif value == 2:
+        temperature_digit.write("p0", "LOW")
+        temperature_digit.write("p1", "HIGH")
+        temperature_digit.write("p2", "LOW")
+        temperature_digit.write("p3", "LOW")
+        temperature_digit.write("p4", "HIGH")
+        temperature_digit.write("p5", "LOW")
+        temperature_digit.write("p6", "LOW")
+    elif value == 3:
+        temperature_digit.write("p0", "LOW")
+        temperature_digit.write("p1", "HIGH")
+        temperature_digit.write("p2", "HIGH")
+        temperature_digit.write("p3", "LOW")
+        temperature_digit.write("p4", "LOW")
+        temperature_digit.write("p5", "LOW")
+        temperature_digit.write("p6", "LOW")
+    elif value == 4:
+        temperature_digit.write("p0", "HIGH")
+        temperature_digit.write("p1", "LOW")
+        temperature_digit.write("p2", "HIGH")
+        temperature_digit.write("p3", "HIGH")
+        temperature_digit.write("p4", "LOW")
+        temperature_digit.write("p5", "LOW")
+        temperature_digit.write("p6", "LOW")
+    elif value == 5:
         temperature_digit.write("p0", "LOW")
         temperature_digit.write("p1", "LOW")
         temperature_digit.write("p2", "HIGH")
@@ -130,45 +154,21 @@ def display_number(temperature_digit, value, disable_zero = False):
         temperature_digit.write("p4", "LOW")
         temperature_digit.write("p5", "HIGH")
         temperature_digit.write("p6", "LOW")
-    elif value == 3:
-        temperature_digit.write("p0", "LOW")
-        temperature_digit.write("p1", "LOW")
-        temperature_digit.write("p2", "LOW")
-        temperature_digit.write("p3", "LOW")
-        temperature_digit.write("p4", "HIGH")
-        temperature_digit.write("p5", "HIGH")
-        temperature_digit.write("p6", "LOW")
-    elif value == 4:
-        temperature_digit.write("p0", "HIGH")
-        temperature_digit.write("p1", "LOW")
-        temperature_digit.write("p2", "LOW")
-        temperature_digit.write("p3", "HIGH")
-        temperature_digit.write("p4", "HIGH")
-        temperature_digit.write("p5", "LOW")
-        temperature_digit.write("p6", "LOW")
-    elif value == 5:
-        temperature_digit.write("p0", "LOW")
-        temperature_digit.write("p1", "HIGH")
-        temperature_digit.write("p2", "LOW")
-        temperature_digit.write("p3", "LOW")
-        temperature_digit.write("p4", "HIGH")
-        temperature_digit.write("p5", "LOW")
-        temperature_digit.write("p6", "LOW")
     elif value == 6:
         temperature_digit.write("p0", "LOW")
-        temperature_digit.write("p1", "HIGH")
+        temperature_digit.write("p1", "LOW")
         temperature_digit.write("p2", "LOW")
         temperature_digit.write("p3", "LOW")
         temperature_digit.write("p4", "LOW")
-        temperature_digit.write("p5", "LOW")
+        temperature_digit.write("p5", "HIGH")
         temperature_digit.write("p6", "LOW")
     elif value == 7:
         temperature_digit.write("p0", "LOW")
-        temperature_digit.write("p1", "LOW")
-        temperature_digit.write("p2", "LOW")
+        temperature_digit.write("p1", "HIGH")
+        temperature_digit.write("p2", "HIGH")
         temperature_digit.write("p3", "HIGH")
-        temperature_digit.write("p4", "HIGH")
-        temperature_digit.write("p5", "HIGH")
+        temperature_digit.write("p4", "LOW")
+        temperature_digit.write("p5", "LOW")
         temperature_digit.write("p6", "HIGH")
     elif value == 8:
         temperature_digit.write("p0", "LOW")
@@ -181,9 +181,9 @@ def display_number(temperature_digit, value, disable_zero = False):
     elif value == 9:
         temperature_digit.write("p0", "LOW")
         temperature_digit.write("p1", "LOW")
-        temperature_digit.write("p2", "LOW")
+        temperature_digit.write("p2", "HIGH")
         temperature_digit.write("p3", "LOW")
-        temperature_digit.write("p4", "HIGH")
+        temperature_digit.write("p4", "LOW")
         temperature_digit.write("p5", "LOW")
         temperature_digit.write("p6", "LOW")
 
