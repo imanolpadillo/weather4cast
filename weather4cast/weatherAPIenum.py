@@ -17,8 +17,8 @@ class WeatherConfig(Enum):
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
-    INTENSITY_7LED = 3  # 7led intensity
-    INTENSITY_LED_MATRIX = 10  # led matrix intensity
+    INTENSITY_7LED = 1  # 7led intensity
+    INTENSITY_LED_MATRIX = 2  # led matrix intensity
     LIFX_ON = True  # If True LIFX color changes with status change
     ECO_MODE_ON = True  # in 'eco mode' leds are switched off in eco time
     ECO_MODE_HOLIDAYS = [

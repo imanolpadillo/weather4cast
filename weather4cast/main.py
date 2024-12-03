@@ -193,18 +193,19 @@ def get_eco_flag (current_date, current_day, current_hour):
     check if current time is between eco scheduled init and end times
     """
     try:
-        today_tuple = (current_date.month, current_date.day)
-        if today_tuple in WeatherConfig.ECO_MODE_HOLIDAYS:
-            eco_flag = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE[current_hour]
+        holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
+        if (current_date.month, current_date.day) in holidays:
+            eco_flag = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
         else:
             # No holiday
-            today_schedule = WeatherConfig.ECO_MODE_SCHEDULE[current_day]
+            today_schedule = WeatherConfig.ECO_MODE_SCHEDULE.value[current_day]
             eco_flag = today_schedule[current_hour]
         if eco_flag == 1:
             return True  # on
         else:
             return False # off
-    except:
+    except Exception as e:
+        print(f"An error occurred: {e}")
         return True      # on
  
 def input_data_refresh():
