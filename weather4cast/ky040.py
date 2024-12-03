@@ -60,6 +60,7 @@ def dayDialChanged(count):
 
 # 00=day1, 04=day2, 08=day3, 12=day4, 16=day5
 def setForecastDay(count):
+    global forecast_day
     while count<0:
         count += 20
     while count>=20:
