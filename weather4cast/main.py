@@ -199,8 +199,8 @@ def get_eco_flag (current_date, current_day, current_hour):
         else:
             # No holiday
             today_schedule = WeatherConfig.ECO_MODE_SCHEDULE.value[current_day]
-            eco_flag = today_schedule[current_hour]
-        if eco_flag == 1:
+            eco_flag = str(today_schedule[current_hour])
+        if eco_flag == '1':
             return True  # on
         else:
             return False # off
