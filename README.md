@@ -20,6 +20,8 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 8 | visualcrossing | visucros | yes | 900s (15min) | 1000 calls/day | [https://www.visualcrossing.com](https://www.visualcrossing.com)
 9 | tomorrow.io | tomorrow | yes | 900s (15min) | 500 calls/day | [https://api.tomorrow.io/](https://api.tomorrow.io/)
 10 | openweathermap | openweat | yes | 900s (15min) | 60 calls/min | [https://openweathermap.org/api](https://openweathermap.org/api)
+11 | 7timer | 7timer | no | 900s (15min) | none | [https://github.com/Yeqzids/7timer-issues/wiki/Wiki](https://github.com/Yeqzids/7timer-issues/wiki/Wiki)
+12 | apimet | apimet | no | 900s (15min) | none | [https://api.met.no/weatherapi/locationforecast/2.0/documentation](https://api.met.no/weatherapi/locationforecast/2.0/documentation)
 
 
 ## 🎮 Raspi commands
