@@ -80,7 +80,7 @@ tomorrow = XXXXXX
 Create 'weatherAPIX.py'. Every weatherAPIX file will be added alphabetically as a new weather API.
 
 
-## 🛜 How to deal WIFI change?
+## 📶 How to deal WIFI change?
 Enter into the following file:
 ```
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
