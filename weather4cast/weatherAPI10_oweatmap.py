@@ -20,7 +20,8 @@ config.read(secrets_file_path)
 api_name = 'oweatmap'
 api_refresh_s = 900
 api_key = config['secrets'][api_name]
-api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=42.8465088&lon=-2.6724025&units=metric&appid=' + api_key
+api_url =  'https://api.openweathermap.org/data/2.5/forecast?lat=' + WeatherConfig.GEO_LAT.value + \
+'&lon=' + WeatherConfig.GEO_LON.value + '&units=metric&appid=' + api_key
 
 dict_weather_status = [
                        {'snow': WeatherStatus.SNOWY}, \

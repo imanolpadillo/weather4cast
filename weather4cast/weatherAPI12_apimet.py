@@ -15,7 +15,8 @@ from datetime import datetime
  
 api_name = 'apimet'
 api_refresh_s = 900
-api_url = 'https://api.met.no/weatherapi/locationforecast/2.0?lat=42.8465088&lon=-2.6724025&altitude=525'
+api_url = 'https://api.met.no/weatherapi/locationforecast/2.0?lat=' + WeatherConfig.GEO_LAT.value + \
+'&lon=' + WeatherConfig.GEO_LON.value + '&altitude=525'
 
 dict_weather_status = [
     {'clearsky_day': WeatherStatus.SUNNY},
@@ -144,7 +145,7 @@ def decode_json(data):
     
     # set data for hours from day 0 not included in api data
     for i in range(init_hour):
-        temperature_array.append(data['properties']['timeseries'][0]['data']['instant']['details']['air_temperature'])
+        temperature_array.append(round(data['properties']['timeseries'][0]['data']['instant']['details']['air_temperature']))
         if data['properties']['timeseries'][0]['data']['instant']['details']['wind_speed'] > WeatherConfig.MAX_WIND_MS.value:
             status_array.append('windy')
         else:
@@ -159,11 +160,11 @@ def decode_json(data):
                 if current_time == 0:
                     current_time = 24
                 for i in range (abs(current_time - last_time) -1):
-                    temperature_array.append(temperature_array[-1])
+                    temperature_array.append(round(temperature_array[-1]))
                     status_array.append(status_array[-1])
                     rain_array.append(rain_array[-1])
 
-            temperature_array.append(item['data']['instant']['details']['air_temperature'])
+            temperature_array.append(round(item['data']['instant']['details']['air_temperature']))
             if item['data']['instant']['details']['wind_speed'] > WeatherConfig.MAX_WIND_MS.value:
                 status_array.append('windy')
             else:
@@ -222,8 +223,8 @@ def refresh():
     except Exception as e:
         wlogging.log(LogType.ERROR.value, LogMessage.ERR_API_CONN.name, LogMessage.ERR_API_CONN.value + ': ' + str(e))
 
-#refresh() # get data first time
-#print("apimet")
-#print(weekWeather[0].temperature)
-#print(weekWeather[0].status)
-#print(weekWeather[0].rain)
+# refresh() # get data first time
+# print("apimet")
+# print(weekWeather[0].temperature)
+# print(weekWeather[0].status)
+# print(weekWeather[0].rain)

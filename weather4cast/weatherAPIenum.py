@@ -9,7 +9,9 @@ class WeatherRainStep(Enum):
     AUTO = 1  # rain step is x2 when rain is > RAIN_STEP*8
 
 class WeatherConfig(Enum):
-    DAYS = 6        # Number of day to be forecasted
+    GEO_LON = '-2.6724025'  # longitude
+    GEO_LAT = '42.8465088'  # latitude
+    DAYS = 6   # Number of day to be forecasted
     WEATHER_API_REFRESH_TIME = 1800 # in seconds
     RAIN_WARNING_REFRESH_TIME = 1   # in seconds
     RAIN_WARNING_MM = 1  # limit of rain mm

@@ -10,3 +10,19 @@ ERROR:root:11:22:31 [ERR_API_CONN] Unable to connect with API: list index out of
 ERROR:root:21:06:40 [ERR_API_CONN] Unable to connect with API: remove_yesterday_values() takes 1 positional argument but 2 were given
 ERROR:root:21:08:10 [ERR_API_CONN] Unable to connect with API: list indices must be integers or slices, not str
 ERROR:root:21:17:49 [ERR_API_CONN] Unable to connect with API: list indices must be integers or slices, not str
+ERROR:root:2024-12-14 09:20:15 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:22:29 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:22:48 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:22:56 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:23:31 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:24:19 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:25:08 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:32:07 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:33:49 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:36:07 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:37:26 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:37:39 [ERR_API_CONN] Unable to connect with API: type NoneType doesn't define __round__ method
+ERROR:root:2024-12-14 09:41:02 [ERR_API_CONN] Unable to connect with API: argument of type 'NoneType' is not iterable
+ERROR:root:2024-12-14 09:41:22 [ERR_API_CONN] Unable to connect with API: unsupported operand type(s) for *: 'NoneType' and 'int'
+ERROR:root:2024-12-14 09:42:33 [ERR_API_CONN] Unable to connect with API: unsupported operand type(s) for *: 'NoneType' and 'int'
+ERROR:root:2024-12-14 09:43:29 [ERR_API_CONN] Unable to connect with API: unsupported operand type(s) for *: 'NoneType' and 'int'

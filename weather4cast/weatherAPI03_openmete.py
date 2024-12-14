@@ -14,7 +14,9 @@ from wlogging import LogType, LogMessage
  
 api_name = 'openmete'
 api_refresh_s = 900
-api_url = 'https://api.open-meteo.com/v1/forecast?latitude=42.85&longitude=-2.6727&hourly=apparent_temperature,rain,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto'
+api_url = 'https://api.open-meteo.com/v1/forecast?latitude=' + WeatherConfig.GEO_LAT.value + \
+'&longitude=' + WeatherConfig.GEO_LON.value + \
+'&hourly=temperature_2m,rain,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto'
 
 dict_weather_status = [
                        {0: WeatherStatus.SUNNY}, \
@@ -78,7 +80,7 @@ def decode_json(data):
     count = 0
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
-            weekWeather[day].temperature[hour] = round(data['hourly']['apparent_temperature'][count])
+            weekWeather[day].temperature[hour] = round(data['hourly']['temperature_2m'][count])
             weekWeather[day].rain[hour] = round(data['hourly']['rain'][count],1)
             if (data['hourly']['wind_speed_10m'][count]>WeatherConfig.MAX_WIND_MS.value):
                 #wind status is not defined in 'weather code'

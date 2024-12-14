@@ -105,16 +105,22 @@ def decode_json(data):
     count = 0
     for day in range(WeatherConfig.DAYS.value):
         for hour in range(24):
-            weekWeather[day].temperature[hour] = round(data['data'][count]['temp'])
+            if data['data'][count]['temp'] is None:
+                weekWeather[day].temperature[hour] = 0
+            else:
+                weekWeather[day].temperature[hour] = round(data['data'][count]['temp'])
             if data['data'][count]['prcp'] is None:
                 weekWeather[day].rain[hour] = 0.0
             else:
                 weekWeather[day].rain[hour] = round(data['data'][count]['prcp'],1)
-            if (data['data'][count]['wspd'] * 1000 / 3600 >WeatherConfig.MAX_WIND_MS.value):
-                #wind status is not defined in 'weather code'
-                weekWeather[day].status[hour] = 100 # windy code
-            else:
+            if data['data'][count]['wspd'] is None:
                 weekWeather[day].status[hour] = data['data'][count]['coco']
+            else:
+                if (data['data'][count]['wspd'] * 1000 / 3600 >WeatherConfig.MAX_WIND_MS.value):
+                    #wind status is not defined in 'weather code'
+                    weekWeather[day].status[hour] = 100 # windy code
+                else:
+                    weekWeather[day].status[hour] = data['data'][count]['coco']
             count+=1  
    
     # Decode weather status

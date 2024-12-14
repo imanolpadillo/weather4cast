@@ -93,7 +93,8 @@ def generate_url():
     end_date = get_current_day(WeatherConfig.DAYS.value)
     api_url =  'https://personalproject_caseof_usein:' + api_key + \
     '@api.meteomatics.com/' + init_date + 'T00:00:00.000+02:00--' + end_date + \
-    'T00:00:00.000+02:00:PT1H/t_2m:C,precip_1h:mm,weather_symbol_1h:idx,wind_speed_10m:ms/42.8465088,-2.6724025/json'
+    'T00:00:00.000+02:00:PT1H/t_2m:C,precip_1h:mm,weather_symbol_1h:idx,wind_speed_10m:ms/' + \
+    WeatherConfig.GEO_LAT.value + ',' + WeatherConfig.GEO_LON.value + '/json'
     return api_url
 
 def call_api():
