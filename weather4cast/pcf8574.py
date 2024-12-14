@@ -194,8 +194,8 @@ def display_temperature (value):
     global temperature_high
     global temperature_low
     # Extract tens and units digits
-    tens = value // 10
-    units = value % 10
+    tens = abs(value) // 10
+    units = abs(value) % 10
     display_number(temperature_high, tens, True)
     display_number(temperature_low, units)
     # Display sign
