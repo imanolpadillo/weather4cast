@@ -357,8 +357,8 @@ while True:
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing
             else:
-                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
-                                                            WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
+                                                                                    WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()
@@ -366,9 +366,12 @@ while True:
             # send rain warning notification
             if RAIN_WARNING_TELEGRAM_ON == True:
                 if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
-                    if weather.get_rain_warning(forecast_input.day,forecast_input.hour, WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value) == True: 
+                    rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
+                                                                                        WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                    if rain_warning_flag == True: 
                         if rain_warning_telegram_flag == False:
-                            print('send telegram')
+                            print(f"[RAIN WARNIG]: In {WeatherConfig.RAIN_WARNING_TIME.value} hours: {rain_warning_quantity}" )
+                            wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
                             rain_warning_telegram_flag = True
                     else:
                         rain_warning_telegram_flag = False
