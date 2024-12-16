@@ -30,6 +30,7 @@ class LogMessage(Enum):
     ECO_MODE_OFF = 'ECO MODE deactivated'
     ECO_MODE_MOFF ='ECO MODE manually deactivated'
     LIFX_CHG =     'LIFX_CHG'
+    TELEGRAM_SND = 'TELEGRAM sent'
 
 # logging.basicConfig(filename='/home/pi/Documents/weather4cast/logs/weather4cast.log', level=logging.INFO)
 current_path = os.path.dirname(os.path.abspath(__file__))
