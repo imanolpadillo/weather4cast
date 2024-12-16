@@ -14,8 +14,9 @@ import threading, time
 import pytz
 from datetime import datetime
 import wlogging
+import telegram
 from wlogging import LogType, LogMessage
-from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxColor, WeatherLifxScenes, \
+from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxScenes, \
 WeatherButton, WeatherTimeLine
  
 # ***************************************************************************************************
@@ -370,7 +371,7 @@ while True:
                                                                                         WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
                     if rain_warning_flag == True: 
                         if rain_warning_telegram_flag == False:
-                            print(f"[RAIN WARNIG]: In {WeatherConfig.RAIN_WARNING_TIME.value} hours: {rain_warning_quantity}" )
+                            telegram.send_telegram(f"[RAIN WARNIG] In {WeatherConfig.RAIN_WARNING_TIME.value} hours: {rain_warning_quantity} mm/h." )
                             wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
                             rain_warning_telegram_flag = True
                     else:
