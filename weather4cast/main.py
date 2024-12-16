@@ -364,7 +364,7 @@ while True:
             tomorrow_rain = check_tomorrow_rain()
             log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
             # send rain warning notification
-            if RAIN_WARNING_TELEGRAM_ON == True:
+            if WeatherConfig.RAIN_WARNING_TELEGRAM_ON == True:
                 if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
                     rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
                                                                                         WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
