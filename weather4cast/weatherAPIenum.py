@@ -114,6 +114,11 @@ class WeatherButton(Enum):
     LongClick = 6
     SuperLongClick = 7
 
+class RainWarningTelegramStatus(Enum):
+    Deactivated = 0  # No rain warning
+    Triggered = 1    # Rain warning triggered, telegram must be send
+    Activated = 2    # Rain warning already notified
+
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):
         self.status = status if status is not None else [None]*24
