@@ -293,11 +293,11 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     hour_counter=0
     for hour in range(index + 1, len(rain_data)):
         if hour_counter>=hour_limit:
-            return False
+            return False, 0
         if rain_data[hour] >= rain_limit:
-            return True
+            return True, rain_data[hour]
         hour_counter+=1
-    return False
+    return False, 0
 
 def get_tomorrow_rain(forecast_day, rain_limit):
     """
