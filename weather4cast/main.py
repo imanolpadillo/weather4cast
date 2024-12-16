@@ -23,6 +23,7 @@ WeatherButton, WeatherTimeLine
 # ***************************************************************************************************
 weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
+rain_warning_telegram_flag = False # if True telegram has already send
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
 eco_mode_flag = False              # in eco mode, all leds are switched off until eco end time
@@ -362,6 +363,15 @@ while True:
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()
             log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
+            # send rain warning notification
+            if RAIN_WARNING_TELEGRAM_ON == True:
+                if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
+                    if weather.get_rain_warning(forecast_input.day,forecast_input.hour, WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value) == True: 
+                        if rain_warning_telegram_flag == False:
+                            print('send telegram')
+                            rain_warning_telegram_flag = True
+                    else:
+                        rain_warning_telegram_flag = False
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
