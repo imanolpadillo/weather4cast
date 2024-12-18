@@ -263,6 +263,21 @@ def get_eco_flag (start_time_str, end_time_str):
         return start_time <= current_time <= end_time
     else:  # Over midnight case
         return current_time >= start_time or current_time <= end_time
+
+def calculate_week_day(offset: int) -> int:
+    """
+    Calculate the day of the week given an offset.
+    Days are represented as:
+    1 = Monday, ..., 7 = Sunday.
+
+    :param offset: The number of days to add or subtract from today.
+    :return: The day of the week (1-7) after applying the offset.
+    """
+    # Get the current day of the week (1 = Monday, ..., 7 = Sunday)
+    today_week_day = datetime.now().isoweekday()  # isoweekday: 1 = Monday, ..., 7 = Sunday
+    # Calculate the new day of the week with offset
+    new_week_day = ((today_week_day + offset - 1) % 7) + 1
+    return new_week_day
  
 def input_data_refresh():
     """
