@@ -14,22 +14,21 @@ import threading, time
 import pytz
 from datetime import datetime
 import wlogging
-import telegram
 from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxScenes, \
-WeatherButton, WeatherTimeLine
+WeatherButton, WeatherTimeLine, ActionButtonMode
  
 # ***************************************************************************************************
 # CONSTANTS AND GLOBAL VARIABLES
 # ***************************************************************************************************
 weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
-rain_warning_telegram_flag = False # if True telegram has already send
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
 eco_mode_flag = False              # in eco mode, all leds are switched off until eco end time
 eco_manual_flag = False            # in manual eco, all leds are switched off until manual disabling
 last_status = None                 # if last_status != current_status, LIFX color changes
+action_button_mode = ActionButtonMode.Normal
  
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
@@ -88,44 +87,103 @@ def thread_actionButton_function():
     global check_tomorrow_rain_flag  # disabled with double/tripple click
     global eco_mode_flag
     global eco_manual_flag
+    global action_button_mode
+    global forecast_input
     while True:
         button_output = weatherAPIchange.detect_button()
-        if button_output == WeatherButton.ShortLongClick:
-            # ._  API+    : API change +1
-            # print('API+')
-            change_weather_api(False, True, True)
-        elif button_output == WeatherButton.ShortShortLongClick:
-            # .._ API-    : API change -1
-            # print('API-')
-            change_weather_api(False, True, False)
-        elif button_output == WeatherButton.LongClick:
-            # _   ECO     : Activate ECO
-            # print('ECO')
-            demo(False)
-            eco_manual_flag = True
-            wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MON.name,LogMessage.ECO_MODE_MON.value)
-            # eco_mode_flag = True
-        elif button_output == WeatherButton.SuperLongClick:
-            # __  RST     : Reset system
-            # print('RST')
-            reset_leds()
-            change_weather_api(True)
-        elif button_output == WeatherButton.ShortClick:
-            # .   0-24H   : Display 24H weather
-            # print('0-24H')
+
+        if ky040.dayDial_One_click == True and ky040.hourDial_One_click == False:
+            action_button_mode = ActionButtonMode.WeekDay.value
+        elif ky040.dayDial_One_click == False and ky040.hourDial_One_click == True:
+            action_button_mode = ActionButtonMode.SequentialDay.value
+        else:
+            action_button_mode = ActionButtonMode.Normal.value
+
+        # A) Action button: normal mode
+        if action_button_mode == ActionButtonMode.Normal.value:
+            if button_output == WeatherButton.ShortLongClick:
+                # ._  API+    : API change +1
+                # print('API+')
+                change_weather_api(False, True, True)
+            elif button_output == WeatherButton.ShortShortLongClick:
+                # .._ API-    : API change -1
+                # print('API-')
+                change_weather_api(False, True, False)
+            elif button_output == WeatherButton.LongClick:
+                # _   ECO     : Activate ECO
+                # print('ECO')
+                demo(False)
+                eco_manual_flag = True
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MON.name,LogMessage.ECO_MODE_MON.value)
+                # eco_mode_flag = True
+            elif button_output == WeatherButton.SuperLongClick:
+                # __  RST     : Reset system
+                # print('RST')
+                reset_leds()
+                change_weather_api(True)
+            elif button_output == WeatherButton.ShortClick:
+                # .   0-24H   : Display 24H weather
+                # print('0-24H')
+                weather.weather_timeline = WeatherTimeLine.T24
+            elif button_output == WeatherButton.DoubleClick:
+                # ..  24-48H  : Display tomorrow weather
+                # print('24-48H')
+                check_tomorrow_rain_flag = False
+                pcf8574.tomorrow_rain(False)
+                weather.weather_timeline = WeatherTimeLine.T48
+            elif button_output == WeatherButton.TrippleClick:
+                # ... 24-120H : Display next 5 day weather
+                # print('24-120H')
+                check_tomorrow_rain_flag = False
+                pcf8574.tomorrow_rain(False)
+                weather.weather_timeline = WeatherTimeLine.T120
+        # B) Action button: week day mode
+        elif action_button_mode == ActionButtonMode.WeekDay.value:
             weather.weather_timeline = WeatherTimeLine.T24
-        elif button_output == WeatherButton.DoubleClick:
-            # ..  24-48H  : Display tomorrow weather
-            # print('24-48H')
-            check_tomorrow_rain_flag = False
-            pcf8574.tomorrow_rain(False)
-            weather.weather_timeline = WeatherTimeLine.T48
-        elif button_output == WeatherButton.TrippleClick:
-            # ... 24-120H : Display next 5 day weather
-            # print('24-120H')
-            check_tomorrow_rain_flag = False
-            pcf8574.tomorrow_rain(False)
-            weather.weather_timeline = WeatherTimeLine.T120
+            if button_output == WeatherButton.ShortClick:
+                # Monday
+                print('Monday')	
+            elif button_output == WeatherButton.DoubleClick:
+                # Tuesday
+                print('Tuesday')	
+            elif button_output == WeatherButton.TrippleClick:
+                # Wednesday
+                print('Wednesday')	
+            elif button_output == WeatherButton.CuadrupleClick:
+                # Thursday
+                print('Thursday')	
+            elif button_output == WeatherButton.QuintupleClick:
+                # Friday
+                print('Friday')	
+            elif button_output == WeatherButton.SextupleClick:
+                # Saturday
+                print('Saturday')	
+            elif button_output == WeatherButton.SevenfoldClick:
+                # Sunday
+                print('Sunday')	
+        # C) Action button: sequential day mode
+        elif action_button_mode == ActionButtonMode.SequentialDay.value:
+            weather.weather_timeline = WeatherTimeLine.T24
+            if button_output == WeatherButton.ShortClick:
+                # +1 day
+                forecast_input.day = 1
+                print('+1 day')	
+            elif button_output == WeatherButton.DoubleClick:
+                # +2 days
+                forecast_input.day = 2
+                print('+2 days')	
+            elif button_output == WeatherButton.TrippleClick:
+                # +3 days
+                forecast_input.day = 3
+                print('+3 days')	
+            elif button_output == WeatherButton.CuadrupleClick:
+                # +4 days
+                forecast_input.day = 4
+                print('+4 days')	
+            elif button_output == WeatherButton.QuintupleClick:
+                # +5 days
+                forecast_input.day = 5
+                print('+5 days')	            
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and button_output != WeatherButton.LongClick:
@@ -189,26 +247,22 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
 
-def get_eco_flag (current_date, current_day, current_hour):
+def get_eco_flag (start_time_str, end_time_str):
     """
-    check if current date is holiday
     check if current time is between eco scheduled init and end times
     """
-    try:
-        holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
-        if (current_date.month, current_date.day) in holidays:
-            eco_flag = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
-        else:
-            # No holiday
-            today_schedule = WeatherConfig.ECO_MODE_SCHEDULE.value[current_day]
-            eco_flag = str(today_schedule[current_hour])
-        if eco_flag == '0':
-            return True  # on
-        else:
-            return False # off
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return True      # on
+    # Parse the input time strings into datetime objects
+    start_time = datetime.datetime.strptime(start_time_str, '%H:%M').time()
+    end_time = datetime.datetime.strptime(end_time_str, '%H:%M').time()
+    
+    # Get the current time
+    current_time = datetime.datetime.now().time()
+    
+    # Check if the current time is between the start and end times
+    if start_time < end_time:
+        return start_time <= current_time <= end_time
+    else:  # Over midnight case
+        return current_time >= start_time or current_time <= end_time
  
 def input_data_refresh():
     """
@@ -238,7 +292,7 @@ def input_data_refresh():
         # Check eco_mode every 5 minutes
         if WeatherConfig.ECO_MODE_ON.value == True:
             if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  
-                eco_scheduled = get_eco_flag(now.today(),now.weekday(),now.time().hour)
+                eco_scheduled = get_eco_flag(WeatherConfig.ECO_MODE_INIT_TIME.value, WeatherConfig.ECO_MODE_END_TIME.value)
                 # Set eco_mode_flag at eco_mode_init_time
                 if eco_scheduled == True and eco_mode_flag == False:
                     demo(False)  # reset all leds
@@ -323,7 +377,13 @@ thread_actionButton.start()
  
 # infinite loop
 while True:
-    input_data_refresh()
+    if action_button_mode == ActionButtonMode.Normal.value:
+        # in normal mode, day is set by input controls
+        input_data_refresh()
+    else:
+        # reset action button triggers for week and sequence day
+        ky040.dayDial_One_click = False
+        ky040.hourDial_One_click = False
     if eco_manual_flag == False and eco_mode_flag == False and weather_refresh_flag == True:
         try:
             weather_refresh_flag = False
@@ -352,30 +412,18 @@ while True:
             log+='; status' + suffix_24_48_120h + '=' + str(status)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
-            max7219.calculate_level(rain, weather.weather_timeline, forecast_input.day, forecast_input.hourFlag, forecast_input.hour)
+            max7219.calculate_level(rain,weather.weather_timeline)
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing
             else:
-                rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
-                                                                                    WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
+                                                            WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()
             log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
-            # send rain warning notification
-            if WeatherConfig.RAIN_WARNING_TELEGRAM_ON.value == True:
-                if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
-                    rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
-                                                                                        WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
-                    if rain_warning_flag == True: 
-                        if rain_warning_telegram_flag == False:
-                            telegram.send_telegram(f"[RAIN WARNIG] In {WeatherConfig.RAIN_WARNING_TIME.value} hours: {rain_warning_quantity} mm/h." )
-                            wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
-                            rain_warning_telegram_flag = True
-                    else:
-                        rain_warning_telegram_flag = False
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
@@ -389,6 +437,8 @@ while True:
                 weather.weather_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h 
                 time.sleep(5)
+            # reset action button
+            action_button_mode = ActionButtonMode.Normal.value
         except Exception as e:
             show_api_error()
             wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + ': ' + str(e))

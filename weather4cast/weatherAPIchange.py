@@ -75,8 +75,61 @@ def detect_button():
                 # print('shortShortLongClick')
                 return WeatherButton.ShortShortLongClick  # ShortShortLongClick threshold 
             time.sleep(0.01) 
-        # print('trippleClick')
-        return WeatherButton.TrippleClick                 # TripleClick threshold 
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 0:
+            if time.time() - start_time >= 0.5:  
+                # print('trippleClick')
+                return WeatherButton.TrippleClick         # TrippleClick threshold 
+            time.sleep(0.01) 
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 1.0:  
+                # print('noClick')
+                return WeatherButton.NoClick              # NoClick threshold
+            time.sleep(0.01)
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 0:
+            if time.time() - start_time >= 0.5:  
+                # print('cuadrupleClick')
+                return WeatherButton.CuadrupleClick       # CuadrupleClick threshold 
+            time.sleep(0.01) 
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 1.0:  
+                # print('noClick')
+                return WeatherButton.NoClick              # NoClick threshold
+            time.sleep(0.01)
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 0:
+            if time.time() - start_time >= 0.5:  
+                # print('quintupleClick')
+                return WeatherButton.QuintupleClick       # QuintupleClick threshold 
+            time.sleep(0.01) 
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 1.0:  
+                # print('noClick')
+                return WeatherButton.NoClick              # NoClick threshold
+            time.sleep(0.01)
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 0:
+            if time.time() - start_time >= 0.5:  
+                # print('sextupleClick')
+                return WeatherButton.SextupleClick        # SextupleClick threshold 
+            time.sleep(0.01) 
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 1.0:  
+                # print('noClick')
+                return WeatherButton.NoClick              # NoClick threshold
+            time.sleep(0.01)
+        start_time = time.time()
+        while GPIO.input(PULSE_PIN) == 0:
+            if time.time() - start_time >= 0.5:  
+                # print('sevenfoldClick')
+                return WeatherButton.SevenfoldClick       # SevenfoldClick threshold 
+            time.sleep(0.01) 
+        while GPIO.input(PULSE_PIN) == 1:
+            if time.time() - start_time >= 1.0:  
+                # print('noClick')
+                return WeatherButton.NoClick              # NoClick threshold
+            time.sleep(0.01)
     elif super_long_click_flag == True:
         # long click remains
         start_time = time.time()

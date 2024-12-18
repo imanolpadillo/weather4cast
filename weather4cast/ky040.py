@@ -7,6 +7,7 @@
 #   Prerequisites:
 #       pip3 install RPi-GPIO-Rotary
 import max7219
+import time
 from RPi_GPIO_Rotary import rotary
 from gpioenum import gpio
 
@@ -27,6 +28,12 @@ DayDialSW = gpio.KY040_DAY_SW.value
 prev_counter = 0
 counter = 0
 lastWasInc = False
+
+CLICK_MS = 1000   # 2 clicks in less than CLICK_MS means a doble click
+dayDial_last_pushed_ms = 0
+dayDial_One_click = False
+hourDial_last_pushed_ms = 0
+hourDial_One_click = False
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -49,10 +56,18 @@ def dayDialPushed():
     """
     Push button activated
     """
-    day_dial.stop()
-    day_dial.start()
-    setForecastDay(1)
-    # print("reset day")
+    global CLICK_MS
+    global dayDial_last_pushed_ms
+    global dayDial_One_click
+    if abs(int(time.time() * 1000) - dayDial_last_pushed_ms) < CLICK_MS:
+        day_dial.stop()
+        day_dial.start()
+        setForecastDay(1)
+        dayDial_One_click = False
+        #print("reset day")
+    else:
+        dayDial_One_click = True
+    dayDial_last_pushed_ms = int(time.time() * 1000)
 
 def dayDialChanged(count):
     # print(count) ## Current Counter value
@@ -60,7 +75,6 @@ def dayDialChanged(count):
 
 # 00=day1, 04=day2, 08=day3, 12=day4, 16=day5
 def setForecastDay(count):
-    global forecast_day
     while count<0:
         count += 20
     while count>=20:
@@ -89,10 +103,18 @@ def hourDialTurnDec():
     # print("- hour")
 
 def hourDialPushed():
-    hour_dial.stop()
-    hour_dial.start()
-    setForecastHour(0)
-    # print("reset hour")
+    global CLICK_MS
+    global hourDial_last_pushed_ms
+    global hourDial_One_click
+    if abs(int(time.time() * 1000) - hourDial_last_pushed_ms) < CLICK_MS:
+        hour_dial.stop()
+        hour_dial.start()
+        setForecastHour(0)
+        hourDial_One_click = False
+        # print("reset hour")
+    else:
+        hourDial_One_click = True
+    hourDial_last_pushed_ms = int(time.time() * 1000)
 
 def hourDialChanged(count):
     # print(count) ## Current Counter value
