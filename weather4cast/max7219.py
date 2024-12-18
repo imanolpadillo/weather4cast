@@ -11,7 +11,7 @@
 #       (optional) https://github.com/rm-hull/luma.led_matrix.git
 #       (optional) python3 ./luma.led_matrix/examples/matrix_demo.py --cascade=2 --block-orientation=-90
 
-from weatherAPIenum import WeatherConfig, WeatherRainStep, WeatherTimeLine
+from weatherAPIenum import WeatherConfig, WeatherRainStep, ActionButtonMode, WeatherTimeLine
 from PIL import Image
 from luma.led_matrix.device import max7219
 from luma.core.interface.serial import spi, noop
@@ -72,7 +72,7 @@ def show_message(message = message):
         text(draw, (0, 0), message, fill="white")
 
 
-def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, day = 0, hourFlag = False, hour = 0):
+def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_button_mode = ActionButtonMode.Normal.value, day = 0, hourFlag = False, hour = 0):
     """
     shows level
     :param level: 16 array including precipitation probability
@@ -104,9 +104,12 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, day = 0
                 output_level.append(deactivated_led)
 
     # Set extra markers markers
-    if weather_timeline == WeatherTimeLine.T24:
+    if weather_timeline == WeatherTimeLine.T24 and action_button_mode == ActionButtonMode.Normal.value:
         # x1 mark at top right corner
         output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
+    elif weather_timeline == WeatherTimeLine.T24 and action_button_mode != ActionButtonMode.Normal.value:
+        # x1 mark at top right corner
+        output_level[9] ^= 1  # XOR operation to toggle between 0 and 1
     elif weather_timeline == WeatherTimeLine.T48:
         # x2 mark at top right corner
         output_level[15] ^= 1  
