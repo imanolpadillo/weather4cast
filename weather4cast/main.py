@@ -13,6 +13,7 @@ from time import strftime
 import threading, time
 import pytz
 from datetime import datetime
+import telegram
 import wlogging
 from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxScenes, \
@@ -432,12 +433,24 @@ while True:
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
                 rain_warning_flag = False     # do not blink rain status, if it is raining or snowing
             else:
-                rain_warning_flag = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
-                                                            WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
+                                                                                    WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain()
             log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
+            # send rain warning notification
+            if WeatherConfig.RAIN_WARNING_TELEGRAM_ON.value == True:
+                if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
+                    rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
+                                                                                        WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                    if rain_warning_flag == True: 
+                        if rain_warning_telegram_flag == False:
+                            telegram.send_telegram(f"[RAIN WARNIG] In {WeatherConfig.RAIN_WARNING_TIME.value} hours: {rain_warning_quantity} mm/h." )
+                            wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
+                            rain_warning_telegram_flag = True
+                    else:
+                        rain_warning_telegram_flag = False
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status

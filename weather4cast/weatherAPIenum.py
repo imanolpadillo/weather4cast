@@ -13,7 +13,8 @@ class WeatherConfig(Enum):
     WEATHER_API_REFRESH_TIME = 1800 # in seconds
     RAIN_WARNING_REFRESH_TIME = 1   # in seconds
     RAIN_WARNING_MM = 1  # limit of rain mm
-    RAIN_WARNING_TIME = 3   # limit of hours to check
+    RAIN_WARNING_TIME = 2   # limit of hours to check
+    RAIN_WARNING_TELEGRAM_ON = True  # If True Telegram notification is send
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
