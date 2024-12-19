@@ -1,5 +1,5 @@
 # *************************************************************************************************** 
-# ************************************* WEATHER API: ELTIEMPO ***************************************
+# ************************************** WEATHER API: DUMMY *****************************************
 # *************************************************************************************************** 
 # Source: https://www.el-tiempo.net/api
 
@@ -12,7 +12,7 @@ from wlogging import LogType, LogMessage
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
  
-api_name = 'eltiempo'
+api_name = 'dummy'
 api_refresh_s = 900
 api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
 
@@ -153,6 +153,36 @@ def decode_json(data):
         else:                                                                       # [0: 00-24]
             weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion']]*24
         info_weather_to_rain_mm(x+1)    
+
+    for i in range(24):
+        weekWeather[0].rain[i] = 0
+        weekWeather[0].temperature[i] = 0
+        weekWeather[0].status[i] = 'sol'
+
+    for i in range(24):
+        weekWeather[1].rain[i] = 0.5
+        weekWeather[1].temperature[i] = 1
+        weekWeather[1].status[i] = 'cub'
+
+    for i in range(24):
+        weekWeather[2].rain[i] = 1
+        weekWeather[2].temperature[i] = 2
+        weekWeather[2].status[i] = 'llu'
+
+    for i in range(24):
+        weekWeather[3].rain[i] = 1.5
+        weekWeather[3].temperature[i] = 3
+        weekWeather[3].status[i] = 'nie'
+
+    for i in range(24):
+        weekWeather[4].rain[i] = 2
+        weekWeather[4].temperature[i] = 4
+        weekWeather[4].status[i] = 'tor'
+
+    for i in range(24):
+        weekWeather[5].rain[i] = 2.5
+        weekWeather[5].temperature[i] = 5
+        weekWeather[5].status[i] = 'vie'
 
     # Decode weather status
     for x in range(len(weekWeather)):
