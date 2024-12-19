@@ -20,7 +20,7 @@ config = configparser.ConfigParser()
 config.read(secrets_file_path)
 
 api_name = 'forecapi'
-api_refresh_s = 900
+api_refresh_s = 300
 api_key = config['secrets'][api_name]
 api_url = "https://foreca-weather.p.rapidapi.com/forecast/hourly/103104499"
 #status: https://developer.foreca.com/resources

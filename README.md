@@ -11,7 +11,7 @@ Weather4cast works with the following weather APIs:
 N. | Name | Name Id | API_KEY? | Refresh | API limit | url 
 --- | --- | --- | --- |--- |--- |--- 
 1 | meteomatics | metemati | yes | 900s (15min) | 500 calls/day | [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/) 
-2 | foreca | forecapi | yes | 900s (15min) | 1000 calls/day | [https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather](https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather)
+2 | foreca | forecapi | yes | 300s (05min) | 1000 calls/day | [https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather](https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather)
 3 | open-meteo | openmete | no | 900s (15min) | none | [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs) 
 4 | el-tiempo.net | eltiempo | no | 900s (15min) | none | [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
 5 | meteoblue | meteblue | yes | 28800s  (8h) | 1250 calls/year| [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
