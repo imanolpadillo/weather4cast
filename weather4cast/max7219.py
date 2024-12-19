@@ -11,6 +11,7 @@
 #       (optional) https://github.com/rm-hull/luma.led_matrix.git
 #       (optional) python3 ./luma.led_matrix/examples/matrix_demo.py --cascade=2 --block-orientation=-90
 
+import datetime
 from weatherAPIenum import WeatherConfig, WeatherRainStep, ActionButtonMode, WeatherTimeLine
 from PIL import Image
 from luma.led_matrix.device import max7219
@@ -71,6 +72,21 @@ def show_message(message = message):
     with canvas(device) as draw:
         text(draw, (0, 0), message, fill="white")
 
+def calculate_week_day(offset: int) -> int:
+    """
+    Calculate the day of the week given an offset.
+    Days are represented as:
+    1 = Monday, ..., 7 = Sunday.
+
+    :param offset: The number of days to add or subtract from today.
+    :return: The day of the week (1-7) after applying the offset.
+    """
+    # Get the current day of the week (1 = Monday, ..., 7 = Sunday)
+    today_week_day = datetime.now().isoweekday()  # isoweekday: 1 = Monday, ..., 7 = Sunday
+    # Calculate the new day of the week with offset
+    new_week_day = ((today_week_day + offset - 1) % 7) + 1
+    return new_week_day
+
 
 def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_button_mode = ActionButtonMode.Normal.value, day = 0, hourFlag = False, hour = 0):
     """
@@ -108,8 +124,11 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_
         # x1 mark at top right corner
         output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
     elif weather_timeline == WeatherTimeLine.T24 and action_button_mode != ActionButtonMode.Normal.value:
-        # x1 mark at top right corner
-        output_level[9] ^= 1  # XOR operation to toggle between 0 and 1
+        # x1 mark for week days. monday starts in pos 8
+        weekday = calculate_week_day(day)
+        while weekday > 0:
+            output_level[9-weekday] ^= 1
+            weekday -= 1
     elif weather_timeline == WeatherTimeLine.T48:
         # x2 mark at top right corner
         output_level[15] ^= 1  

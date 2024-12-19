@@ -153,11 +153,44 @@ def decode_json(data):
         else:                                                                       # [0: 00-24]
             weekWeather[x+1].rain = [data['proximos_dias'][x-1]['prob_precipitacion']]*24
         info_weather_to_rain_mm(x+1)    
-   
+
+    for i in range(24):
+        weekWeather[0].rain[i] = 0
+        weekWeather[0].temperature[i] = 0
+        weekWeather[0].status[i] = 'sol'
+
+    for i in range(24):
+        weekWeather[1].rain[i] = 0.5
+        weekWeather[1].temperature[i] = 1
+        weekWeather[1].status[i] = 'cub'
+
+    for i in range(24):
+        weekWeather[2].rain[i] = 1
+        weekWeather[2].temperature[i] = 2
+        weekWeather[2].status[i] = 'llu'
+
+    for i in range(24):
+        weekWeather[3].rain[i] = 1.5
+        weekWeather[3].temperature[i] = 3
+        weekWeather[3].status[i] = 'nie'
+
+    for i in range(24):
+        weekWeather[4].rain[i] = 2
+        weekWeather[4].temperature[i] = 4
+        weekWeather[4].status[i] = 'tor'
+
+    for i in range(24):
+        weekWeather[5].rain[i] = 2.5
+        weekWeather[5].temperature[i] = 5
+        weekWeather[5].status[i] = 'vie'
+
     # Decode weather status
     for x in range(len(weekWeather)):
         for ycount, yvalue in enumerate(weekWeather[x].status):
             weekWeather[x].status[ycount] = decode_weather_status(weekWeather[x].status[ycount], dict_weather_status)
+    
+
+
 
 
 def decode_weather_status(input_string, dict_list):

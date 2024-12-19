@@ -142,24 +142,31 @@ def thread_actionButton_function():
             weather.weather_timeline = WeatherTimeLine.T24
             if button_output == WeatherButton.ShortClick:
                 # Monday
+                forecast_input.day = days_until_weekday(1)
                 print('Monday')	
             elif button_output == WeatherButton.DoubleClick:
                 # Tuesday
+                forecast_input.day = days_until_weekday(2)
                 print('Tuesday')	
             elif button_output == WeatherButton.TrippleClick:
                 # Wednesday
+                forecast_input.day = days_until_weekday(3)
                 print('Wednesday')	
             elif button_output == WeatherButton.CuadrupleClick:
                 # Thursday
+                forecast_input.day = days_until_weekday(4)
                 print('Thursday')	
             elif button_output == WeatherButton.QuintupleClick:
                 # Friday
+                forecast_input.day = days_until_weekday(5)
                 print('Friday')	
             elif button_output == WeatherButton.SextupleClick:
                 # Saturday
+                forecast_input.day = days_until_weekday(6)
                 print('Saturday')	
             elif button_output == WeatherButton.SevenfoldClick:
                 # Sunday
+                forecast_input.day = days_until_weekday(7)
                 print('Sunday')	
         # C) Action button: sequential day mode
         elif action_button_mode == ActionButtonMode.SequentialDay.value:
@@ -199,6 +206,25 @@ def thread_actionButton_function():
 # ***************************************************************************************************
 # FUNCTIONS
 # ***************************************************************************************************
+def days_until_weekday(target_day):
+    """
+    Calculate the number of days from today until the given weekday.
+
+    :param target_day: Integer representing the target weekday (Monday=1, ..., Sunday=7)
+    :return: Number of days until the target weekday
+    """
+    # Get today's weekday (Monday=1, ..., Sunday=7)
+    today = datetime.now().isoweekday()
+
+    # Calculate the difference, accounting for wrapping around the week
+    days_difference = (target_day - today) % 7
+
+    # If the target day > 5, get the max available difference: 5
+    if days_difference > 5:
+        days_difference = 5
+
+    return days_difference
+
 def reset_leds():
     """
     Deactivates and activates all leds, and set weather_api_id to 1
@@ -256,28 +282,13 @@ def get_eco_flag (start_time_str, end_time_str):
     end_time = datetime.strptime(end_time_str, '%H:%M').time()
     
     # Get the current time
-    current_time = datetime.datetime.now().time()
+    current_time = datetime.now().time()
     
     # Check if the current time is between the start and end times
     if start_time < end_time:
         return start_time <= current_time <= end_time
     else:  # Over midnight case
         return current_time >= start_time or current_time <= end_time
-
-def calculate_week_day(offset: int) -> int:
-    """
-    Calculate the day of the week given an offset.
-    Days are represented as:
-    1 = Monday, ..., 7 = Sunday.
-
-    :param offset: The number of days to add or subtract from today.
-    :return: The day of the week (1-7) after applying the offset.
-    """
-    # Get the current day of the week (1 = Monday, ..., 7 = Sunday)
-    today_week_day = datetime.now().isoweekday()  # isoweekday: 1 = Monday, ..., 7 = Sunday
-    # Calculate the new day of the week with offset
-    new_week_day = ((today_week_day + offset - 1) % 7) + 1
-    return new_week_day
  
 def input_data_refresh():
     """
@@ -427,7 +438,7 @@ while True:
             log+='; status' + suffix_24_48_120h + '=' + str(status)
             # display rain
             rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
-            max7219.calculate_level(rain, weather.weather_timeline, action_button_mode)
+            max7219.calculate_level(rain, weather.weather_timeline, action_button_mode, forecast_input.day, forecast_input.hourFlag, forecast_input.hour)
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
             if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
