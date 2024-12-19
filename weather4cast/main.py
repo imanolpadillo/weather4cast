@@ -143,54 +143,42 @@ def thread_actionButton_function():
             if button_output == WeatherButton.ShortClick:
                 # Monday
                 forecast_input.day = days_until_weekday(1)
-                print('Monday')	
             elif button_output == WeatherButton.DoubleClick:
                 # Tuesday
-                forecast_input.day = days_until_weekday(2)
-                print('Tuesday')	
+                forecast_input.day = days_until_weekday(2)	
             elif button_output == WeatherButton.TrippleClick:
                 # Wednesday
                 forecast_input.day = days_until_weekday(3)
-                print('Wednesday')	
             elif button_output == WeatherButton.CuadrupleClick:
                 # Thursday
                 forecast_input.day = days_until_weekday(4)
-                print('Thursday')	
             elif button_output == WeatherButton.QuintupleClick:
                 # Friday
                 forecast_input.day = days_until_weekday(5)
-                print('Friday')	
             elif button_output == WeatherButton.SextupleClick:
                 # Saturday
-                forecast_input.day = days_until_weekday(6)
-                print('Saturday')	
+                forecast_input.day = days_until_weekday(6)	
             elif button_output == WeatherButton.SevenfoldClick:
                 # Sunday
                 forecast_input.day = days_until_weekday(7)
-                print('Sunday')	
         # C) Action button: sequential day mode
         elif action_button_mode == ActionButtonMode.SequentialDay.value:
             weather.weather_timeline = WeatherTimeLine.T24
             if button_output == WeatherButton.ShortClick:
                 # +1 day
                 forecast_input.day = 1
-                print('+1 day')	
             elif button_output == WeatherButton.DoubleClick:
                 # +2 days
                 forecast_input.day = 2
-                print('+2 days')	
             elif button_output == WeatherButton.TrippleClick:
                 # +3 days
                 forecast_input.day = 3
-                print('+3 days')	
             elif button_output == WeatherButton.CuadrupleClick:
                 # +4 days
-                forecast_input.day = 4
-                print('+4 days')	
+                forecast_input.day = 4	
             elif button_output == WeatherButton.QuintupleClick:
                 # +5 days
-                forecast_input.day = 5
-                print('+5 days')	            
+                forecast_input.day = 5            
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and button_output != WeatherButton.LongClick:

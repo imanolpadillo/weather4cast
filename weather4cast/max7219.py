@@ -11,7 +11,7 @@
 #       (optional) https://github.com/rm-hull/luma.led_matrix.git
 #       (optional) python3 ./luma.led_matrix/examples/matrix_demo.py --cascade=2 --block-orientation=-90
 
-import datetime
+from datetime import datetime
 from weatherAPIenum import WeatherConfig, WeatherRainStep, ActionButtonMode, WeatherTimeLine
 from PIL import Image
 from luma.led_matrix.device import max7219
@@ -127,7 +127,7 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_
         # x1 mark for week days. monday starts in pos 8
         weekday = calculate_week_day(day)
         while weekday > 0:
-            output_level[9-weekday] ^= 1
+            output_level[7+weekday] ^= 1
             weekday -= 1
     elif weather_timeline == WeatherTimeLine.T48:
         # x2 mark at top right corner
