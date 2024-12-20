@@ -24,12 +24,13 @@ WeatherButton, WeatherTimeLine, ActionButtonMode
 # ***************************************************************************************************
 weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
+rain_warning_telegram_flag = False # if True telegram has already send
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 thread_max7219_running = True
 eco_mode_flag = False              # in eco mode, all leds are switched off until eco end time
 eco_manual_flag = False            # in manual eco, all leds are switched off until manual disabling
 last_status = None                 # if last_status != current_status, LIFX color changes
-action_button_mode = ActionButtonMode.Normal
+action_button_mode = ActionButtonMode.Normal.value
  
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
@@ -262,22 +263,26 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
 
-def get_eco_flag (start_time_str, end_time_str):
+def get_eco_flag (current_date, current_day, current_hour):
     """
+    check if current date is holiday
     check if current time is between eco scheduled init and end times
     """
-    # Parse the input time strings into datetime objects
-    start_time = datetime.strptime(start_time_str, '%H:%M').time()
-    end_time = datetime.strptime(end_time_str, '%H:%M').time()
-    
-    # Get the current time
-    current_time = datetime.now().time()
-    
-    # Check if the current time is between the start and end times
-    if start_time < end_time:
-        return start_time <= current_time <= end_time
-    else:  # Over midnight case
-        return current_time >= start_time or current_time <= end_time
+    try:
+        holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
+        if (current_date.month, current_date.day) in holidays:
+            eco_flag = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
+        else:
+            # No holiday
+            today_schedule = WeatherConfig.ECO_MODE_SCHEDULE.value[current_day]
+            eco_flag = str(today_schedule[current_hour])
+        if eco_flag == '0':
+            return True  # on
+        else:
+            return False # off
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return True      # on
  
 def input_data_refresh():
     """
@@ -307,7 +312,7 @@ def input_data_refresh():
         # Check eco_mode every 5 minutes
         if WeatherConfig.ECO_MODE_ON.value == True:
             if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  
-                eco_scheduled = get_eco_flag(WeatherConfig.ECO_MODE_INIT_TIME.value, WeatherConfig.ECO_MODE_END_TIME.value)
+                eco_scheduled = get_eco_flag(now.today(),now.weekday(),now.time().hour)
                 # Set eco_mode_flag at eco_mode_init_time
                 if eco_scheduled == True and eco_mode_flag == False:
                     demo(False)  # reset all leds
