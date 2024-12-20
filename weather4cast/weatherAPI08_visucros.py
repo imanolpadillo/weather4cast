@@ -18,7 +18,7 @@ config = configparser.ConfigParser()
 config.read(secrets_file_path)
 
 api_name = 'visucros'
-api_refresh_s = 900
+api_refresh_s = 300
 api_key = config['secrets'][api_name]
 api_url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/vitoria-gasteiz?unitGroup=metric&include=hours&contentType=json&key=' + api_key 
 

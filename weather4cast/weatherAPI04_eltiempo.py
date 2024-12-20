@@ -13,7 +13,7 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
  
 api_name = 'eltiempo'
-api_refresh_s = 900
+api_refresh_s = 300
 api_url = 'https://www.el-tiempo.net/api/json/v2/provincias/01/municipios/01059'
 
 dict_weather_status = [

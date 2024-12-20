@@ -14,7 +14,7 @@ from datetime import datetime
 # *************************************************************************************************** 
  
 api_name = 'apimet'
-api_refresh_s = 900
+api_refresh_s = 300
 api_url = 'https://api.met.no/weatherapi/locationforecast/2.0?lat=' + WeatherConfig.GEO_LAT.value + \
 '&lon=' + WeatherConfig.GEO_LON.value + '&altitude=525'
 

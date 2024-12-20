@@ -10,18 +10,19 @@ Weather4cast works with the following weather APIs:
 
 N. | Name | Name Id | API_KEY? | Refresh | API limit | url 
 --- | --- | --- | --- |--- |--- |--- 
-1 | meteomatics | metemati | yes | 900s (15min) | 500 calls/day | [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/) 
-2 | foreca | forecapi | yes | 300s (05min) | 1000 calls/day | [https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather](https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather)
-3 | open-meteo | openmete | no | 900s (15min) | none | [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs) 
+1 | foreca | forecapi | yes | 300s (05min) | 1000 calls/day | [https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather](https://rapidapi.com/foreca-ltd-foreca-ltd-default/api/foreca-weather)
+2 | meteomatics | metemati | yes | 300s (05min) | 500 calls/day | [https://www.meteomatics.com/en/api/getting-started/](https://www.meteomatics.com/en/api/getting-started/) 
+3 | open-meteo | openmete | no | 300s (05min) | none | [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs) 
 4 | el-tiempo.net | eltiempo | no | 900s (15min) | none | [https://www.el-tiempo.net/api](https://www.el-tiempo.net/api)
 5 | meteoblue | meteblue | yes | 28800s  (8h) | 1250 calls/year| [https://docs.meteoblue.com/en/weather-apis/packages-api/overview](https://docs.meteoblue.com/en/weather-apis/packages-api/overview)
 6 | meteostat | metestat | yes | 5400s (1,5h) | 500 calls/month | [https://dev.meteostat.net/api/](https://dev.meteostat.net/api/)
 7 | ai weather | aiweathr | yes | 28800s  (8h) | 100 calls/month | [https://rapidapi.com/MeteosourceWeather/api/ai-weather-by-meteosource/](https://rapidapi.com/MeteosourceWeather/api/ai-weather-by-meteosource/)
-8 | visualcrossing | visucros | yes | 900s (15min) | 1000 calls/day | [https://www.visualcrossing.com](https://www.visualcrossing.com)
-9 | tomorrow.io | tomorrow | yes | 900s (15min) | 500 calls/day | [https://api.tomorrow.io/](https://api.tomorrow.io/)
+8 | visualcrossing | visucros | yes | 300s (05min) | 1000 calls/day | [https://www.visualcrossing.com](https://www.visualcrossing.com)
+9 | tomorrow.io | tomorrow | yes | 300s (05min) | 500 calls/day | [https://api.tomorrow.io/](https://api.tomorrow.io/)
 10 | openweathermap | openweat | yes | 900s (15min) | 60 calls/min | [https://openweathermap.org/api](https://openweathermap.org/api)
-11 | 7timer | 7timer | no | 900s (15min) | none | [https://github.com/Yeqzids/7timer-issues/wiki/Wiki](https://github.com/Yeqzids/7timer-issues/wiki/Wiki)
-12 | apimet | apimet | no | 900s (15min) | none | [https://api.met.no/weatherapi/locationforecast/2.0/documentation](https://api.met.no/weatherapi/locationforecast/2.0/documentation)
+11 | 7timer | 7timer | no | 300s (05min) | none | [https://github.com/Yeqzids/7timer-issues/wiki/Wiki](https://github.com/Yeqzids/7timer-issues/wiki/Wiki)
+12 | apimet | apimet | no | 300s (05min) | none | [https://api.met.no/weatherapi/locationforecast/2.0/documentation](https://api.met.no/weatherapi/locationforecast/2.0/documentation)
+13 | dummy | dummy | no | 300s (05min) | none | dummy
 
 
 ## 🎮 Raspi commands

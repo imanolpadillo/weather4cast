@@ -13,7 +13,7 @@ from wlogging import LogType, LogMessage
 # *************************************************************************************************** 
  
 api_name = '7timer'
-api_refresh_s = 900
+api_refresh_s = 300
 api_url = 'https://www.7timer.info/bin/civil.php?lon=' + WeatherConfig.GEO_LON.value + \
 '&lat=' + WeatherConfig.GEO_LAT.value + '&ac=0&unit=metric&output=json&tzshift=0'
 
