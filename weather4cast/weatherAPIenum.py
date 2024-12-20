@@ -11,7 +11,7 @@ class WeatherRainStep(Enum):
 class WeatherConfig(Enum):
     GEO_LON = '-2.6724025'  # longitude
     GEO_LAT = '42.8465088'  # latitude
-    DAYS = 6        # Number of day to be forecasted
+    DAYS = 6   # Number of day to be forecasted
     WEATHER_API_REFRESH_TIME = 1800 # in seconds
     RAIN_WARNING_REFRESH_TIME = 1   # in seconds
     RAIN_WARNING_MM = 1  # limit of rain mm
@@ -20,12 +20,53 @@ class WeatherConfig(Enum):
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
-    INTENSITY_7LED = 3  # 7led intensity
-    INTENSITY_LED_MATRIX = 10  # led matrix intensity
-    ECO_MODE_ON = True  # in 'eco mode' leds are switched off in eco time
-    ECO_MODE_INIT_TIME = "22:00"  # 'eco mode' init time
-    ECO_MODE_END_TIME = "06:00"  # 'eco mode' end time
+    INTENSITY_7LED = 1  # 7led intensity
+    INTENSITY_LED_MATRIX = 2  # led matrix intensity
     LIFX_ON = True  # If True LIFX color changes with status change
+    ECO_MODE_ON = True  # in 'eco mode' leds are switched off in eco time
+    ECO_MODE_HOLIDAYS = [
+        # (month, day)
+        # Xmas
+        (12, 24), 
+        (12, 25), 
+        (12, 26), 
+        (12, 27),
+        (12, 28),
+        (12, 29),
+        (12, 30),
+        (12, 31),
+        (1, 1), 
+        (1, 2), 
+        (1, 3), 
+        (1, 4), 
+        (1, 5),
+        (1, 6), 
+        # Summer
+        (8, 4), 
+        (8, 5), 
+        (8, 6), 
+        (8, 7), 
+        (8, 8), 
+        (8, 9), 
+        # Spanish National Holidays
+        (5, 1), 
+        (8, 15), 
+        (10, 12),
+        (11, 1),
+        (12, 6), 
+    ]
+    ECO_MODE_HOLIDAYS_SCHEDULE = "000000011111111111111000"
+    #                             000000000011111111112222   
+    #                             012345678901234567890123  
+    ECO_MODE_SCHEDULE = [        "000000000000000111111000","000000000000000111111000","000000000000000111111000",
+    # hours                       000000000011111111112222   000000000011111111112222   000000000011111111112222
+    #                             012345678901234567890123   012345678901234567890123   012345678901234567890123
+                                 "000000000000000111111000","000000000000000111111000","000000011111111111111000",
+    #                             000000000011111111112222   000000000011111111112222   000000000011111111112222
+    #                             012345678901234567890123   012345678901234567890123   012345678901234567890123 
+                                 "000000011111111111111000"]
+    #                             000000000011111111112222   
+    #                             012345678901234567890123 
 
 class WeatherStatus(Enum):
     SUNNY = 1
@@ -76,7 +117,7 @@ class WeatherButton(Enum):
     QuintupleClick = 9
     SextupleClick = 10
     SevenfoldClick = 11
-
+	
 class ActionButtonMode(Enum):
     Normal = 0
     WeekDay = 1
