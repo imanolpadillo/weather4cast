@@ -241,10 +241,16 @@ def rain_24_to_16_hours(input_array, worst_case = True):
     output_array = []
     if worst_case == True:
         # Worst case
-        for i in range(0, len(input_array), 3):
-            chunk = input_array[i:i + 3]  # Get the current chunk of 3 elements
-            largest_two = sorted(chunk, reverse=True)[:2]  # Sort in descending order and take the top 2
-            output_array.extend(largest_two)  # Add the top 2 to the output array
+        # Process chunks of 3 elements
+        for i in range(0, len(input_array), 3):  # Step through the input array in chunks of 3
+            chunk = input_array[i:i + 3]  # Extract the current chunk of 3 elements
+            # Sort in descending order, but keep the order as it appears in the input
+            largest_two = sorted(chunk, reverse=True)[:2]  # Get the two largest values
+            # Now, to maintain order, add the two largest elements in the order they appear in the chunk
+            for val in chunk:
+                if val in largest_two:
+                    output_array.append(val)
+                    largest_two.remove(val)
     else:
         # Average
         for i in range(0, len(input_array), 3):
