@@ -230,7 +230,7 @@ def get_rain (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T1
 
     return rain_output
 
-def rain_24_to_16_hours(input_array):
+def rain_24_to_16_hours(input_array, worst_case = True):
     """
     converts 24 array into 16 array
     :param input_array: size 24
@@ -239,14 +239,22 @@ def rain_24_to_16_hours(input_array):
     if len(input_array) != 24:
         raise ValueError("Input array must have 24 elements.")
     output_array = []
-    for i in range(0, len(input_array), 3):
-        # Calculate the average of each pair of 1.5 groups
-        avg1 = round((input_array[i] + input_array[i+1]) / 2,1)
-        avg2 = round((input_array[i+1] + input_array[i+2]) / 2,1)
-        output_array.extend([avg1, avg2])
+    if worst_case == True:
+        # Worst case
+        for i in range(0, len(input_array), 3):
+            chunk = input_array[i:i + 3]  # Get the current chunk of 3 elements
+            largest_two = sorted(chunk, reverse=True)[:2]  # Sort in descending order and take the top 2
+            output_array.extend(largest_two)  # Add the top 2 to the output array
+    else:
+        # Average
+        for i in range(0, len(input_array), 3):
+            # Calculate the average of each pair of 1.5 groups
+            avg1 = round((input_array[i] + input_array[i+1]) / 2,1)
+            avg2 = round((input_array[i+1] + input_array[i+2]) / 2,1)
+            output_array.extend([avg1, avg2])
     return output_array
 
-def rain_120_to_16_hours(input_array):
+def rain_120_to_16_hours(input_array, worst_case = True):
     """
     converts 120 array into 16 array
     :param input_array: size 120
@@ -254,15 +262,22 @@ def rain_120_to_16_hours(input_array):
     """
     if len(input_array) != 120:
         raise ValueError("Input array must have exactly 120 fields.")
-    
     output_array = []
-    for i in range(0, len(input_array), 8):
-        chunk = input_array[i:i+8]
-        chunk_average = sum(chunk) / len(chunk)
-        output_array.append(round(chunk_average,1))
+    if worst_case == True:
+        # Worst case
+        for i in range(0, len(input_array), 8):  # Step through the array in steps of 8
+            chunk = input_array[i:i + 8]  # Get the current chunk of 8 elements
+            max_value = max(chunk)       # Find the maximum value in the chunk
+            output_array.append(max_value)  # Append the max value to the output array
+    else:
+        # Average
+        for i in range(0, len(input_array), 8):
+            chunk = input_array[i:i+8]
+            chunk_average = sum(chunk) / len(chunk)
+            output_array.append(round(chunk_average,1))
     # Append 0 at the end of the output array
     output_array.append(0)
-
+    print(output_array)
     return output_array
   
 def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
@@ -314,7 +329,6 @@ def get_tomorrow_rain(forecast_day, rain_limit):
     else:
         tomorrow_rain = weatherAPI.weekWeather[forecast_day + 1].rain  
         tomorrow_rain_rnd  = [round(x) for x in tomorrow_rain] 
-        print("TOMORROW_DAY_" + str(forecast_day + 1) + ": " + str(tomorrow_rain_rnd)) 
     rain_max = max(list(map(float, tomorrow_rain_rnd)))
     if rain_max >= rain_limit:
         return True

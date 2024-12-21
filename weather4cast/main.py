@@ -370,9 +370,7 @@ def check_tomorrow_rain():
     global check_tomorrow_rain_flag
     global forecast_input
     rain_flag = 'Disabled'
-    print("INIT - IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
     if check_tomorrow_rain_flag == True:
-        print("CHECKING - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         rain_flag = weather.get_tomorrow_rain(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
         pcf8574.tomorrow_rain(rain_flag)
     return str(rain_flag)
