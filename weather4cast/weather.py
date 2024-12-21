@@ -312,8 +312,10 @@ def get_tomorrow_rain(forecast_day, rain_limit):
     if forecast_day >= WeatherConfig.DAYS.value -1:
         return False
     else:
-        tomorrow_rain = weatherAPI.weekWeather[forecast_day + 1].rain    
-    rain_max = max(list(map(float, tomorrow_rain)))
+        tomorrow_rain = weatherAPI.weekWeather[forecast_day + 1].rain  
+        tomorrow_rain_rnd  = [round(x) for x in tomorrow_rain] 
+        print("TOMORROW_DAY_" + str(forecast_day + 1) + ": " + str(tomorrow_rain_rnd)) 
+    rain_max = max(list(map(float, tomorrow_rain_rnd)))
     if rain_max >= rain_limit:
         return True
     else:

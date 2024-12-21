@@ -26,6 +26,7 @@ weather_refresh_flag = False
 rain_warning_flag = False          # activated if it starts raining in following hours
 rain_warning_telegram_flag = False # if True telegram has already send
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
+disable_tomorrow_rain = False      # double click disable tomorrow rain
 thread_max7219_running = True
 eco_mode_flag = False              # in eco mode, all leds are switched off until eco end time
 eco_manual_flag = False            # in manual eco, all leds are switched off until manual disabling
@@ -86,7 +87,8 @@ def thread_actionButton_function():
     ... 24-120H : Display next 5 day weather
     '''
     global weather_refresh_flag
-    global check_tomorrow_rain_flag  # disabled with double/tripple click
+    global check_tomorrow_rain_flag  
+    global disable_tomorrow_rain
     global eco_mode_flag
     global eco_manual_flag
     global action_button_mode
@@ -130,14 +132,12 @@ def thread_actionButton_function():
             elif button_output == WeatherButton.DoubleClick:
                 # ..  24-48H  : Display tomorrow weather
                 # print('24-48H')
-                check_tomorrow_rain_flag = False
-                pcf8574.tomorrow_rain(False)
+                disable_tomorrow_rain = True
                 weather.weather_timeline = WeatherTimeLine.T48
             elif button_output == WeatherButton.TrippleClick:
                 # ... 24-120H : Display next 5 day weather
                 # print('24-120H')
-                check_tomorrow_rain_flag = False
-                pcf8574.tomorrow_rain(False)
+                disable_tomorrow_rain = True
                 weather.weather_timeline = WeatherTimeLine.T120
         # B) Action button: week day mode
         elif action_button_mode == ActionButtonMode.WeekDay.value:
@@ -168,6 +168,7 @@ def thread_actionButton_function():
             weather.weather_timeline = WeatherTimeLine.T24
             if button_output == WeatherButton.ShortClick:
                 # +1 day
+                disable_tomorrow_rain = True
                 forecast_input.day = 1
             elif button_output == WeatherButton.DoubleClick:
                 # +2 days
@@ -188,6 +189,8 @@ def thread_actionButton_function():
                 wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MOFF.name,LogMessage.ECO_MODE_MOFF.value)
             eco_manual_flag = False
             eco_mode_flag = False
+            pcf8574.tomorrow_rain(False)     # reset tomorrow rain
+            check_tomorrow_rain_flag = True
             weather_refresh_flag = True
             time.sleep(2)
         else:
@@ -367,7 +370,9 @@ def check_tomorrow_rain():
     global check_tomorrow_rain_flag
     global forecast_input
     rain_flag = 'Disabled'
+    print("INIT - IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
     if check_tomorrow_rain_flag == True:
+        print("CHECKING - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         rain_flag = weather.get_tomorrow_rain(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
         pcf8574.tomorrow_rain(rain_flag)
     return str(rain_flag)
@@ -469,6 +474,12 @@ while True:
                 weather.weather_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h 
                 time.sleep(5)
+                pcf8574.tomorrow_rain(False)       # switch off tomorrow rain
+                if disable_tomorrow_rain == True:
+                    disable_tomorrow_rain = False
+                    check_tomorrow_rain_flag = False
+                else:
+                    check_tomorrow_rain_flag = True
             # reset action button
             action_button_mode = ActionButtonMode.Normal.value
         except Exception as e:
