@@ -332,7 +332,8 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     for hour in range(index, len(rain_data)):
         if (hour_counter>hour_limit) and raining_flag == False:
             break
-        if round_to_step(rain_data[hour]) >= rain_limit:
+        if round_to_step(rain_data[hour]) >= rain_limit or (raining_flag == True and round_to_step(rain_data[hour]) > 0):
+            # continue for until rain != 0
             raining_flag = True
         elif hour_counter>hour_limit:
             break
@@ -357,7 +358,7 @@ def get_tomorrow_rain(forecast_day, rain_limit):
         return False
     else:
         tomorrow_rain = weatherAPI.weekWeather[forecast_day + 1].rain  
-        tomorrow_rain_rnd  = [round(x) for x in tomorrow_rain] 
+        tomorrow_rain_rnd  = [round_to_step(x) for x in tomorrow_rain] 
     rain_max = max(list(map(float, tomorrow_rain_rnd)))
     if rain_max >= rain_limit:
         return True
