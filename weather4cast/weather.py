@@ -325,7 +325,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     # get current index
     index = forecast_day * 24 + forecast_hour
 
-    # from index+1, check if it rains the following 'hour_limit' hours.
+    # from index, check if it rains the following 'hour_limit' hours.
     raining_flag=False
     raining_quantity=""
     hour_counter=0
