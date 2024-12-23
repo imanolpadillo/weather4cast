@@ -454,7 +454,7 @@ while True:
                                                                                         WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
                     if rain_warning_flag == True: 
                         if rain_warning_telegram_flag == False:
-                            telegram.send_telegram(f"[RAIN WARNIG] In {WeatherConfig.RAIN_WARNING_TIME.value} hours: {rain_warning_quantity} mm/h." )
+                            telegram.send_telegram(f"[RAIN WARNING] From {forecast_input.hour:0>2}h: [{rain_warning_quantity}] mm/h." )
                             wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
                             rain_warning_telegram_flag = True
                     else:

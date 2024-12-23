@@ -285,6 +285,21 @@ def rain_120_to_16_hours(input_array, worst_case = True):
     output_array.append(0)
     print(output_array)
     return output_array
+
+
+def round_to_step(input_value, step = WeatherConfig.RAIN_STEP.value):
+    """
+    Rounds each input_value to the nearest multiple of the step.
+   
+    Args:
+    - step (float): The step size to round to.
+    - input_value: Input values to round.
+   
+    Returns:
+    - list of floats: The rounded values.
+    """
+    rounded_value = round(input_value / step) * step 
+    return rounded_value
   
 def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     """
@@ -311,14 +326,22 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     index = forecast_day * 24 + forecast_hour
 
     # from index+1, check if it rains the following 'hour_limit' hours.
+    raining_flag=False
+    raining_quantity=""
     hour_counter=0
-    for hour in range(index + 1, len(rain_data)):
-        if hour_counter>=hour_limit:
-            return False, 0
-        if round(rain_data[hour]) >= rain_limit:
-            return True, round(rain_data[hour])
+    for hour in range(index, len(rain_data)):
+        if (hour_counter>hour_limit) and raining_flag == False:
+            break
+        if round_to_step(rain_data[hour]) >= rain_limit:
+            raining_flag = True
+        elif hour_counter>hour_limit:
+            break
+        raining_quantity += str(rain_data[hour]) + ', '
         hour_counter+=1
-    return False, 0
+    if len(raining_quantity) > 2:
+        # remove last ' ,'
+        raining_quantity = raining_quantity[:-2]
+    return raining_flag, raining_quantity
 
 def get_tomorrow_rain(forecast_day, rain_limit):
     """
