@@ -59,7 +59,9 @@ def thread_weatherAPI(f_stop):
 # Thread that blink rain icon if it rains during current day
 def thread_rainWarning(f_stop):
     global rain_warning_flag
-    if rain_warning_flag == True:
+    if rain_warning_flag == True and not(weather.weather_timeline != WeatherTimeLine.T16 or 
+                                         status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or 
+                                         status == WeatherStatus.STORMY):
         pcf8574.toggle_rain()
     if not f_stop.is_set():
         threading.Timer(WeatherConfig.RAIN_WARNING_REFRESH_TIME.value, thread_rainWarning, [f_stop]).start()
@@ -438,10 +440,7 @@ while True:
             max7219.calculate_level(rain, weather.weather_timeline, action_button_mode, forecast_input.day, forecast_input.hourFlag, forecast_input.hour)
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
-            if weather.weather_timeline != WeatherTimeLine.T16 or status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or status == WeatherStatus.STORMY:
-                rain_warning_flag = False     # do not blink rain status, if it is raining or snowing
-            else:
-                rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
+            rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
                                                                                     WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
@@ -450,8 +449,6 @@ while True:
             # send rain warning notification
             if WeatherConfig.RAIN_WARNING_TELEGRAM_ON.value == True:
                 if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
-                    rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour, 
-                                                                                        WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
                     if rain_warning_flag == True: 
                         if rain_warning_telegram_flag == False:
                             telegram.send_telegram(f"[RAIN WARNING] From {forecast_input.hour:0>2}h: [{rain_warning_quantity}] mm/h." )
