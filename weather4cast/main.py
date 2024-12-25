@@ -165,6 +165,10 @@ def thread_actionButton_function():
             elif button_output == WeatherButton.SevenfoldClick:
                 # Sunday
                 forecast_input.day = days_until_weekday(7)
+            elif button_output == WeatherButton.LongClick:
+                # display weather API
+                weather.weather_timeline = WeatherTimeLine.T16
+                display_weather_api()   
         # C) Action button: sequential day mode
         elif action_button_mode == ActionButtonMode.SequentialDay.value:
             weather.weather_timeline = WeatherTimeLine.T24
@@ -183,10 +187,15 @@ def thread_actionButton_function():
                 forecast_input.day = 4	
             elif button_output == WeatherButton.QuintupleClick:
                 # +5 days
-                forecast_input.day = 5            
+                forecast_input.day = 5 
+            elif button_output == WeatherButton.LongClick:
+                # display weather API
+                weather.weather_timeline = WeatherTimeLine.T16
+                display_weather_api()           
             
         # avoid button overlapping
-        if button_output != WeatherButton.NoClick and button_output != WeatherButton.LongClick:
+        if button_output != WeatherButton.NoClick and \
+            not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value):
             if eco_manual_flag == True or eco_mode_flag == True:
                 wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MOFF.name,LogMessage.ECO_MODE_MOFF.value)
             eco_manual_flag = False
@@ -242,6 +251,15 @@ def show_api_error():
     """
     demo(False)
     tm1637l.show_api_error()
+
+def display_weather_api():
+    demo(False)
+    tm1637l.show_api_name()
+    if len(str(weather.api_weather_id))==1:
+        max7219.message = '0' + str(weather.api_weather_id)
+    else:
+        max7219.message = str(weather.api_weather_id)
+    time.sleep(max7219.timeout)
  
 def change_weather_api(reset_api_id = False, refresh = True, increase = True):
     global weather_refresh_flag
@@ -252,13 +270,7 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
     # Update weather_api_id
     weather.change_weather_api(increase)
     # Display info about new api
-    demo(False)
-    tm1637l.show_api_name()
-    if len(str(weather.api_weather_id))==1:
-        max7219.message = '0' + str(weather.api_weather_id)
-    else:
-        max7219.message = str(weather.api_weather_id)
-    time.sleep(max7219.timeout)
+    display_weather_api()
     if refresh == True:
     # Update api data
         weather.refresh()
