@@ -8,6 +8,7 @@
 
 import tm1637
 import weather
+from datetime import datetime
 from gpioenum import gpio
 from weatherAPIenum import WeatherConfig
 
@@ -58,3 +59,13 @@ def show_temperature(min, max):
     """
     tmin.temperature(int(min))
     tmax.temperature(int(max))
+
+def show_date_time():
+    """
+    shows date and time
+    """ 
+    # Get the current date and time
+    now = datetime.now()
+
+    tmax.numbers(now.day, now.month, colon=False)
+    tmin.numbers(now.hour, now.minute)

@@ -190,8 +190,10 @@ def thread_actionButton_function():
                 forecast_input.day = 5 
             elif button_output == WeatherButton.LongClick:
                 # display weather API
+                demo(False)
                 weather.weather_timeline = WeatherTimeLine.T16
-                display_weather_api()           
+                tm1637l.show_date_time()   
+                time.sleep(max7219.timeout)       
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
