@@ -9,6 +9,7 @@
 import tm1637
 import weather
 from datetime import datetime
+import pytz
 from gpioenum import gpio
 from weatherAPIenum import WeatherConfig
 
@@ -65,7 +66,8 @@ def show_date_time():
     shows date and time
     """ 
     # Get the current date and time
-    now = datetime.now()
+    madrid_tz = pytz.timezone('Europe/Madrid')
+    now = datetime.now(madrid_tz)
 
     tmax.numbers(now.day, now.month, colon=False)
     tmin.numbers(now.hour, now.minute)
