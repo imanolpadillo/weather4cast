@@ -4,6 +4,11 @@ from enum import Enum
 # CONSTANTS AND GLOBAL VARIABLES
 # *************************************************************************************************** 
 
+class WorkingMode(Enum):
+    OFF = '0'
+    ON = '1'
+    CLOCK = 'C'
+
 class WeatherRainStep(Enum):
     FIXED = 0 # rain step is fixed by RAIN_STEP
     AUTO = 1  # rain step is x2 when rain is > RAIN_STEP*8
@@ -21,7 +26,8 @@ class WeatherConfig(Enum):
     MAX_WIND_MS = 12  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
-    INTENSITY_7LED = 1  # 7led intensity
+    INTENSITY_7LED_MODE_0N = 1  # 7led intensity in mode on
+    INTENSITY_7LED_MODE_CLOCK = 0  # 7led intensity in mode clock
     INTENSITY_LED_MATRIX = 2  # led matrix intensity
     LIFX_ON = True  # If True LIFX color changes with status change
     ECO_MODE_ON = True  # in 'eco mode' leds are switched off in eco time
@@ -56,16 +62,16 @@ class WeatherConfig(Enum):
         (11, 1),
         (12, 6), 
     ]
-    ECO_MODE_HOLIDAYS_SCHEDULE = "000000011111111111111000"
+    ECO_MODE_HOLIDAYS_SCHEDULE = "000000011111111111111CCC"
     #                             000000000011111111112222   
     #                             012345678901234567890123  
-    ECO_MODE_SCHEDULE = [        "000000000000000111111000","000000000000000111111000","000000000000000111111000",
+    ECO_MODE_SCHEDULE = [        "000000000000000111111C00","000000000000000111111C00","000000000000000111111C00",
     # hours                       000000000011111111112222   000000000011111111112222   000000000011111111112222
     #                             012345678901234567890123   012345678901234567890123   012345678901234567890123
-                                 "000000000000000111111000","000000000000000111111000","000000011111111111111000",
+                                 "000000000000000111111C00","000000000000000111111CCC","000000011111111111111CCC",
     #                             000000000011111111112222   000000000011111111112222   000000000011111111112222
     #                             012345678901234567890123   012345678901234567890123   012345678901234567890123 
-                                 "000000011111111111111000"]
+                                 "000000011111111111111C00"]
     #                             000000000011111111112222   
     #                             012345678901234567890123 
 

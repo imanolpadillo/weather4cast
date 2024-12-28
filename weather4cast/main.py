@@ -17,7 +17,7 @@ import telegram
 import wlogging
 from wlogging import LogType, LogMessage
 from weatherAPIenum import WeatherConfig, WeatherStatus, WeatherLifxScenes, \
-WeatherButton, WeatherTimeLine, ActionButtonMode
+WeatherButton, WeatherTimeLine, ActionButtonMode, WorkingMode
  
 # ***************************************************************************************************
 # CONSTANTS AND GLOBAL VARIABLES
@@ -27,11 +27,14 @@ rain_warning_flag = False          # activated if it starts raining in following
 rain_warning_telegram_flag = False # if True telegram has already send
 check_tomorrow_rain_flag = True    # activated to check tomorrow rain
 disable_tomorrow_rain = False      # double click disable tomorrow rain
-thread_max7219_running = True
-eco_mode_flag = False              # in eco mode, all leds are switched off until eco end time
-eco_manual_flag = False            # in manual eco, all leds are switched off until manual disabling
+thread_max7219_running = True      # running thread for led matrix
+eco_flag = WorkingMode.ON.value    # working mode: on, off or clock
+eco_flag_change = False            # working mode changes
+eco_off_manual_flag = False        # in manual eco_off, all leds are switched off until manual disabling
+eco_clock_manual_flag = False      # in manual eco_clock, only time is enabled
 last_status = None                 # if last_status != current_status, LIFX color changes
 action_button_mode = ActionButtonMode.Normal.value
+time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
  
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
@@ -91,8 +94,9 @@ def thread_actionButton_function():
     global weather_refresh_flag
     global check_tomorrow_rain_flag  
     global disable_tomorrow_rain
-    global eco_mode_flag
-    global eco_manual_flag
+    global eco_flag
+    global eco_off_manual_flag
+    global eco_clock_manual_flag
     global action_button_mode
     global forecast_input
     while True:
@@ -119,9 +123,7 @@ def thread_actionButton_function():
                 # _   ECO     : Activate ECO
                 # print('ECO')
                 demo(False)
-                eco_manual_flag = True
-                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MON.name,LogMessage.ECO_MODE_MON.value)
-                # eco_mode_flag = True
+                eco_off_manual_flag = True
             elif button_output == WeatherButton.SuperLongClick:
                 # __  RST     : Reset system
                 # print('RST')
@@ -189,19 +191,20 @@ def thread_actionButton_function():
                 # +5 days
                 forecast_input.day = 5 
             elif button_output == WeatherButton.LongClick:
-                # display weather API
+                # display time
                 demo(False)
                 weather.weather_timeline = WeatherTimeLine.T16
-                tm1637l.show_date_time()   
-                time.sleep(max7219.timeout)       
+                tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value)   
+                time.sleep(max7219.timeout) 
+                eco_clock_manual_flag = True     
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
-            not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value):
-            if eco_manual_flag == True or eco_mode_flag == True:
-                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_MOFF.name,LogMessage.ECO_MODE_MOFF.value)
-            eco_manual_flag = False
-            eco_mode_flag = False
+            not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value) and \
+            not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.SequentialDay.value):
+            eco_off_manual_flag = False
+            eco_clock_manual_flag = False
+            eco_flag = WorkingMode.ON.value
             pcf8574.tomorrow_rain(False)     # reset tomorrow rain
             check_tomorrow_rain_flag = True
             weather_refresh_flag = True
@@ -290,18 +293,15 @@ def get_eco_flag (current_date, current_day, current_hour):
     try:
         holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
         if (current_date.month, current_date.day) in holidays:
-            eco_flag = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
+            value = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
         else:
             # No holiday
             today_schedule = WeatherConfig.ECO_MODE_SCHEDULE.value[current_day]
-            eco_flag = str(today_schedule[current_hour])
-        if eco_flag == '0':
-            return True  # on
-        else:
-            return False # off
+            value = str(today_schedule[current_hour])
+        return value
     except Exception as e:
         print(f"An error occurred: {e}")
-        return True      # on
+        return WorkingMode.ON.value      # on
  
 def input_data_refresh():
     """
@@ -312,7 +312,8 @@ def input_data_refresh():
     global check_tomorrow_rain_flag
     global forecast_input
     global prev_forecast_input
-    global eco_mode_flag
+    global eco_flag
+    global time_zone
     switch.update()
     forecast_input.dayFlag = switch.forecast_day_flag
     forecast_input.hourFlag = switch.forecast_hour_flag
@@ -321,29 +322,12 @@ def input_data_refresh():
     else:
         forecast_input.day = ky040.forecast_day
     if forecast_input.hourFlag == False:
-        # Get the timezone for Madrid
-        time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
+        # Get the current time
         now = datetime.now(time_zone)
         forecast_input.hour = now.strftime("%H")
         # Reset check_tomorrow_rain_flag at 00:00:00
         if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
             check_tomorrow_rain_flag = True   # new day at 00:00:00
-        # Check eco_mode every 5 minutes
-        if WeatherConfig.ECO_MODE_ON.value == True:
-            if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0:  
-                eco_scheduled = get_eco_flag(now.today(),now.weekday(),now.time().hour)
-                # Set eco_mode_flag at eco_mode_init_time
-                if eco_scheduled == True and eco_mode_flag == False:
-                    demo(False)  # reset all leds
-                    eco_mode_flag = True
-                    wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
-                # Reset eco_mode_flag at eco_mode_end_time
-                if eco_scheduled == False and eco_mode_flag == True:
-                    eco_mode_flag = False
-                    weather_refresh_flag = True
-                    wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
-        else:
-            eco_mode_flag = False
     else:
         forecast_input.hour = ky040.forecast_hour
  
@@ -402,6 +386,11 @@ weather.refresh()
 wlogging.log(LogType.INFO.value,LogMessage.SWITCH_ON.name,LogMessage.SWITCH_ON.value)
 reset_leds()
 change_weather_api(True, False)
+
+# get init mode
+now = datetime.now(time_zone)
+eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
+weather_refresh_flag = True
  
 # start threads
 f_stop = threading.Event()
@@ -423,7 +412,45 @@ while True:
         # reset action button triggers for week and sequence day
         ky040.dayDial_One_click = False
         ky040.hourDial_One_click = False
-    if eco_manual_flag == False and eco_mode_flag == False and weather_refresh_flag == True:
+
+    # Check eco_mode every 5 minutes
+    if WeatherConfig.ECO_MODE_ON.value == True:
+        now = datetime.now(time_zone)
+        if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0: 
+            prev_eco_flag = eco_flag 
+            eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
+            print(str(eco_off_manual_flag) + str(eco_clock_manual_flag))
+            if prev_eco_flag != eco_flag:
+                eco_flag_change = True
+            weather_refresh_flag = True
+    else:
+        eco_flag = WorkingMode.ON.value
+
+    # A) OFF MODE
+    if eco_off_manual_flag == True or (eco_flag == WorkingMode.OFF.value and weather_refresh_flag == True):
+        # reset all leds
+        demo(False)
+        eco_off_manual_flag = False
+        weather_refresh_flag = False
+        # logging
+        if eco_flag_change:
+            eco_flag_change = False
+            wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
+    # B) CLOCK MODE
+    elif eco_clock_manual_flag == True or (eco_flag == WorkingMode.CLOCK.value):
+        if (int(now.strftime("%M")) % 1 == 0 and int(now.strftime("%S")) == 0) or weather_refresh_flag == True: 
+            # enable only time
+            if eco_flag_change == True:
+                demo(False)
+            tm1637l.show_date_time() 
+            eco_clock_manual_flag = False
+            weather_refresh_flag = False
+        # logging
+        if eco_flag_change:
+            eco_flag_change = False
+            wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_CLK.name,LogMessage.ECO_MODE_CLK.value)
+    # C) ON MODE
+    elif eco_flag == WorkingMode.ON.value and weather_refresh_flag == True:
         try:
             weather_refresh_flag = False
             log=''
@@ -491,6 +518,10 @@ while True:
                     check_tomorrow_rain_flag = True
             # reset action button
             action_button_mode = ActionButtonMode.Normal.value
+            # logging
+            if eco_flag_change:
+                eco_flag_change = False
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
         except Exception as e:
             show_api_error()
             wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + ': ' + str(e))
