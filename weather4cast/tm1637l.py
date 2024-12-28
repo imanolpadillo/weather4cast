@@ -66,8 +66,8 @@ def show_date_time():
     shows date and time
     """ 
     # Get the current date and time
-    madrid_tz = pytz.timezone('Europe/Madrid')
-    now = datetime.now(madrid_tz)
+    time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
+    now = datetime.now(time_zone)
 
     tmax.numbers(now.day, now.month, colon=False)
     tmin.numbers(now.hour, now.minute)

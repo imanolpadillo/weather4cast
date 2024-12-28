@@ -322,8 +322,8 @@ def input_data_refresh():
         forecast_input.day = ky040.forecast_day
     if forecast_input.hourFlag == False:
         # Get the timezone for Madrid
-        madrid_tz = pytz.timezone('Europe/Madrid')
-        now = datetime.now(madrid_tz)
+        time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
+        now = datetime.now(time_zone)
         forecast_input.hour = now.strftime("%H")
         # Reset check_tomorrow_rain_flag at 00:00:00
         if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:

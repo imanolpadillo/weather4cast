@@ -11,6 +11,7 @@ class WeatherRainStep(Enum):
 class WeatherConfig(Enum):
     GEO_LON = '-2.6724025'  # longitude
     GEO_LAT = '42.8465088'  # latitude
+    TIME_ZONE = 'Europe/Madrid'  # time zone
     DAYS = 6   # Number of day to be forecasted
     WEATHER_API_REFRESH_TIME = 1800 # in seconds
     RAIN_WARNING_REFRESH_TIME = 1   # in seconds

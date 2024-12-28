@@ -6,6 +6,7 @@ import logging, os
 import pytz
 from datetime import datetime
 from enum import Enum
+from weatherAPIenum import WeatherConfig
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -41,8 +42,8 @@ logging.basicConfig(filename=current_path+'/logs/weather4cast.log', level=loggin
 # *************************************************************************************************** 
 
 def log(logType, logId, message):
-    madrid_tz = pytz.timezone('Europe/Madrid')
-    now = datetime.now(madrid_tz)
+    time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
+    now = datetime.now(time_zone)
     log = now.strftime("%Y-%m-%d %H:%M:%S")
     if logType == LogType.ERROR.value: 
         logidlength = LOGID_MAX_LEN - 1
