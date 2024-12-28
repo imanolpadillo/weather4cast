@@ -192,11 +192,12 @@ def thread_actionButton_function():
                 forecast_input.day = 5 
             elif button_output == WeatherButton.LongClick:
                 # display time
+                eco_clock_manual_flag = True  
                 demo(False)
                 weather.weather_timeline = WeatherTimeLine.T16
-                tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value)   
-                time.sleep(max7219.timeout) 
-                eco_clock_manual_flag = True     
+                # show date with manual flag
+                tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
+                time.sleep(max7219.timeout)    
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
@@ -442,7 +443,8 @@ while True:
             # enable only time
             if eco_flag_change == True:
                 demo(False)
-            tm1637l.show_date_time() 
+            # show date with manual flag
+            tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
             eco_clock_manual_flag = False
             weather_refresh_flag = False
         # logging
