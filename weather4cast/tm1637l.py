@@ -84,3 +84,4 @@ def show_date_time(led_intensity = WeatherConfig.INTENSITY_7LED_MODE_0N.value, t
         tmin.numbers(now.hour, now.minute)
     else:
         tmax.numbers(now.hour, now.minute)
+        tmin.write([0, 0, 0, 0])

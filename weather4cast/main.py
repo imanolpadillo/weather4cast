@@ -420,7 +420,6 @@ while True:
         if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0: 
             prev_eco_flag = eco_flag 
             eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
-            print(str(eco_off_manual_flag) + str(eco_clock_manual_flag))
             if prev_eco_flag != eco_flag:
                 eco_flag_change = True
             weather_refresh_flag = True
@@ -430,8 +429,8 @@ while True:
     # A) OFF MODE
     if eco_off_manual_flag == True or (eco_flag == WorkingMode.OFF.value and weather_refresh_flag == True):
         # reset all leds
-        demo(False)
-        eco_off_manual_flag = False
+        if eco_flag_change:
+            demo(False)
         weather_refresh_flag = False
         # logging
         if eco_flag_change:
@@ -445,7 +444,6 @@ while True:
                 demo(False)
             # show date with manual flag
             tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
-            eco_clock_manual_flag = False
             weather_refresh_flag = False
         # logging
         if eco_flag_change:
