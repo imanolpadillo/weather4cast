@@ -213,6 +213,8 @@ def thread_actionButton_function():
                 eco_flag_change = True
                 eco_clock_manual_flag = False
                 wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK0.name,LogMessage.MAN_MODE_CLK0.value)
+            if eco_flag == WorkingMode.CLOCK.value or eco_flag == WorkingMode.OFF.value:
+                eco_flag_change = True
             eco_flag = WorkingMode.ON.value
             pcf8574.tomorrow_rain(False)     # reset tomorrow rain
             check_tomorrow_rain_flag = True
@@ -440,7 +442,7 @@ while True:
         if eco_flag_change:
             demo(False)
         weather_refresh_flag = False
-        # logging
+        # logging working mode
         if eco_flag_change:
             eco_flag_change = False
             wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_OFF.name,LogMessage.ECO_MODE_OFF.value)
@@ -453,7 +455,7 @@ while True:
             # show date with manual flag
             tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
             weather_refresh_flag = False
-        # logging
+        # logging working mode
         if eco_flag_change:
             eco_flag_change = False
             wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_CLK.name,LogMessage.ECO_MODE_CLK.value)
@@ -462,6 +464,10 @@ while True:
         try:
             weather_refresh_flag = False
             log=''
+            # logging working mode
+            if eco_flag_change:
+                eco_flag_change = False
+                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
             # lock rain_warning thread
             rain_warning_flag = False
             # text suffix
@@ -529,10 +535,6 @@ while True:
                     check_tomorrow_rain_flag = True
             # reset action button
             action_button_mode = ActionButtonMode.Normal.value
-            # logging
-            if eco_flag_change:
-                eco_flag_change = False
-                wlogging.log(LogType.INFO.value,LogMessage.ECO_MODE_ON.name,LogMessage.ECO_MODE_ON.value)
         except Exception as e:
             show_api_error()
             wlogging.log(LogType.ERROR.value,LogMessage.ERR_API_DATA.name,LogMessage.ERR_API_DATA.value + ': ' + str(e))
