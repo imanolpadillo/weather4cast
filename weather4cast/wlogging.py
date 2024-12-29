@@ -26,6 +26,7 @@ class LogMessage(Enum):
     API_UPD =      'API_UPD'
     ERR_API_DATA = 'No API data'
     ERR_API_CONN = 'Unable to connect with API'
+    ERR_LIFX =     'Unable to connect with LIFX'
     ECO_MODE_ON =  'ECO MODE: ON activated'
     ECO_MODE_OFF = 'ECO MODE: OFF activated'
     ECO_MODE_CLK = 'ECO MODE: CLOCK activated'

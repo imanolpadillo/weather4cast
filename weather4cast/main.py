@@ -508,9 +508,12 @@ while True:
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
-                #lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
-                lifx.set_lifx_scene(WeatherLifxScenes[status.name].value)
-                wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
+                try:
+                    #lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
+                    lifx.set_lifx_scene(WeatherLifxScenes[status.name].value)
+                    wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
+                except:
+                    wlogging.log(LogType.ERROR.value,LogMessage.ERR_LIFX.name,LogMessage.ERR_LIFX.value)
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data
