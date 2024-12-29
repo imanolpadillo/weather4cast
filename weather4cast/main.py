@@ -124,6 +124,7 @@ def thread_actionButton_function():
                 # print('ECO')
                 demo(False)
                 eco_off_manual_flag = True
+                wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_OFF1.name,LogMessage.MAN_MODE_OFF1.value)
             elif button_output == WeatherButton.SuperLongClick:
                 # __  RST     : Reset system
                 # print('RST')
@@ -197,14 +198,18 @@ def thread_actionButton_function():
                 weather.weather_timeline = WeatherTimeLine.T16
                 # show date with manual flag
                 tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
-                time.sleep(max7219.timeout)    
+                wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK1.name,LogMessage.MAN_MODE_CLK1.value) 
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value) and \
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.SequentialDay.value):
-            eco_off_manual_flag = False
-            eco_clock_manual_flag = False
+            if eco_off_manual_flag == True:
+                eco_off_manual_flag = False
+                wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_OFF0.name,LogMessage.MAN_MODE_OFF0.value)
+            if eco_clock_manual_flag == True:
+                eco_clock_manual_flag = False
+                wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK0.name,LogMessage.MAN_MODE_CLK0.value)
             eco_flag = WorkingMode.ON.value
             pcf8574.tomorrow_rain(False)     # reset tomorrow rain
             check_tomorrow_rain_flag = True

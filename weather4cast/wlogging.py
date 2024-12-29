@@ -29,6 +29,10 @@ class LogMessage(Enum):
     ECO_MODE_ON =  'ECO MODE: ON activated'
     ECO_MODE_OFF = 'ECO MODE: OFF activated'
     ECO_MODE_CLK = 'ECO MODE: CLOCK activated'
+    MAN_MODE_OFF1 = 'MANUAL MODE OFF: activated'
+    MAN_MODE_OFF0 = 'MANUAL MODE OFF: deactivated'
+    MAN_MODE_CLK1 = 'MANUAL MODE CLOCK: activated'
+    MAN_MODE_CLK0 = 'MANUAL MODE CLOCK: deactivated'
     LIFX_CHG =     'LIFX_CHG'
     TELEGRAM_SND = 'TELEGRAM sent'
 
