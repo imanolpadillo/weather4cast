@@ -427,7 +427,7 @@ while True:
             eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
             if prev_eco_flag != eco_flag:
                 eco_flag_change = True
-            weather_refresh_flag = True
+                weather_refresh_flag = True
     else:
         eco_flag = WorkingMode.ON.value
 
