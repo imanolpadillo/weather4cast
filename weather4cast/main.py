@@ -97,6 +97,7 @@ def thread_actionButton_function():
     global eco_flag
     global eco_off_manual_flag
     global eco_clock_manual_flag
+    global eco_flag_change
     global action_button_mode
     global forecast_input
     while True:
@@ -205,9 +206,11 @@ def thread_actionButton_function():
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value) and \
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.SequentialDay.value):
             if eco_off_manual_flag == True:
+                eco_flag_change = True
                 eco_off_manual_flag = False
                 wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_OFF0.name,LogMessage.MAN_MODE_OFF0.value)
             if eco_clock_manual_flag == True:
+                eco_flag_change = True
                 eco_clock_manual_flag = False
                 wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK0.name,LogMessage.MAN_MODE_CLK0.value)
             eco_flag = WorkingMode.ON.value
@@ -425,7 +428,7 @@ while True:
         if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0: 
             prev_eco_flag = eco_flag 
             eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
-            if prev_eco_flag != eco_flag:
+            if prev_eco_flag != eco_flag or eco_flag_change:
                 eco_flag_change = True
                 weather_refresh_flag = True
     else:
