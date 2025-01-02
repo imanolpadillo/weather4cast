@@ -316,11 +316,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit, weathe
     raining_quantity=""
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if weather_timeline==WeatherTimeLine.T48:
-        # for T48, get info of next day
-        if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
-    elif weather_timeline==WeatherTimeLine.T120:
-        # for T120 return no warning
+    if weather_timeline!=WeatherTimeLine.T16:
         return raining_flag, raining_quantity
     # join all temperature values
     hour_counter=0
