@@ -503,7 +503,8 @@ while True:
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
             rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
-                                                                                    WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
+                                                                                    WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value,
+                                                                                    weather.weather_timeline)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
             tomorrow_rain = check_tomorrow_rain(weather.weather_timeline)

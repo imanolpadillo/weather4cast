@@ -301,7 +301,7 @@ def round_to_step(input_value, step = WeatherConfig.RAIN_STEP.value):
     rounded_value = round(input_value / step) * step 
     return rounded_value
   
-def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
+def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit, weather_timeline = WeatherTimeLine.T16):
     """
     returns true, if rain value is higher than rain_limit from next hour
     to the next amount of hours defined by hour_limit
@@ -312,8 +312,16 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     :return: True if it rains the following hours
     """
     global weatherAPI
+    raining_flag=False
+    raining_quantity=""
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
+    if weather_timeline==WeatherTimeLine.T48:
+        # for T48, get info of next day
+        if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
+    elif weather_timeline==WeatherTimeLine.T120:
+        # for T120 return no warning
+        return raining_flag, raining_quantity
     # join all temperature values
     hour_counter=0
     rain_data = []
@@ -326,8 +334,6 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit):
     index = forecast_day * 24 + forecast_hour
 
     # from index, check if it rains the following 'hour_limit' hours.
-    raining_flag=False
-    raining_quantity=""
     hour_counter=0
     for hour in range(index, len(rain_data)):
         if (hour_counter>hour_limit) and raining_flag == False:
