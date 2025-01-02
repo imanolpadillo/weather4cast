@@ -365,7 +365,7 @@ def input_data_refresh():
     prev_forecast_input.day = forecast_input.day
     prev_forecast_input.hour = forecast_input.hour
 
-def check_tomorrow_rain():
+def check_tomorrow_rain(weather_timeline = WeatherTimeLine.T16):
     """
     if 'check_tomorrow_rain_flag' is activated:
         - when day switch is changed
@@ -381,8 +381,15 @@ def check_tomorrow_rain():
     global check_tomorrow_rain_flag
     global forecast_input
     rain_flag = 'Disabled'
+    forecast_day = forecast_input.day
+    if weather_timeline==WeatherTimeLine.T48:
+        # For T48, the rain check must be for next day
+        if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
+    elif weather_timeline==WeatherTimeLine.T120:
+        # For T120, no light is displayed
+        return str(rain_flag)
     if check_tomorrow_rain_flag == True:
-        rain_flag = weather.get_tomorrow_rain(forecast_input.day, WeatherConfig.RAIN_WARNING_MM.value)
+        rain_flag = weather.get_tomorrow_rain(forecast_day, WeatherConfig.RAIN_WARNING_MM.value)
         pcf8574.tomorrow_rain(rain_flag)
     return str(rain_flag)
 
@@ -499,7 +506,7 @@ while True:
                                                                                     WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
             # display tomorrow rain
-            tomorrow_rain = check_tomorrow_rain()
+            tomorrow_rain = check_tomorrow_rain(weather.weather_timeline)
             log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
             # send rain warning notification
             if WeatherConfig.RAIN_WARNING_TELEGRAM_ON.value == True:
