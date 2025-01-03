@@ -12,7 +12,7 @@ import lifx
 from time import strftime
 import threading, time
 import pytz
-from datetime import datetime
+from datetime import datetime, timedelta
 import telegram
 import wlogging
 from wlogging import LogType, LogMessage
@@ -33,6 +33,7 @@ eco_flag_change = False            # working mode changes
 eco_off_manual_flag = False        # in manual eco_off, all leds are switched off until manual disabling
 eco_clock_manual_flag = False      # in manual eco_clock, only time is enabled
 last_status = None                 # if last_status != current_status, LIFX color changes
+telegram_deadline = current_time = datetime.now() # no telegram will be send until this deadline
 action_button_mode = ActionButtonMode.Normal.value
 time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
  
@@ -404,6 +405,21 @@ def check_tomorrow_rain(weather_timeline = WeatherTimeLine.T16):
         pcf8574.tomorrow_rain(rain_flag)
     return str(rain_flag)
 
+def add_hours_to_current_time(hours):
+    """
+    Generate a date that adds input(hours) to current date
+    """    
+    # Get the current date and time
+    current_time = datetime.now()
+    
+    # Create a timedelta object representing the hours to add
+    time_delta = timedelta(hours=hours)
+    
+    # Add the timedelta to the current time
+    new_time = current_time + time_delta
+    
+    return new_time
+
 # ***************************************************************************************************
 # main
 # ***************************************************************************************************
@@ -513,7 +529,7 @@ while True:
             max7219.calculate_level(rain, weather.weather_timeline, action_button_mode, forecast_input.day, forecast_input.hourFlag, forecast_input.hour)
             log+='; rain' + suffix_24_48_120h + '=' + str(rain)
             # display rain warning
-            rain_warning_flag, rain_warning_quantity = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
+            rain_warning_flag, rain_warning_quantity, rain_hour_counter = weather.get_rain_warning(forecast_input.day,forecast_input.hour,
                                                                                     WeatherConfig.RAIN_WARNING_MM.value, WeatherConfig.RAIN_WARNING_TIME.value,
                                                                                     weather.weather_timeline)
             log+='; rain_warning' + suffix_24_48_120h + '=' + str(rain_warning_flag)
@@ -527,9 +543,12 @@ while True:
                         if rain_warning_telegram_flag == False:
                             telegram.send_telegram(f"[RAIN WARNING] From {forecast_input.hour:0>2}h: [{rain_warning_quantity}] mm/h." )
                             wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
+                            telegram_deadline = add_hours_to_current_time(rain_hour_counter)
                             rain_warning_telegram_flag = True
                     else:
-                        rain_warning_telegram_flag = False
+                        # avoid sending multiple telegram messages for same rain
+                        if datetime.now()>telegram_deadline:
+                            rain_warning_telegram_flag = False
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status

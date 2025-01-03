@@ -344,7 +344,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit, weathe
     if len(raining_quantity) > 2:
         # remove last ' ,'
         raining_quantity = raining_quantity[:-2]
-    return raining_flag, raining_quantity
+    return raining_flag, raining_quantity, hour_counter
 
 def get_tomorrow_rain(forecast_day, rain_limit):
     """
