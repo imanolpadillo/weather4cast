@@ -176,22 +176,27 @@ def thread_actionButton_function():
         # C) Action button: sequential day mode
         elif action_button_mode == ActionButtonMode.SequentialDay.value:
             weather.weather_timeline = WeatherTimeLine.T24
+            # get init input day
+            if switch.forecast_day_flag == False:
+                forecast_input.day = 0
+            else:
+                forecast_input.day = ky040.forecast_day
+            # increase input day sequentally
             if button_output == WeatherButton.ShortClick:
                 # +1 day
-                disable_tomorrow_rain = True
-                forecast_input.day = 1
+                forecast_input.day += 1
             elif button_output == WeatherButton.DoubleClick:
                 # +2 days
-                forecast_input.day = 2
+                forecast_input.day += 2
             elif button_output == WeatherButton.TrippleClick:
                 # +3 days
-                forecast_input.day = 3
+                forecast_input.day += 3
             elif button_output == WeatherButton.CuadrupleClick:
                 # +4 days
-                forecast_input.day = 4	
+                forecast_input.day += 4	
             elif button_output == WeatherButton.QuintupleClick:
                 # +5 days
-                forecast_input.day = 5 
+                forecast_input.day += 5 
             elif button_output == WeatherButton.LongClick:
                 # display time
                 eco_clock_manual_flag = True  
@@ -200,6 +205,12 @@ def thread_actionButton_function():
                 # show date with manual flag
                 tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
                 wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK1.name,LogMessage.MAN_MODE_CLK1.value) 
+            # trunc max forecast day
+            if forecast_input.day >= WeatherConfig.DAYS.value:
+                forecast_input.day = WeatherConfig.DAYS.value - 1
+            # disable tomorrow rain when forecast day is tomorrow
+            if forecast_input.day == 1: 
+                disable_tomorrow_rain = True
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
