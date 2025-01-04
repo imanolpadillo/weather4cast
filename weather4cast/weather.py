@@ -316,10 +316,10 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit, weathe
     raining_quantity=""
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-    if weather_timeline!=WeatherTimeLine.T16:
-        return raining_flag, raining_quantity
-    # join all temperature values
     hour_counter=0
+    if weather_timeline!=WeatherTimeLine.T16:
+        return raining_flag, raining_quantity, hour_counter
+    # join all temperature values
     rain_data = []
     for day in range(WeatherConfig.DAYS.value):
         # for hour in range(24):
