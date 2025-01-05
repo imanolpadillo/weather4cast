@@ -139,12 +139,14 @@ def thread_actionButton_function():
             elif button_output == WeatherButton.DoubleClick:
                 # ..  24-48H  : Display tomorrow weather
                 # print('24-48H')
-                disable_tomorrow_rain = True
+                if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
+                    disable_tomorrow_rain = True
                 weather.weather_timeline = WeatherTimeLine.T48
             elif button_output == WeatherButton.TrippleClick:
                 # ... 24-120H : Display next 5 day weather
                 # print('24-120H')
-                disable_tomorrow_rain = True
+                if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
+                    disable_tomorrow_rain = True
                 weather.weather_timeline = WeatherTimeLine.T120
         # B) Action button: week day mode
         elif action_button_mode == ActionButtonMode.WeekDay.value:
@@ -211,7 +213,8 @@ def thread_actionButton_function():
                 forecast_input.day = WeatherConfig.DAYS.value - 1
             # disable tomorrow rain when forecast day is tomorrow
             if forecast_input.day == 1: 
-                disable_tomorrow_rain = True
+                if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
+                    disable_tomorrow_rain = True
             
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
