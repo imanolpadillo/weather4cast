@@ -49,7 +49,7 @@ prev_forecast_input = ForecastInput()
 # ***************************************************************************************************
 # THREADS
 # ***************************************************************************************************
-# Thread that calls API weather every WEATHER_API_REFRESH_TIME seconds
+# Thread that calls API weather
 def thread_weatherAPI(f_stop):
     log='API' + str(weather.api_weather_id) + ': ' + weather.get_current_weather_api_name() + \
                 ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
