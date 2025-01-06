@@ -65,9 +65,8 @@ def thread_rainWarning(f_stop):
     global rain_warning_flag
     if rain_warning_flag == True and not(weather.weather_timeline != WeatherTimeLine.T16 or 
                                          status == WeatherStatus.RAINY or status == WeatherStatus.SNOWY or 
-                                         status == WeatherStatus.STORMY) \
-                                 and eco_flag == WorkingMode.ON.value:
-        pcf8574.toggle_rain()
+                                         status == WeatherStatus.STORMY):
+        pcf8574.toggle_rain(eco_flag == WorkingMode.ON.value)
     if not f_stop.is_set():
         threading.Timer(WeatherConfig.RAIN_WARNING_REFRESH_TIME.value, thread_rainWarning, [f_stop]).start()
  
