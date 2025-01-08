@@ -16,7 +16,7 @@ api_name = 'openmete'
 api_refresh_s = 300
 api_url = 'https://api.open-meteo.com/v1/forecast?latitude=' + WeatherConfig.GEO_LAT.value + \
 '&longitude=' + WeatherConfig.GEO_LON.value + \
-'&hourly=temperature_2m,rain,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto'
+'&hourly=temperature_2m,rain,weather_code,wind_gusts_10m&wind_speed_unit=ms&timezone=auto'
 
 dict_weather_status = [
                        {0: WeatherStatus.SUNNY}, \
@@ -82,7 +82,7 @@ def decode_json(data):
         for hour in range(24):
             weekWeather[day].temperature[hour] = round(data['hourly']['temperature_2m'][count])
             weekWeather[day].rain[hour] = round(data['hourly']['rain'][count],1)
-            if (data['hourly']['wind_speed_10m'][count]>WeatherConfig.MAX_WIND_MS.value):
+            if (data['hourly']['wind_gusts_10m'][count]>WeatherConfig.MAX_WIND_MS.value):
                 #wind status is not defined in 'weather code'
                 weekWeather[day].status[hour] = 100 # windy code
             else:
