@@ -124,9 +124,9 @@ def decode_json(data):
         for hour in range(24):
             weekWeather[day].temperature[hour] = round(data[count]['temperature'])
             weekWeather[day].rain[hour] = round(float(data[count]['precipAccum']),1)
-            if (data[count]['windSpeed'] >WeatherConfig.MAX_WIND_MS.value):
+            if (data[count]['windGust'] >WeatherConfig.MAX_WIND_MS.value):
                 #wind status is not defined in 'weather code'
-                weekWeather[day].status[hour] = 999 # windy code
+                weekWeather[day].status[hour] = '999' # windy code
             else:
                 weekWeather[day].status[hour] = data[count]['symbol']
             count+=1  

@@ -23,7 +23,7 @@ class WeatherConfig(Enum):
     RAIN_WARNING_TIME = 2   # limit of hours to check
     RAIN_WARNING_TELEGRAM_ON = True  # If True Telegram notification is send
     TOMORROW_RAIN_MANUAL_CANCEL = False  # Allow disabling tomorrow manually with x2 click
-    MAX_WIND_MS = 12  # max wind speed
+    MAX_WIND_MS = 14  # max wind speed
     RAIN_STEP = 0.5  # mm that correspond to a row in led matrix
     RAIN_STEP_MODE = WeatherRainStep.AUTO.value  # auto adjust scale of rain
     INTENSITY_7LED_MODE_0N = 1  # 7led intensity in mode on
