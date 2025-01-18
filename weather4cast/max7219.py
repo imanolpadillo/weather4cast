@@ -145,7 +145,8 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_
             # x1 to x5 at top left corner indicating the actived tomorrow day
             for x in range(day):
                 output_level[x] ^= 1
-        if hourFlag == True:
+        if hourFlag == True or action_button_mode == ActionButtonMode.IncreaseHourAbs.value or \
+            action_button_mode == ActionButtonMode.IncreaseHourRel.value:
             # at top row set the 4 leds in the middle, depending on hour
             output_level[6] ^= 1 
             if int(hour) >= 6:

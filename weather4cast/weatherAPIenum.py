@@ -113,22 +113,41 @@ class WeatherTimeLine(Enum):
 
 class WeatherButton(Enum):
     NoClick = 0
-    ShortClick = 1
-    DoubleClick = 2
-    TrippleClick = 3
-    ShortLongClick = 4
-    ShortShortLongClick = 5
-    LongClick = 6
-    SuperLongClick = 7
-    CuadrupleClick = 8
-    QuintupleClick = 9
-    SextupleClick = 10
-    SevenfoldClick = 11
+    x01Click = 1
+    x02Click = 2
+    x03Click = 3
+    x04Click = 4
+    x05Click = 5
+    x06Click = 6
+    x07Click = 7
+    x08Click = 8
+    x09Click = 9
+    x10Click = 10
+    x11Click = 11
+    x12Click = 12
+    x13Click = 13
+    x14Click = 14
+    x15Click = 15
+    x16Click = 16
+    x17Click = 17
+    x18Click = 18
+    x19Click = 19
+    x20Click = 20
+    x21Click = 21
+    x22Click = 22
+    x23Click = 23
+    x24Click = 24
+    ShortLongClick = 25
+    ShortShortLongClick = 26
+    LongClick = 27
+    SuperLongClick = 28
 	
 class ActionButtonMode(Enum):
     Normal = 0
-    WeekDay = 1
-    SequentialDay = 2
+    IncreaseDayAbs = 1
+    IncreaseDayRel = 2
+    IncreaseHourAbs = 3
+    IncreaseHourRel = 4
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):

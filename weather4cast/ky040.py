@@ -31,9 +31,9 @@ lastWasInc = False
 
 CLICK_MS = 1000   # 2 clicks in less than CLICK_MS means a doble click
 dayDial_last_pushed_ms = 0
-dayDial_One_click = False
+dayDial_click_times = 0     # number of times that button has been pushed in a row.
 hourDial_last_pushed_ms = 0
-hourDial_One_click = False
+hourDial_click_times = 0    # number of times that button has been pushed in a row.
 
 # *************************************************************************************************** 
 # FUNCTIONS
@@ -58,15 +58,18 @@ def dayDialPushed():
     """
     global CLICK_MS
     global dayDial_last_pushed_ms
-    global dayDial_One_click
+    global dayDial_click_times
     if abs(int(time.time() * 1000) - dayDial_last_pushed_ms) < CLICK_MS:
+        dayDial_click_times += 1
+    else:
+        dayDial_click_times = 1
+    # Reset day at 3rd click
+    if dayDial_click_times == 3:
         day_dial.stop()
         day_dial.start()
         setForecastDay(1)
-        dayDial_One_click = False
-        #print("reset day")
-    else:
-        dayDial_One_click = True
+    elif dayDial_click_times > 3:
+        dayDial_click_times = 0
     dayDial_last_pushed_ms = int(time.time() * 1000)
 
 def dayDialChanged(count):
@@ -106,15 +109,18 @@ def hourDialTurnDec():
 def hourDialPushed():
     global CLICK_MS
     global hourDial_last_pushed_ms
-    global hourDial_One_click
+    global hourDial_click_times
     if abs(int(time.time() * 1000) - hourDial_last_pushed_ms) < CLICK_MS:
+        hourDial_click_times += 1
+    else:
+        hourDial_click_times = 1
+    # Reset hour at 3rd click
+    if hourDial_click_times == 3:
         hour_dial.stop()
         hour_dial.start()
         setForecastHour(0)
-        hourDial_One_click = False
-        # print("reset hour")
-    else:
-        hourDial_One_click = True
+    elif hourDial_click_times > 3:
+        hourDial_click_times = 0
     hourDial_last_pushed_ms = int(time.time() * 1000)
 
 def hourDialChanged(count):

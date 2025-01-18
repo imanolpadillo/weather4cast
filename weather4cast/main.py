@@ -102,14 +102,24 @@ def thread_actionButton_function():
     global action_button_mode
     global forecast_input
     while True:
+        # Wait until action button is pressed
         button_output = weatherAPIchange.detect_button()
 
-        if ky040.dayDial_One_click == True and ky040.hourDial_One_click == False:
-            action_button_mode = ActionButtonMode.WeekDay.value
-        elif ky040.dayDial_One_click == False and ky040.hourDial_One_click == True:
-            action_button_mode = ActionButtonMode.SequentialDay.value
+        # Get action mode
+        if ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 0:
+            action_button_mode = ActionButtonMode.IncreaseDayRel.value
+        elif ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 0:
+            action_button_mode = ActionButtonMode.IncreaseDayAbs.value
+        elif ky040.dayDial_click_times == 0 and ky040.hourDial_click_times == 1:
+            action_button_mode = ActionButtonMode.IncreaseHourRel.value
+        elif ky040.dayDial_click_times == 0 and ky040.hourDial_click_times == 2:
+            action_button_mode = ActionButtonMode.IncreaseHourAbs.value
         else:
             action_button_mode = ActionButtonMode.Normal.value
+        
+        # Reset dayDial and hourDial (because action button has been already pressed)
+        ky040.dayDial_click_times = 0
+        ky040.hourDial_click_times = 0
 
         # A) Action button: normal mode
         if action_button_mode == ActionButtonMode.Normal.value:
@@ -132,52 +142,24 @@ def thread_actionButton_function():
                 # print('RST')
                 reset_leds()
                 change_weather_api(True)
-            elif button_output == WeatherButton.ShortClick:
+            elif button_output == WeatherButton.x01Click:
                 # .   0-24H   : Display 24H weather
                 # print('0-24H')
                 weather.weather_timeline = WeatherTimeLine.T24
-            elif button_output == WeatherButton.DoubleClick:
+            elif button_output == WeatherButton.x02Click:
                 # ..  24-48H  : Display tomorrow weather
                 # print('24-48H')
                 if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
                     disable_tomorrow_rain = True
                 weather.weather_timeline = WeatherTimeLine.T48
-            elif button_output == WeatherButton.TrippleClick:
+            elif button_output == WeatherButton.x03Click:
                 # ... 24-120H : Display next 5 day weather
                 # print('24-120H')
                 if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
                     disable_tomorrow_rain = True
                 weather.weather_timeline = WeatherTimeLine.T120
-        # B) Action button: week day mode
-        elif action_button_mode == ActionButtonMode.WeekDay.value:
-            weather.weather_timeline = WeatherTimeLine.T24
-            if button_output == WeatherButton.ShortClick:
-                # Monday
-                forecast_input.day = days_until_weekday(1)
-            elif button_output == WeatherButton.DoubleClick:
-                # Tuesday
-                forecast_input.day = days_until_weekday(2)	
-            elif button_output == WeatherButton.TrippleClick:
-                # Wednesday
-                forecast_input.day = days_until_weekday(3)
-            elif button_output == WeatherButton.CuadrupleClick:
-                # Thursday
-                forecast_input.day = days_until_weekday(4)
-            elif button_output == WeatherButton.QuintupleClick:
-                # Friday
-                forecast_input.day = days_until_weekday(5)
-            elif button_output == WeatherButton.SextupleClick:
-                # Saturday
-                forecast_input.day = days_until_weekday(6)	
-            elif button_output == WeatherButton.SevenfoldClick:
-                # Sunday
-                forecast_input.day = days_until_weekday(7)
-            elif button_output == WeatherButton.LongClick:
-                # display weather API
-                weather.weather_timeline = WeatherTimeLine.T16
-                display_weather_api()   
-        # C) Action button: sequential day mode
-        elif action_button_mode == ActionButtonMode.SequentialDay.value:
+        # B) Action button: increase day relative
+        elif action_button_mode == ActionButtonMode.IncreaseDayRel.value:
             weather.weather_timeline = WeatherTimeLine.T24
             # get init input day
             if switch.forecast_day_flag == False:
@@ -185,29 +167,25 @@ def thread_actionButton_function():
             else:
                 forecast_input.day = ky040.forecast_day
             # increase input day sequentally
-            if button_output == WeatherButton.ShortClick:
+            if button_output == WeatherButton.x01Click:
                 # +1 day
                 forecast_input.day += 1
-            elif button_output == WeatherButton.DoubleClick:
+            elif button_output == WeatherButton.x02Click:
                 # +2 days
                 forecast_input.day += 2
-            elif button_output == WeatherButton.TrippleClick:
+            elif button_output == WeatherButton.x03Click:
                 # +3 days
                 forecast_input.day += 3
-            elif button_output == WeatherButton.CuadrupleClick:
+            elif button_output == WeatherButton.x04Click:
                 # +4 days
                 forecast_input.day += 4	
-            elif button_output == WeatherButton.QuintupleClick:
+            elif button_output == WeatherButton.x05Click:
                 # +5 days
                 forecast_input.day += 5 
             elif button_output == WeatherButton.LongClick:
-                # display time
-                eco_clock_manual_flag = True  
-                demo(False)
+                # display weather API
                 weather.weather_timeline = WeatherTimeLine.T16
-                # show date with manual flag
-                tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
-                wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK1.name,LogMessage.MAN_MODE_CLK1.value) 
+                display_weather_api() 
             # trunc max forecast day
             if forecast_input.day >= WeatherConfig.DAYS.value:
                 forecast_input.day = WeatherConfig.DAYS.value - 1
@@ -215,11 +193,65 @@ def thread_actionButton_function():
             if forecast_input.day == 1: 
                 if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
                     disable_tomorrow_rain = True
-            
+        # C) Action button: increase day absolute
+        elif action_button_mode == ActionButtonMode.IncreaseDayAbs.value:
+            weather.weather_timeline = WeatherTimeLine.T24
+            if button_output == WeatherButton.x01Click:
+                # Monday
+                forecast_input.day = days_until_weekday(1)
+            elif button_output == WeatherButton.x02Click:
+                # Tuesday
+                forecast_input.day = days_until_weekday(2)	
+            elif button_output == WeatherButton.x03Click:
+                # Wednesday
+                forecast_input.day = days_until_weekday(3)
+            elif button_output == WeatherButton.x04Click:
+                # Thursday
+                forecast_input.day = days_until_weekday(4)
+            elif button_output == WeatherButton.x05Click:
+                # Friday
+                forecast_input.day = days_until_weekday(5)
+            elif button_output == WeatherButton.x06Click:
+                # Saturday
+                forecast_input.day = days_until_weekday(6)	
+            elif button_output == WeatherButton.x07Click:
+                # Sunday
+                forecast_input.day = days_until_weekday(7) 
+        # D) Action button: increase hour relative
+        elif action_button_mode == ActionButtonMode.IncreaseHourRel.value: 
+            if button_output == WeatherButton.LongClick:
+                # Time mode
+                action_button_mode = ActionButtonMode.Normal.value
+                eco_clock_manual_flag = True  
+                demo(False)
+                weather.weather_timeline = WeatherTimeLine.T16
+                # show date with manual flag
+                tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
+                wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK1.name,LogMessage.MAN_MODE_CLK1.value) 
+            else:
+                current_hour = int(forecast_input.hour)
+                forecast_input.hour=current_hour + button_output.value
+                while forecast_input.hour > 24:
+                    forecast_input.hour = forecast_input.hour - 24
+                if len(str(forecast_input.hour))==1:
+                    max7219.message = '0' + str(forecast_input.hour)
+                else:
+                    max7219.message = str(forecast_input.hour)
+                time.sleep(1)
+        # E) Action button: increase hour absolute
+        elif action_button_mode == ActionButtonMode.IncreaseHourAbs.value: 
+            forecast_input.hour = int(button_output.value)
+            while forecast_input.hour > 24:
+                forecast_input.hour = forecast_input.hour - 24
+            if len(str(forecast_input.hour))==1:
+                max7219.message = '0' + str(forecast_input.hour)
+            else:
+                max7219.message = str(forecast_input.hour)
+            time.sleep(1)
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value) and \
-            not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.SequentialDay.value):
+            not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.IncreaseDayAbs.value):
             if eco_off_manual_flag == True:
                 eco_flag_change = True
                 eco_off_manual_flag = False
@@ -453,13 +485,9 @@ thread_actionButton.start()
  
 # infinite loop
 while True:
+    # in normal mode, day is set by input controls
     if action_button_mode == ActionButtonMode.Normal.value:
-        # in normal mode, day is set by input controls
         input_data_refresh()
-    else:
-        # reset action button triggers for week and sequence day
-        ky040.dayDial_One_click = False
-        ky040.hourDial_One_click = False
 
     # Check eco_mode every 5 minutes
     if WeatherConfig.ECO_MODE_ON.value == True:
@@ -564,7 +592,9 @@ while True:
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data
-            if weather.weather_timeline != WeatherTimeLine.T16:
+            if weather.weather_timeline != WeatherTimeLine.T16 or \
+                action_button_mode == ActionButtonMode.IncreaseHourAbs.value or \
+                action_button_mode == ActionButtonMode.IncreaseHourRel.value:
                 weather.weather_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h 
                 time.sleep(5)
