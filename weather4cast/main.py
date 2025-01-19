@@ -249,7 +249,6 @@ def thread_actionButton_function():
                     max7219.message = '0' + str(forecast_input.hour)
                 else:
                     max7219.message = str(forecast_input.hour)
-                time.sleep(1)
         # E) Action button: increase hour absolute
         elif action_button_mode == ActionButtonMode.IncreaseHourAbs.value: 
             forecast_input.hour = int(button_output.value)
@@ -259,7 +258,6 @@ def thread_actionButton_function():
                 max7219.message = '0' + str(forecast_input.hour)
             else:
                 max7219.message = str(forecast_input.hour)
-            time.sleep(1)
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value) and \
@@ -609,7 +607,7 @@ while True:
                 action_button_mode == ActionButtonMode.IncreaseHourRel.value:
                 weather.weather_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h 
-                time.sleep(5)
+                time.sleep(WeatherConfig.TIMEOUT_24_48_120.value)
                 pcf8574.tomorrow_rain(False)       # switch off tomorrow rain
                 if disable_tomorrow_rain == True:
                     disable_tomorrow_rain = False
