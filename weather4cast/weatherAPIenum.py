@@ -29,7 +29,7 @@ class WeatherConfig(Enum):
     INTENSITY_7LED_MODE_0N = 1  # 7led intensity in mode on
     INTENSITY_7LED_MODE_CLOCK = 0  # 7led intensity in mode clock
     INTENSITY_LED_MATRIX = 1  # led matrix intensity
-    TIMEOUT_24_48_120 = 6   # seconds that 24, 48, 120 display is shown
+    TIMEOUT_24_48_120 = 5   # seconds that 24, 48, 120 display is shown
     LIFX_ON = True  # If True LIFX color changes with status change
     ECO_MODE_ON = True  # in 'eco mode' leds are switched off in eco time
     ECO_MODE_HOLIDAYS = [
