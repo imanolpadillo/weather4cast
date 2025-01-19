@@ -87,18 +87,20 @@ def calculate_week_day_name(offset: int) -> str:
     new_week_day_name = ''
     if new_week_day == 1:
         new_week_day_name = 'MO'
-    elif new_week_day_name == 2:
+    elif new_week_day == 2:
         new_week_day_name = 'TU'
-    elif new_week_day_name == 3:
+    elif new_week_day == 3:
         new_week_day_name = 'WE'
-    elif new_week_day_name == 4:
+    elif new_week_day == 4:
         new_week_day_name = 'TH'
-    elif new_week_day_name == 5:
+    elif new_week_day == 5:
         new_week_day_name = 'FR'
-    elif new_week_day_name == 6:
+    elif new_week_day == 6:
         new_week_day_name = 'SA'
-    elif new_week_day_name == 7:
+    elif new_week_day == 7:
         new_week_day_name = 'SU'
+    else:
+        new_week_day_name = '--'
     return new_week_day_name
 
 def calculate_week_day(offset: int) -> int:
