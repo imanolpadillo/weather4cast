@@ -193,6 +193,11 @@ def thread_actionButton_function():
             if forecast_input.day == 1: 
                 if WeatherConfig.TOMORROW_RAIN_MANUAL_CANCEL.value:
                     disable_tomorrow_rain = True
+            # display day name
+            if button_output != WeatherButton.LongClick:
+                day_name = max7219.calculate_week_day_name(forecast_input.day)
+                max7219.message = str(day_name)
+                time.sleep(1)
         # C) Action button: increase day absolute
         elif action_button_mode == ActionButtonMode.IncreaseDayAbs.value:
             weather.weather_timeline = WeatherTimeLine.T24
@@ -217,6 +222,11 @@ def thread_actionButton_function():
             elif button_output == WeatherButton.x07Click:
                 # Sunday
                 forecast_input.day = days_until_weekday(7) 
+            # display day name
+            if button_output != WeatherButton.LongClick:
+                day_name = max7219.calculate_week_day_name(forecast_input.day)
+                max7219.message = str(day_name)
+                time.sleep(1)
         # D) Action button: increase hour relative
         elif action_button_mode == ActionButtonMode.IncreaseHourRel.value: 
             if button_output == WeatherButton.LongClick:
@@ -232,6 +242,8 @@ def thread_actionButton_function():
                 current_hour = int(forecast_input.hour)
                 forecast_input.hour=current_hour + button_output.value
                 while forecast_input.hour > 24:
+                    if forecast_input.day < WeatherConfig.DAYS.value - 1:
+                        forecast_input.day += 1
                     forecast_input.hour = forecast_input.hour - 24
                 if len(str(forecast_input.hour))==1:
                     max7219.message = '0' + str(forecast_input.hour)

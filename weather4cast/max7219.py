@@ -72,6 +72,35 @@ def show_message(message = message):
     with canvas(device) as draw:
         text(draw, (0, 0), message, fill="white")
 
+def calculate_week_day_name(offset: int) -> str:
+    """
+    Calculate the day name of the week given an offset.
+    Days are represented as:
+    1 = Monday, ..., 7 = Sunday.
+
+    :param offset: The number of days to add or subtract from today.
+    :return: The day of the week (1-7) after applying the offset.
+    """
+    # Get week day
+    new_week_day = calculate_week_day(offset)
+    # Get week day name
+    new_week_day_name = ''
+    if new_week_day == 1:
+        new_week_day_name = 'MO'
+    elif new_week_day_name == 2:
+        new_week_day_name = 'TU'
+    elif new_week_day_name == 3:
+        new_week_day_name = 'WE'
+    elif new_week_day_name == 4:
+        new_week_day_name = 'TH'
+    elif new_week_day_name == 5:
+        new_week_day_name = 'FR'
+    elif new_week_day_name == 6:
+        new_week_day_name = 'SA'
+    elif new_week_day_name == 7:
+        new_week_day_name = 'SU'
+    return new_week_day_name
+
 def calculate_week_day(offset: int) -> int:
     """
     Calculate the day of the week given an offset.
