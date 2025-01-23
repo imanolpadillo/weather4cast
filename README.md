@@ -26,9 +26,31 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 
 ## 🎮 Action button commands
 
+Buttons:
+- Action Button: A 
+- Daily Dial Button: D
+- Hour Dial Button: H
+
 Legend:
-- Click: 
-- x2Click
+- Action Button single click: A
+- Action Button double click: AA
+- Action Button x click: Ax
+- Action Button long click: [A]
+- Action Button super long click: [[A]]
+
+Actions:
+- [[A]]         : RST
+- [A]           : ECO
+- A[A]          : API+
+- AA[A]         : API-
+- A             : 0-24h
+- AA            : 24-48h
+- AAA           : 24-144h
+- DAx           : +x day REL
+- DDAx          : +x day ABS
+- HAx           : +x hour REL
+- HHAx          : +x hour ABS
+- HDA           : LIFX neutral
 
 ## 🎮 Raspi commands
 
