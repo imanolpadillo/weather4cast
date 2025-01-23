@@ -87,6 +87,7 @@ class WeatherStatus(Enum):
     SNOWY = 8
 
 class WeatherLifxColor(Enum):
+    NEUTRAL = (249, 249, 249, 0.9)
     SUNNY = (249, 192, 120, 0.5)
     PARTLY_CLOUDY = (249, 192, 120, 0.1)
     CLOUDY = (215, 244, 250, 0.2)
@@ -97,6 +98,7 @@ class WeatherLifxColor(Enum):
     SNOWY = (53, 228, 240, 0.9)
 
 class WeatherLifxScenes(Enum):
+    NEUTRAL = 'neutral'
     SUNNY = 'sunny'
     PARTLY_CLOUDY = 'partly_cloudy'
     CLOUDY = 'cloudy'

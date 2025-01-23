@@ -24,6 +24,11 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 12 | apimet | apimet | no | 300s (05min) | none | [https://api.met.no/weatherapi/locationforecast/2.0/documentation](https://api.met.no/weatherapi/locationforecast/2.0/documentation)
 13 | dummy | dummy | no | 300s (05min) | none | dummy
 
+## 🎮 Action button commands
+
+Legend:
+- Click: 
+- x2Click
 
 ## 🎮 Raspi commands
 

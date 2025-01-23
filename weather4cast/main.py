@@ -105,6 +105,7 @@ def thread_actionButton_function():
         # Wait until action button is pressed
         button_output = weatherAPIchange.detect_button()
 
+        print(str(ky040.dayDial_click_times) + str(ky040.hourDial_click_times))
         # Get action mode
         if ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 0:
             action_button_mode = ActionButtonMode.IncreaseDayRel.value
@@ -114,6 +115,10 @@ def thread_actionButton_function():
             action_button_mode = ActionButtonMode.IncreaseHourRel.value
         elif ky040.dayDial_click_times == 0 and ky040.hourDial_click_times == 2:
             action_button_mode = ActionButtonMode.IncreaseHourAbs.value
+        elif ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 1:
+            button_output = WeatherButton.NoClick
+            max7219.message = "LX"
+            set_lifx_scene('NEUTRAL')
         else:
             action_button_mode = ActionButtonMode.Normal.value
         
@@ -465,6 +470,17 @@ def add_hours_to_current_time(hours):
     
     return new_time
 
+def set_lifx_scene(scene):
+    """
+    Change LIFX color 
+    """     
+    try:
+        #lifx.set_lifx_color(*WeatherLifxColor[scene].value)
+        lifx.set_lifx_scene(WeatherLifxScenes[scene].value)
+        wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(scene))
+    except:
+        wlogging.log(LogType.ERROR.value,LogMessage.ERR_LIFX.name,LogMessage.ERR_LIFX.value)
+
 # ***************************************************************************************************
 # main
 # ***************************************************************************************************
@@ -593,12 +609,7 @@ while True:
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
-                try:
-                    #lifx.set_lifx_color(*WeatherLifxColor[status.name].value)
-                    lifx.set_lifx_scene(WeatherLifxScenes[status.name].value)
-                    wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(status.name))
-                except:
-                    wlogging.log(LogType.ERROR.value,LogMessage.ERR_LIFX.name,LogMessage.ERR_LIFX.value)
+                set_lifx_scene(status.name)
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data
