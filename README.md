@@ -27,16 +27,17 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 ## 🎮 Action button commands
 
 Buttons:
-- Action Button: A 
+- Action Button:     A 
 - Daily Dial Button: D
-- Hour Dial Button: H
+- Hour Dial Button:  H
 
 Legend:
-- Action Button single click: A
-- Action Button double click: AA
-- Action Button x click: Ax
-- Action Button long click: [A]
-- Action Button super long click: [[A]]
+- Single click:      A
+- Double click:      AA
+- Triple click:      AAA
+- x click:           Ax
+- Long click:        [A]
+- Superlong click:   [[A]]
 
 Actions:
 - [[A]]         : RST
