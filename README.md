@@ -52,7 +52,10 @@ Actions:
 - HAx           : +x hour REL
 - HHAx          : +x hour ABS
 - HDA           : LIFX neutral
-- HHDDA         : Rain Telegram
+- HDDA,DHHA     : Rain report
+- HHDDA         : Weather report
+- DDD           : RST day dial
+- HHH           : RST hour dial
 
 ## 🎮 Raspi commands
 

@@ -116,13 +116,21 @@ def thread_actionButton_function():
         elif ky040.dayDial_click_times == 0 and ky040.hourDial_click_times == 2:
             action_button_mode = ActionButtonMode.IncreaseHourAbs.value
         elif ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 1:
+            # LIFX neutral
             button_output = WeatherButton.NoClick
             max7219.message = "LX"
             set_lifx_scene('NEUTRAL')
-        elif ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 2:
+        elif (ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 2) or + \
+            (ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 1):
+            # Rain report
             button_output = WeatherButton.NoClick
-            max7219.message = "TG"
-            send_telegram_rain_per_hour(forecast_input.day)
+            max7219.message = "RR"
+            send_telegram_rain_report(forecast_input.day)
+        elif ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 2:
+            # Weather report
+            button_output = WeatherButton.NoClick
+            max7219.message = "WR"
+            send_telegram_weather_report(forecast_input.day)
         else:
             action_button_mode = ActionButtonMode.Normal.value
         
@@ -485,13 +493,38 @@ def set_lifx_scene(scene):
     except:
         wlogging.log(LogType.ERROR.value,LogMessage.ERR_LIFX.name,LogMessage.ERR_LIFX.value)
 
-def send_telegram_rain_per_hour(day):
+def send_telegram_rain_warning(hour, rain_warning_quantity):
+    """
+    Send telegram indicating rain warning for following hours
+    """   
+    message = ''
+    for index, value in enumerate(rain_warning_quantity):
+        rain_hour = int(hour) + index 
+        # pass from 23h to 00h
+        while rain_hour >= 24:
+            rain_hour -= 24
+        # hour always with 2 digits
+        rain_hour_str = str(rain_hour).zfill(2)
+        message += '\n' + rain_hour_str + 'h: ' + str(value) + 'mm/h'
+    telegram.send_telegram(f"[RAIN WARNING]: {message}" )
+    wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
+
+def send_telegram_rain_report(day):
     """
     Send telegram indicating the hours with rain
     """   
     day_name = max7219.calculate_week_day_name(day)
-    rain_per_hour = weather.get_rain_hours(day)
-    telegram.send_telegram(f"[RAIN INFO FOR {day_name}]: {rain_per_hour}")
+    report = weather.get_rain_report(day)
+    telegram.send_telegram(f"[RAIN REPORT FOR {day_name}]: {report}")
+    wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
+
+def send_telegram_weather_report(day):
+    """
+    Send telegram indicating the rain + temperature + status for input day
+    """   
+    day_name = max7219.calculate_week_day_name(day)
+    report = weather.get_weather_report(day)
+    telegram.send_telegram(f"[FULL REPORT FOR {day_name}]: {report}")
     wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
 
 # ***************************************************************************************************
@@ -611,8 +644,7 @@ while True:
                 if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
                     if rain_warning_flag == True: 
                         if rain_warning_telegram_flag == False:
-                            telegram.send_telegram(f"[RAIN WARNING] From {forecast_input.hour:0>2}h: [{rain_warning_quantity}] mm/h." )
-                            wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
+                            send_telegram_rain_warning(forecast_input.hour, rain_warning_quantity)
                             telegram_deadline = add_hours_to_current_time(rain_hour_counter)
                             rain_warning_telegram_flag = True
                     else:

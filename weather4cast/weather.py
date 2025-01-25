@@ -286,23 +286,39 @@ def rain_120_to_16_hours(input_array, worst_case = True):
     print(output_array)
     return output_array
 
-def get_rain_hours (forecast_day):
+def get_rain_report (forecast_day):
     """
     gets hours with rain
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :return: string indicating hour + rain
     """
     global weatherAPI
-    rain = ''
-    for hour in range(len(weatherAPI.weekWeather[int(forecast_day)].rain)):
+    report = ''
+    for hour in range(24):
         if weatherAPI.weekWeather[int(forecast_day)].rain[hour] > 0:
-            hour_str = ''
-            if len(str(hour))==1:
-                hour_str = '0' + str(hour)
-            else:
-                hour_str = str(hour)
-            rain += '\n' + hour_str + 'h: ' + str(weatherAPI.weekWeather[int(forecast_day)].rain[hour]) + 'mm/h'
-    return rain
+            # hour always with 2 digits
+            hour_str = str(hour).zfill(2)
+            report += '\n' + hour_str + 'h: ' + str(weatherAPI.weekWeather[int(forecast_day)].rain[hour]) + 'mm/h'
+    return report
+
+def get_weather_report (forecast_day):
+    """
+    gets rain + temperature + status for input day
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :return: string indicating hour + rain + temperature + status
+    """
+    global weatherAPI
+    report = ''
+    for hour in range(24):
+        # hour always with 2 digits
+        hour_str = str(hour).zfill(2)
+        # get hour data
+        rain = weatherAPI.weekWeather[int(forecast_day)].rain[hour]
+        temperature = weatherAPI.weekWeather[int(forecast_day)].temperature[hour]
+        status = weatherAPI.weekWeather[int(forecast_day)].status[hour].name
+        report += '\n' + hour_str + 'h: ' + str(rain) + 'mm/h, ' + \
+            str(temperature).rjust(2, ' ')+ '°C, ' + str(status)
+    return report
 
 def round_to_step(input_value, step = WeatherConfig.RAIN_STEP.value):
     """
@@ -347,6 +363,7 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit, weathe
     index = forecast_day * 24 + forecast_hour
 
     # from index, check if it rains the following 'hour_limit' hours.
+    raining_quantity = []
     hour_counter=0
     for hour in range(index, len(rain_data)):
         if (hour_counter>hour_limit) and raining_flag == False:
@@ -356,11 +373,8 @@ def get_rain_warning(forecast_day, forecast_hour, rain_limit, hour_limit, weathe
             raining_flag = True
         elif hour_counter>hour_limit:
             break
-        raining_quantity += str(rain_data[hour]) + ', '
+        raining_quantity.append(rain_data[hour])
         hour_counter+=1
-    if len(raining_quantity) > 2:
-        # remove last ' ,'
-        raining_quantity = raining_quantity[:-2]
     return raining_flag, raining_quantity, hour_counter
 
 def get_tomorrow_rain(forecast_day, rain_limit):
