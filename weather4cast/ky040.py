@@ -93,7 +93,7 @@ def setForecastDay(count):
         forecast_day = 4
     elif count>=16:
         forecast_day = 5
-    max7219.message = str(forecast_day)
+    max7219.message = ' ' + str(forecast_day)
 
 ## Define HOUR-Callback functions
 def hourDialTurnInc():

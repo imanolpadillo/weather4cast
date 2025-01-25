@@ -52,6 +52,7 @@ Actions:
 - HAx           : +x hour REL
 - HHAx          : +x hour ABS
 - HDA           : LIFX neutral
+- HHDDA         : Rain Telegram
 
 ## 🎮 Raspi commands
 

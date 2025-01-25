@@ -119,6 +119,10 @@ def thread_actionButton_function():
             button_output = WeatherButton.NoClick
             max7219.message = "LX"
             set_lifx_scene('NEUTRAL')
+        elif ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 2:
+            button_output = WeatherButton.NoClick
+            max7219.message = "TG"
+            send_telegram_rain_per_hour(forecast_input.day)
         else:
             action_button_mode = ActionButtonMode.Normal.value
         
@@ -480,6 +484,15 @@ def set_lifx_scene(scene):
         wlogging.log(LogType.INFO.value,LogMessage.LIFX_CHG.name,str(scene))
     except:
         wlogging.log(LogType.ERROR.value,LogMessage.ERR_LIFX.name,LogMessage.ERR_LIFX.value)
+
+def send_telegram_rain_per_hour(day):
+    """
+    Send telegram indicating the hours with rain
+    """   
+    day_name = max7219.calculate_week_day_name(day)
+    rain_per_hour = weather.get_rain_hours(day)
+    telegram.send_telegram(f"[RAIN INFO FOR {day_name}]: {rain_per_hour}")
+    wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
 
 # ***************************************************************************************************
 # main
