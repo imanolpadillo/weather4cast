@@ -39,23 +39,27 @@ Legend:
 - Long click:        [A]
 - Superlong click:   [[A]]
 
-Actions:
-- [[A]]         : RST
-- [A]           : ECO
-- A[A]          : API+
-- AA[A]         : API-
+Mode Actions:
+- [[A]]         : RST mode
+- [A]           : ECO mode
+- H[A]          : CLK mode
+- HDA           : LIFX neutral
+- DDD           : RST day dial
+- HHH           : RST hour dial
+
+Weather Actions:
 - A             : 0-24h
 - AA            : 24-48h
 - AAA           : 24-144h
-- DAx           : +x day REL
-- DDAx          : +x day ABS
-- HAx           : +x hour REL
-- HHAx          : +x hour ABS
-- HDA           : LIFX neutral
+- DAx           : +x days REL
+- DDAx          : +x days ABS
+- HAx           : +x hours REL
+- HHAx          : +x hours ABS
+- A[A]          : API+
+- AA[A]         : API-
+- D[A]          : API info
 - HDDA,DHHA     : Rain report
 - HHDDA         : Weather report
-- DDD           : RST day dial
-- HHH           : RST hour dial
 
 ## 🎮 Raspi commands
 
