@@ -27,39 +27,39 @@ N. | Name | Name Id | API_KEY? | Refresh | API limit | url
 ## 🎮 Action button commands
 
 Buttons:
-- Action Button:     A 
-- Daily Dial Button: D
-- Hour Dial Button:  H
+- Action Button   : A 
+- Daily Button    : D
+- Hour Button     : H
 
 Legend:
-- Single click:      A
-- Double click:      AA
-- Triple click:      AAA
-- x click:           Ax
-- Long click:        [A]
-- Superlong click:   [[A]]
+- Single click    : A
+- Double click    : AA
+- Triple click    : AAA
+- x click         : Ax
+- Long click      : [A]
+- Superlong click : [[A]]
 
 Mode Actions:
-- [[A]]         : RST mode
-- [A]           : ECO mode
-- H[A]          : CLK mode
-- HDA           : LIFX neutral
-- DDD           : RST day dial
-- HHH           : RST hour dial
+- [[A]]           : RST mode
+- [A]             : ECO mode
+- H[A]            : CLK mode
+- HDA             : LIFX neutral
+- DDD             : RST day dial
+- HHH             : RST hour dial
+- A[A]            : API+
+- AA[A]           : API-
+- D[A]            : API info
 
 Weather Actions:
-- A             : 0-24h
-- AA            : 24-48h
-- AAA           : 24-144h
-- DAx           : +x days REL
-- DDAx          : +x days ABS
-- HAx           : +x hours REL
-- HHAx          : +x hours ABS
-- A[A]          : API+
-- AA[A]         : API-
-- D[A]          : API info
-- HDDA,DHHA     : Rain report
-- HHDDA         : Weather report
+- A               : 0-24h
+- AA              : 24-48h
+- AAA             : 24-144h
+- DAx             : +x days REL
+- DDAx            : +x days ABS
+- HAx             : +x hours REL
+- HHAx            : +x hours ABS
+- HDDA,DHHA       : Rain report
+- HHDDA           : Weather report
 
 ## 🎮 Raspi commands
 
@@ -75,7 +75,7 @@ ssh pi@192.168.0.34
 
  2. Copy files from PC to Raspi
 ```
-scp /Users/imanolpadillo/Documents/weather4cast/weather4cast/*.* pi@192.168.0.34:/home/pi/Documents/weather4cast
+scp /Users/imanolpadillo/Documents/weather4cast/weather4cast/*.* pi@192.168.0.10:/home/pi/Documents/weather4cast
 ````
 
  3. Execute weather4cast manually from Raspi
