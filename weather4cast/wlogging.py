@@ -46,8 +46,7 @@ logging.basicConfig(filename=current_path+'/logs/weather4cast.log', level=loggin
 # *************************************************************************************************** 
 
 def log(logType, logId, message):
-    time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
-    now = datetime.now(time_zone)
+    now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
     log = now.strftime("%Y-%m-%d %H:%M:%S")
     if logType == LogType.ERROR.value: 
         logidlength = LOGID_MAX_LEN - 1

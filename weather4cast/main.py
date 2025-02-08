@@ -33,9 +33,9 @@ eco_flag_change = False            # working mode changes
 eco_off_manual_flag = False        # in manual eco_off, all leds are switched off until manual disabling
 eco_clock_manual_flag = False      # in manual eco_clock, only time is enabled
 last_status = None                 # if last_status != current_status, LIFX color changes
-telegram_deadline = current_time = datetime.now() # no telegram will be send until this deadline
+telegram_deadline  = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)) # no telegram will be send until this deadline
 action_button_mode = ActionButtonMode.Normal.value
-time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
+
  
 class ForecastInput:
     def __init__(self, dayFlag=False, hourFlag=False, day=0, hour=0):
@@ -308,7 +308,7 @@ def days_until_weekday(target_day):
     :return: Number of days until the target weekday
     """
     # Get today's weekday (Monday=1, ..., Sunday=7)
-    today = datetime.now().isoweekday()
+    today = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)).isoweekday()
 
     # Calculate the difference, accounting for wrapping around the week
     days_difference = (target_day - today) % 7
@@ -398,7 +398,6 @@ def input_data_refresh():
     global forecast_input
     global prev_forecast_input
     global eco_flag
-    global time_zone
     switch.update()
     forecast_input.dayFlag = switch.forecast_day_flag
     forecast_input.hourFlag = switch.forecast_hour_flag
@@ -408,7 +407,7 @@ def input_data_refresh():
         forecast_input.day = ky040.forecast_day
     if forecast_input.hourFlag == False:
         # Get the current time
-        now = datetime.now(time_zone)
+        now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
         forecast_input.hour = now.strftime("%H")
         # Reset check_tomorrow_rain_flag at 00:00:00
         if int(now.strftime("%H")) == 0 and int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0:
@@ -472,7 +471,7 @@ def add_hours_to_current_time(hours):
     Generate a date that adds input(hours) to current date
     """    
     # Get the current date and time
-    current_time = datetime.now()
+    current_time = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
     
     # Create a timedelta object representing the hours to add
     time_delta = timedelta(hours=hours)
@@ -540,7 +539,7 @@ reset_leds()
 change_weather_api(True, False)
 
 # get init mode
-now = datetime.now(time_zone)
+now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
 eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
 weather_refresh_flag = True
  
@@ -563,7 +562,7 @@ while True:
 
     # Check eco_mode every 5 minutes
     if WeatherConfig.ECO_MODE_ON.value == True:
-        now = datetime.now(time_zone)
+        now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
         if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0: 
             prev_eco_flag = eco_flag 
             eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
@@ -649,7 +648,7 @@ while True:
                             rain_warning_telegram_flag = True
                     else:
                         # avoid sending multiple telegram messages for same rain
-                        if datetime.now()>telegram_deadline:
+                        if datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))>telegram_deadline:
                             rain_warning_telegram_flag = False
             # change lifx color
             if WeatherConfig.LIFX_ON.value == True and status != last_status:

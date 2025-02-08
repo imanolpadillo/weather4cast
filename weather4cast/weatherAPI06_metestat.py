@@ -3,7 +3,7 @@
 # *************************************************************************************************** 
 # Source: https://dev.meteostat.net/api/
 
-import requests, math, os
+import requests, math, os, pytz
 from weatherAPIenum import WeatherConfig, WeatherStatus, DayWeather
 import configparser
 import wlogging
@@ -68,7 +68,7 @@ def get_current_day (day_offset):
     :return: date in format 'YYYY-MM-DD'
     """ 
     # Get the current date
-    current_date = datetime.now()
+    current_date = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
 
     # Calculate the date for the day after tomorrow
     output_date = current_date + timedelta(days=day_offset)

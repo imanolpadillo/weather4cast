@@ -74,8 +74,7 @@ def show_date_time(led_intensity = WeatherConfig.INTENSITY_7LED_MODE_0N.value, t
     shows date and time
     """ 
     # Get the current date and time
-    time_zone = pytz.timezone(WeatherConfig.TIME_ZONE.value)
-    now = datetime.now(time_zone)
+    now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
     tmax.brightness(led_intensity)
     tmin.brightness(led_intensity)
 

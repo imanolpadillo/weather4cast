@@ -70,7 +70,7 @@ ping weather4cast.local
 
  1.  Raspi ssh access
 ```
-ssh pi@192.168.0.34
+ssh pi@192.168.0.10
 ```
 
  2. Copy files from PC to Raspi

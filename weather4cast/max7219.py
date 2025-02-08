@@ -18,6 +18,7 @@ from luma.led_matrix.device import max7219
 from luma.core.interface.serial import spi, noop
 from luma.core.render import canvas
 from luma.core.legacy import text
+import pytz
 
 # *************************************************************************************************** 
 # CONSTANTS AND GLOBAL VARIABLES
@@ -113,7 +114,7 @@ def calculate_week_day(offset: int) -> int:
     :return: The day of the week (1-7) after applying the offset.
     """
     # Get the current day of the week (1 = Monday, ..., 7 = Sunday)
-    today_week_day = datetime.now().isoweekday()  # isoweekday: 1 = Monday, ..., 7 = Sunday
+    today_week_day = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)).isoweekday()  # isoweekday: 1 = Monday, ..., 7 = Sunday
     # Calculate the new day of the week with offset
     new_week_day = ((today_week_day + offset - 1) % 7) + 1
     return new_week_day
