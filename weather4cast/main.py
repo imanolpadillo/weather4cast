@@ -553,6 +553,10 @@ thread_max7219.start()
  
 thread_actionButton = threading.Thread(target=thread_actionButton_function)
 thread_actionButton.start()
+
+# reset leds
+time.sleep(2)
+demo(False)
  
 # infinite loop
 while True:
