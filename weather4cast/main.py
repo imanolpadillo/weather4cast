@@ -126,18 +126,20 @@ def thread_actionButton_function():
         elif (ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 2) or + \
             (ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 1):
             # Rain report
-            max7219.message = "RR"
             if button_output == WeatherButton.LongClick:
+                max7219.message = "5R"
                 send_telegram_rain_report(forecast_input.day, False)
             else:
+                max7219.message = "1R"
                 send_telegram_rain_report(forecast_input.day, True)
             button_output = WeatherButton.NoClick
         elif ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 2:
             # Weather report
-            max7219.message = "WR"
             if button_output == WeatherButton.LongClick:
+                max7219.message = "5W"
                 send_telegram_weather_report(forecast_input.day, False)
             else:
+                max7219.message = "1W"
                 send_telegram_weather_report(forecast_input.day, True)
             button_output = WeatherButton.NoClick
         else:
