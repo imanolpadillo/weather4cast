@@ -558,7 +558,7 @@ def send_telegram_weather_report(day, one_day = True):
         telegram.send_telegram(f"[WEATHER REPORT FOR {day_name}]: {report}")
     else:
         message = ''
-        for day in range(WeatherConfig.DAYS.value):
+        for day in range(WeatherConfig.DAYS.value -1):   #1day less to avoid max telegram lenght
             day_name = max7219.calculate_week_day_name(day)
             report = weather.get_weather_report(day)
             message += f"[WEATHER REPORT FOR {day_name}]: {report}" + '\n\n'
