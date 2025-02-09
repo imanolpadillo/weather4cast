@@ -126,14 +126,20 @@ def thread_actionButton_function():
         elif (ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 2) or + \
             (ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 1):
             # Rain report
-            button_output = WeatherButton.NoClick
             max7219.message = "RR"
-            send_telegram_rain_report(forecast_input.day)
+            if button_output == WeatherButton.LongClick:
+                send_telegram_rain_report(forecast_input.day, False)
+            else:
+                send_telegram_rain_report(forecast_input.day, True)
+            button_output = WeatherButton.NoClick
         elif ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 2:
             # Weather report
-            button_output = WeatherButton.NoClick
             max7219.message = "WR"
-            send_telegram_weather_report(forecast_input.day)
+            if button_output == WeatherButton.LongClick:
+                send_telegram_weather_report(forecast_input.day, False)
+            else:
+                send_telegram_weather_report(forecast_input.day, True)
+            button_output = WeatherButton.NoClick
         else:
             action_button_mode = ActionButtonMode.Normal.value
         
@@ -525,22 +531,38 @@ def send_telegram_rain_warning(hour, rain_warning_quantity):
     telegram.send_telegram(f"[RAIN WARNING]: {message}" )
     wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
 
-def send_telegram_rain_report(day):
+def send_telegram_rain_report(day, one_day = True):
     """
     Send telegram indicating the hours with rain
     """   
-    day_name = max7219.calculate_week_day_name(day)
-    report = weather.get_rain_report(day)
-    telegram.send_telegram(f"[RAIN REPORT FOR {day_name}]: {report}")
+    if one_day == True:
+        day_name = max7219.calculate_week_day_name(day)
+        report = weather.get_rain_report(day)
+        telegram.send_telegram(f"[RAIN REPORT FOR {day_name}]: {report}")
+    else:
+        message = ''
+        for day in range(WeatherConfig.DAYS.value):
+            day_name = max7219.calculate_week_day_name(day)
+            report = weather.get_rain_report(day)
+            message += f"[RAIN REPORT FOR {day_name}]: {report}" + '\n\n'
+        telegram.send_telegram(message)    
     wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
 
-def send_telegram_weather_report(day):
+def send_telegram_weather_report(day, one_day = True):
     """
     Send telegram indicating the rain + temperature + status for input day
     """   
-    day_name = max7219.calculate_week_day_name(day)
-    report = weather.get_weather_report(day)
-    telegram.send_telegram(f"[FULL REPORT FOR {day_name}]: {report}")
+    if one_day == True:
+        day_name = max7219.calculate_week_day_name(day)
+        report = weather.get_weather_report(day)
+        telegram.send_telegram(f"[WEATHER REPORT FOR {day_name}]: {report}")
+    else:
+        message = ''
+        for day in range(WeatherConfig.DAYS.value):
+            day_name = max7219.calculate_week_day_name(day)
+            report = weather.get_weather_report(day)
+            message += f"[WEATHER REPORT FOR {day_name}]: {report}" + '\n\n'
+        telegram.send_telegram(message)    
     wlogging.log(LogType.INFO.value,LogMessage.TELEGRAM_SND.name,LogMessage.TELEGRAM_SND.value)
 
 # ***************************************************************************************************
