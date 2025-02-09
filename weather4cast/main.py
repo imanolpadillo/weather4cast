@@ -282,10 +282,16 @@ def thread_actionButton_function():
         elif action_button_mode == ActionButtonMode.NextRain.value:
             weather.weather_timeline = WeatherTimeLine.T16
             forecast_input.day, forecast_input.hour = weather.get_next_rain_hour(forecast_input.day, forecast_input.hour)
-            if len(str(forecast_input.hour))==1:
-                max7219.message = '0' + str(forecast_input.hour)
+            if forecast_input.day == -1:
+                # no next rain
+                max7219.message = 'NO'
+                button_output = WeatherButton.NoClick
+                action_button_mode = ActionButtonMode.Normal.value
             else:
-                max7219.message = str(forecast_input.hour)
+                if len(str(forecast_input.hour))==1:
+                    max7219.message = '0' + str(forecast_input.hour)
+                else:
+                    max7219.message = str(forecast_input.hour)
         # avoid button overlapping
         if button_output != WeatherButton.NoClick and \
             not(button_output == WeatherButton.LongClick and action_button_mode == ActionButtonMode.Normal.value) and \

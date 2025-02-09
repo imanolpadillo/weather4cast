@@ -308,11 +308,14 @@ def get_next_rain_hour (forecast_day, forecast_hour):
     index = forecast_day * 24 + forecast_hour
     
     # get next_rain_index
-    next_rain_index = 0
+    next_rain_index = -1
     for hour in range(index, len(rain_data)):
         if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
             next_rain_index = hour
             break
+    # exit with -1 if no next rain    
+    if next_rain_index == 1:
+        return -1,-1
 
     # get next_rain_hour and next_rain_day
     next_rain_day = next_rain_index // 24
