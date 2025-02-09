@@ -661,7 +661,7 @@ while True:
             log+='; tomorrow_rain' + suffix_24_48_120h + '=' + str(tomorrow_rain)
             # send rain warning notification
             if WeatherConfig.RAIN_WARNING_TELEGRAM_ON.value == True:
-                if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False:
+                if weather.weather_timeline == WeatherTimeLine.T16 and switch.forecast_day_flag == False and switch.forecast_hour_flag == False and action_button_mode != ActionButtonMode.NextRain.value:
                     if rain_warning_flag == True: 
                         if rain_warning_telegram_flag == False:
                             send_telegram_rain_warning(forecast_input.hour, rain_warning_quantity)
