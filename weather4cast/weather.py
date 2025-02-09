@@ -184,7 +184,7 @@ def get_rain (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T1
     gets rain from input forecast day/hour
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
-    :return: [tmin,tmax]
+    :return: rain array
     """
     global weatherAPI
     forecast_day = int(forecast_day)
@@ -285,6 +285,40 @@ def rain_120_to_16_hours(input_array, worst_case = True):
     output_array.append(0)
     print(output_array)
     return output_array
+
+def get_next_rain_hour (forecast_day, forecast_hour):
+    """
+    gets hour for next rain from input forecast day/hour
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
+    :return: next_rain_day, next_rain_hour
+    """
+    global weatherAPI
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
+    hour_counter=0
+    rain_data = []
+    for day in range(WeatherConfig.DAYS.value):
+        # for hour in range(24):
+        for hour in range(len(weatherAPI.weekWeather[day].rain)):
+            rain_data.append(weatherAPI.weekWeather[day].rain[hour])
+            hour_counter+=1
+
+    # get current index
+    index = forecast_day * 24 + forecast_hour
+    
+    # get next_rain_index
+    next_rain_index = 0
+    for hour in range(index, len(rain_data)):
+        if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
+            next_rain_index = hour
+            break
+
+    # get next_rain_hour and next_rain_day
+    next_rain_day = next_rain_index // 24
+    next_rain_hour = next_rain_index % 24
+
+    return next_rain_day, next_rain_hour
 
 def get_rain_report (forecast_day):
     """

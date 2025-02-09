@@ -151,6 +151,7 @@ class ActionButtonMode(Enum):
     IncreaseDayRel = 2
     IncreaseHourAbs = 3
     IncreaseHourRel = 4
+    NextRain = 5
 
 class DayWeather:
     def __init__(self, status=None, rain=None, temperature=None):

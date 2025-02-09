@@ -43,12 +43,12 @@ Mode Actions:
 - [[A]]           : RST mode
 - [A]             : ECO mode
 - H[A]            : CLK mode
-- HDA             : LIFX neutral
-- DDD             : RST day dial
-- HHH             : RST hour dial
+- HD[A]           : LIFX neutral
 - A[A]            : API+
 - AA[A]           : API-
 - D[A]            : API info
+- DDD             : RST day dial
+- HHH             : RST hour dial
 
 Weather Actions:
 - A               : 0-24h
@@ -58,6 +58,7 @@ Weather Actions:
 - DDAx            : +x days ABS
 - HAx             : +x hours REL
 - HHAx            : +x hours ABS
+- HDA             : Next rain
 - HDDA,DHHA       : Rain report
 - HHDDA           : Weather report
 

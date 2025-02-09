@@ -116,10 +116,13 @@ def thread_actionButton_function():
         elif ky040.dayDial_click_times == 0 and ky040.hourDial_click_times == 2:
             action_button_mode = ActionButtonMode.IncreaseHourAbs.value
         elif ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 1:
-            # LIFX neutral
-            button_output = WeatherButton.NoClick
-            max7219.message = "LX"
-            set_lifx_scene('NEUTRAL')
+            if button_output == WeatherButton.LongClick:
+                # LIFX neutral
+                max7219.message = "LX"
+                set_lifx_scene('NEUTRAL')
+                button_output = WeatherButton.NoClick
+            else:
+                action_button_mode = ActionButtonMode.NextRain.value
         elif (ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 2) or + \
             (ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 1):
             # Rain report
@@ -271,6 +274,14 @@ def thread_actionButton_function():
             forecast_input.hour = int(button_output.value)
             while forecast_input.hour > 24:
                 forecast_input.hour = forecast_input.hour - 24
+            if len(str(forecast_input.hour))==1:
+                max7219.message = '0' + str(forecast_input.hour)
+            else:
+                max7219.message = str(forecast_input.hour)
+        # F) Action button: next rain
+        elif action_button_mode == ActionButtonMode.NextRain.value:
+            weather.weather_timeline = WeatherTimeLine.T16
+            forecast_input.day, forecast_input.hour = weather.get_next_rain_hour(forecast_input.day, forecast_input.hour)
             if len(str(forecast_input.hour))==1:
                 max7219.message = '0' + str(forecast_input.hour)
             else:
@@ -663,7 +674,8 @@ while True:
             # sleep in case of showing 24h/48h data
             if weather.weather_timeline != WeatherTimeLine.T16 or \
                 action_button_mode == ActionButtonMode.IncreaseHourAbs.value or \
-                action_button_mode == ActionButtonMode.IncreaseHourRel.value:
+                action_button_mode == ActionButtonMode.IncreaseHourRel.value or \
+                action_button_mode == ActionButtonMode.NextRain.value:
                 weather.weather_timeline = WeatherTimeLine.T16
                 weather_refresh_flag = True # required new loop for showing timeline 16h 
                 time.sleep(WeatherConfig.TIMEOUT_24_48_120.value)
