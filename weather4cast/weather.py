@@ -300,7 +300,7 @@ def get_next_rain_hour (forecast_day, forecast_hour):
 
     # check if currently it is raining
     now_raining = False
-    if weatherAPI.weekWeather[forecast_day].rain[forecast_hour] >= WeatherConfig.RAIN_STEP.value:
+    if round_to_step(weatherAPI.weekWeather[forecast_day].rain[forecast_hour]) >= WeatherConfig.RAIN_STEP.value:
         now_raining = True
 
     hour_counter=0
