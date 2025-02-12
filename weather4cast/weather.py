@@ -288,7 +288,8 @@ def rain_120_to_16_hours(input_array, worst_case = True):
 
 def get_next_rain_hour (forecast_day, forecast_hour):
     """
-    gets hour for next rain from input forecast day/hour
+    gets hour for next rain from input forecast day/hour. If it is already raining,
+    search for next hour when there is no rain
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: next_rain_day, next_rain_hour
@@ -296,6 +297,12 @@ def get_next_rain_hour (forecast_day, forecast_hour):
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
+
+    # check if currently it is raining
+    now_raining = False
+    if weatherAPI.weekWeather[forecast_day].rain[forecast_hour] >= WeatherConfig.RAIN_STEP.value:
+        now_raining = True
+
     hour_counter=0
     rain_data = []
     for day in range(WeatherConfig.DAYS.value):
@@ -310,9 +317,16 @@ def get_next_rain_hour (forecast_day, forecast_hour):
     # get next_rain_index
     next_rain_index = -1
     for hour in range(index, len(rain_data)):
-        if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
-            next_rain_index = hour
-            break
+        if now_raining == False:
+            # search when it starts raining
+            if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
+                next_rain_index = hour
+                break
+        else:
+            # search when it stops raining
+            if round_to_step(rain_data[hour]) < WeatherConfig.RAIN_STEP.value:
+                next_rain_index = hour
+                break
     # exit with -1 if no next rain    
     if next_rain_index == 1:
         return -1,-1
