@@ -35,11 +35,11 @@ def detect_button():
     '''
     __   SuperLongClick 
     _    LongClick
-    ._   ShortLongClick
-    ..-  ShortShortLongClick
-    .    ShortClick
-    ..   DoubleClick
-    ...  TripleClick
+    ._   x01ClickLongClick
+    ..-  x02ClickLongClick
+    .    x01Click
+    ..   x02Click
+    ...  x03Click
     '''
     global super_long_click_flag
     if GPIO.input(PULSE_PIN) == 0:
@@ -49,273 +49,224 @@ def detect_button():
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('longClick')
                 super_long_click_flag = True
                 return WeatherButton.LongClick            # LongClick threshold 
             time.sleep(0.01) 
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('shortClick')
                 return WeatherButton.x01Click             # x01Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
-            if time.time() - start_time >= 1.0:  
-                # print('shortLongClick')
-                return WeatherButton.ShortLongClick       # ShortLongClick threshold 
+            if time.time() - start_time >= 1.0: 
+                return WeatherButton.x01ClickLongClick    # xClickLongClick threshold 
             time.sleep(0.01) 
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('doubleClick')
                 return WeatherButton.x02Click             # x02Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('shortShortLongClick')
-                return WeatherButton.ShortShortLongClick  # ShortShortLongClick threshold 
+                return WeatherButton.x02ClickLongClick    # xClickLongClick threshold 
             time.sleep(0.01) 
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('trippleClick')
                 return WeatherButton.x03Click             # x03Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x03ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('cuadrupleClick')
                 return WeatherButton.x04Click             # x04Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x04ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('quintupleClick')
                 return WeatherButton.x05Click             # x05Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x05ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('sextupleClick')
                 return WeatherButton.x06Click             # x06Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x06ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x07Click             # x07Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x07ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x08Click             # x08Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x08ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x09Click             # x09Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x09ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x10Click             # x10Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x10ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x11Click             # x11Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x11ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x12Click             # x12Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x12ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x13Click             # x13Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x13ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x14Click             # x14Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x14ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x15Click             # x15Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x15ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x16Click             # x16Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x16ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x17Click             # x17Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x17ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x18Click             # x18Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x18ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x19Click             # x19Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x19ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x20Click             # x20Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x20ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x21Click             # x21Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x21ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x22Click             # x22Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x22ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x23Click             # x23Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x23ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
         start_time = time.time()
         while GPIO.input(PULSE_PIN) == 0:
             if time.time() - start_time >= 0.5:  
-                # print('xClick')
                 return WeatherButton.x24Click             # x24Click threshold 
             time.sleep(0.01) 
         while GPIO.input(PULSE_PIN) == 1:
             if time.time() - start_time >= 1.0:  
-                # print('noClick')
-                return WeatherButton.NoClick              # NoClick threshold
+                return WeatherButton.x24ClickLongClick    # xClickLongClick threshold
             time.sleep(0.01)
 
     elif super_long_click_flag == True:

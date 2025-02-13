@@ -140,10 +140,32 @@ class WeatherButton(Enum):
     x22Click = 22
     x23Click = 23
     x24Click = 24
-    ShortLongClick = 25
-    ShortShortLongClick = 26
-    LongClick = 27
-    SuperLongClick = 28
+    x01ClickLongClick = 101
+    x02ClickLongClick = 102
+    x03ClickLongClick = 103
+    x04ClickLongClick = 104
+    x05ClickLongClick = 105
+    x06ClickLongClick = 106
+    x07ClickLongClick = 107
+    x08ClickLongClick = 108
+    x09ClickLongClick = 109
+    x10ClickLongClick = 110
+    x11ClickLongClick = 111
+    x12ClickLongClick = 112
+    x13ClickLongClick = 113
+    x14ClickLongClick = 114
+    x15ClickLongClick = 115
+    x16ClickLongClick = 116
+    x17ClickLongClick = 117
+    x18ClickLongClick = 118
+    x19ClickLongClick = 119
+    x20ClickLongClick = 120
+    x21ClickLongClick = 121
+    x22ClickLongClick = 122
+    x23ClickLongClick = 123
+    x24ClickLongClick = 124
+    LongClick = 200
+    SuperLongClick = 201
 	
 class ActionButtonMode(Enum):
     Normal = 0

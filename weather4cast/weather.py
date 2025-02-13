@@ -286,10 +286,9 @@ def rain_120_to_16_hours(input_array, worst_case = True):
     print(output_array)
     return output_array
 
-def get_next_rain_hour (forecast_day, forecast_hour):
+def get_next_start_stop_rain_hour (forecast_day, forecast_hour, rain_index, rain_start):
     """
-    gets hour for next rain from input forecast day/hour. If it is already raining,
-    search for next hour when there is no rain
+    gets hour for next start/stop rain from input forecast day/hour.
     :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
     :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
     :return: next_rain_day, next_rain_hour
@@ -297,11 +296,6 @@ def get_next_rain_hour (forecast_day, forecast_hour):
     global weatherAPI
     forecast_day = int(forecast_day)
     forecast_hour = int(forecast_hour)
-
-    # check if currently it is raining
-    now_raining = False
-    if round_to_step(weatherAPI.weekWeather[forecast_day].rain[forecast_hour]) >= WeatherConfig.RAIN_STEP.value:
-        now_raining = True
 
     hour_counter=0
     rain_data = []
@@ -313,22 +307,53 @@ def get_next_rain_hour (forecast_day, forecast_hour):
 
     # get current index
     index = forecast_day * 24 + forecast_hour
-    
-    # get next_rain_index
-    next_rain_index = -1
-    for hour in range(index, len(rain_data)):
-        if now_raining == False:
+
+    if rain_start == True:
+        # if currently raining increase rain_index, for searching first time for next (no current) rain
+        if round_to_step(weatherAPI.weekWeather[forecast_day].rain[forecast_hour]) >= WeatherConfig.RAIN_STEP.value:
+            rain_index+=1
+        # get next_rain_start_index
+        next_rain_index = -1
+        rain_loop = rain_index
+        while (rain_loop > 0):
+            next_rain_index=-1
             # search when it starts raining
-            if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
-                next_rain_index = hour
-                break
-        else:
+            for hour in range(index, len(rain_data)):
+                if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
+                    next_rain_index = hour
+                    break
             # search when it stops raining
-            if round_to_step(rain_data[hour]) < WeatherConfig.RAIN_STEP.value:
-                next_rain_index = hour
-                break
+            index = -1
+            for hour in range(next_rain_index, len(rain_data)):
+                if round_to_step(rain_data[hour]) < WeatherConfig.RAIN_STEP.value:
+                    index = hour
+                    break
+            rain_loop -= 1
+    else:
+        # if currently not raining increase rain_index, for searching first time for next (no current) end of rain
+        if round_to_step(weatherAPI.weekWeather[forecast_day].rain[forecast_hour]) < WeatherConfig.RAIN_STEP.value:
+            rain_index+=1
+        # get next_rain_stop_index
+        next_rain_index = -1
+        rain_loop = rain_index
+        while (rain_loop > 0):
+            next_rain_index=-1
+            # search when it stops raining
+            for hour in range(index, len(rain_data)):
+                if round_to_step(rain_data[hour]) < WeatherConfig.RAIN_STEP.value:
+                    next_rain_index = hour
+                    break
+            # search when it starts raining
+            index = -1
+            for hour in range(next_rain_index, len(rain_data)):
+                if round_to_step(rain_data[hour]) >= WeatherConfig.RAIN_STEP.value:
+                    index = hour
+                    break
+            rain_loop -= 1     
+        
+
     # exit with -1 if no next rain    
-    if next_rain_index == 1:
+    if next_rain_index == -1:
         return -1,-1
 
     # get next_rain_hour and next_rain_day
@@ -336,6 +361,7 @@ def get_next_rain_hour (forecast_day, forecast_hour):
     next_rain_hour = next_rain_index % 24
 
     return next_rain_day, next_rain_hour
+
 
 def get_rain_report (forecast_day):
     """

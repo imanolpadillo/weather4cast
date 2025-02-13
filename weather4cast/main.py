@@ -151,11 +151,11 @@ def thread_actionButton_function():
 
         # A) Action button: normal mode
         if action_button_mode == ActionButtonMode.Normal.value:
-            if button_output == WeatherButton.ShortLongClick:
+            if button_output == WeatherButton.x01ClickLongClick:
                 # ._  API+    : API change +1
                 # print('API+')
                 change_weather_api(False, True, True)
-            elif button_output == WeatherButton.ShortShortLongClick:
+            elif button_output == WeatherButton.x02ClickLongClick:
                 # .._ API-    : API change -1
                 # print('API-')
                 change_weather_api(False, True, False)
@@ -289,7 +289,18 @@ def thread_actionButton_function():
         # F) Action button: next rain
         elif action_button_mode == ActionButtonMode.NextRain.value:
             weather.weather_timeline = WeatherTimeLine.T16
-            forecast_input.day, forecast_input.hour = weather.get_next_rain_hour(forecast_input.day, forecast_input.hour)
+            # Search start or end rain
+            rain_start=True
+            rain_index=0
+            if button_output.value < 100:
+                rain_start=True
+                rain_index=button_output.value
+            else:
+                rain_start=False
+                rain_index=button_output.value - 100
+            
+            forecast_input.day, forecast_input.hour = weather.get_next_start_stop_rain_hour(forecast_input.day, forecast_input.hour, rain_index, rain_start)
+            
             if forecast_input.day == -1:
                 # no next rain
                 max7219.message = 'NO'
