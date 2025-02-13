@@ -283,7 +283,7 @@ def rain_120_to_16_hours(input_array, worst_case = True):
             output_array.append(round(chunk_average,1))
     # Append 0 at the end of the output array
     output_array.append(0)
-    print(output_array)
+    #print(output_array)
     return output_array
 
 def get_next_start_stop_rain_hour (forecast_day, forecast_hour, rain_index, rain_start):

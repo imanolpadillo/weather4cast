@@ -105,7 +105,7 @@ def thread_actionButton_function():
         # Wait until action button is pressed
         button_output = weatherAPIchange.detect_button()
 
-        print(str(ky040.dayDial_click_times) + str(ky040.hourDial_click_times))
+        #print(str(ky040.dayDial_click_times) + str(ky040.hourDial_click_times))
         # Get action mode
         if ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 0:
             action_button_mode = ActionButtonMode.IncreaseDayRel.value
