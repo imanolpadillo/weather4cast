@@ -316,6 +316,8 @@ def get_next_start_stop_rain_hour (forecast_day, forecast_hour, rain_index, rain
         next_rain_index = -1
         rain_loop = rain_index
         while (rain_loop > 0):
+            if index == -1:
+                return -1,-1
             next_rain_index=-1
             # search when it starts raining
             for hour in range(index, len(rain_data)):
@@ -337,6 +339,8 @@ def get_next_start_stop_rain_hour (forecast_day, forecast_hour, rain_index, rain
         next_rain_index = -1
         rain_loop = rain_index
         while (rain_loop > 0):
+            if index == -1:
+                return -1,-1
             next_rain_index=-1
             # search when it stops raining
             for hour in range(index, len(rain_data)):
