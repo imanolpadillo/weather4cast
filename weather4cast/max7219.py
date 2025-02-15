@@ -155,7 +155,8 @@ def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_
     if weather_timeline == WeatherTimeLine.T24 and action_button_mode == ActionButtonMode.Normal.value:
         # x1 mark at top right corner
         output_level[15] ^= 1  # XOR operation to toggle between 0 and 1
-    elif weather_timeline == WeatherTimeLine.T24 and action_button_mode != ActionButtonMode.Normal.value:
+    elif ((weather_timeline == WeatherTimeLine.T24 and action_button_mode != ActionButtonMode.Normal.value) or \
+          action_button_mode == ActionButtonMode.NextRain.value):
         # x1 mark for week days. monday starts in pos 8
         weekday = calculate_week_day(day)
         while weekday > 0:
