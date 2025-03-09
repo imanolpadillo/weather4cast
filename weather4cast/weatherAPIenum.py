@@ -77,14 +77,14 @@ class WeatherConfig(Enum):
     #                             012345678901234567890123 
 
 class WeatherStatus(Enum):
-    SUNNY = 1
-    PARTLY_CLOUDY = 2
-    CLOUDY = 3
-    RAINY = 4
+    SUNNY = 0
+    PARTLY_CLOUDY = 1
+    CLOUDY = 2
+    RAINY = 3
+    FOGGY = 4
     STORMY = 5
-    WINDY = 6
-    FOGGY = 7
-    SNOWY = 8
+    SNOWY = 6
+    WINDY = 7
 
 class WeatherLifxColor(Enum):
     NEUTRAL = (249, 249, 249, 0.9)

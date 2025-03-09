@@ -54,16 +54,17 @@ Weather Actions:
 - A               : 0-24h
 - AA              : 24-48h
 - AAA             : 24-144h
-- DAx             : +x days REL
-- DDAx            : +x days ABS
-- HAx             : +x hours REL
-- HHAx            : +x hours ABS
+- DAx             : +x days REL (*)
+- DDAx            : +x days ABS (*)
+- HAx             : +x hours REL (*)
+- HHAx            : +x hours ABS (*)
 - HDxA            : Next x rain start
 - HDxA[A]         : Next x rain stop
 - HDDA,DHHA       : 1day rain report
 - HDD[A],DHH[A]   : 5day rain report
 - HHDDA           : 1day weather report
 - HHDD[A]         : 5day weather report
+(*) Finishing with [A] change rain level to status
 
 ## 🎮 Raspi commands
 

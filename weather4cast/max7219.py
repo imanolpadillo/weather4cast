@@ -119,6 +119,27 @@ def calculate_week_day(offset: int) -> int:
     new_week_day = ((today_week_day + offset - 1) % 7) + 1
     return new_week_day
 
+def calculate_status_level(input_level):
+    """
+    shows level
+    :param level: 16 array including precipitation probability
+    :return: -
+    """
+    global level
+    # Get max value of array and adjust rain_step, activated_led, deactivated_led
+    activated_led = 1
+    deactivated_led = 0
+
+    # Display the level
+    output_level = []
+    for row in range(8):
+        for status_hour in input_level:
+            if status_hour.value == row:
+                output_level.append(activated_led)
+            else:
+                output_level.append(deactivated_led)
+    level = output_level
+
 
 def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_button_mode = ActionButtonMode.Normal.value, day = 0, hourFlag = False, hour = 0):
     """

@@ -2,7 +2,7 @@
 # ********************************************* WEATHER  ********************************************
 # *************************************************************************************************** 
 import importlib, os, math
-from weatherAPIenum import WeatherConfig, WeatherTimeLine
+from weatherAPIenum import WeatherConfig, WeatherTimeLine, WeatherStatus
 from collections import Counter
 
 # *************************************************************************************************** 
@@ -128,6 +128,88 @@ def get_status (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.
         status_counts = Counter(status_arr)
         most_common_element, most_common_count = status_counts.most_common(1)[0]
         return most_common_element
+    
+def get_status_arr (forecast_day, forecast_hour, weather_timeline = WeatherTimeLine.T16):
+    """
+    gets status from input forecast day/hour
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :param forecast_hour: integer indicating forecast hour (0= 00:00, 1=01:00...)
+    :return: status array
+    """
+    global weatherAPI
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
+    hour_counter=0
+    status_data = []
+    for day in range(WeatherConfig.DAYS.value):
+        # for hour in range(24):
+        for hour in range(len(weatherAPI.weekWeather[day].status)):
+            status_data.append(weatherAPI.weekWeather[day].status[hour])
+            hour_counter+=1
+    # get current index
+    index=0
+    hour_limit=0
+    if weather_timeline==WeatherTimeLine.T16:
+        hour_limit=16
+        index = forecast_day * 24 + forecast_hour
+    # elif weather_timeline==WeatherTimeLine.T120:
+    #     hour_limit=120
+    #     index = 24
+    else: #T24 + T48
+        hour_limit=24
+        # if weather_timeline==WeatherTimeLine.T48:
+        #     if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
+        index = forecast_day * 24
+    
+    # from index count 16, 24 or 120 rain values
+    status_output = []
+    for hour in range(index, len(status_data)):
+        if hour>=hour_limit+index:
+            break
+        status_output.append(status_data[hour])
+
+    # fill with 'SUNNY' if array´s size is lower than hour limit
+    while(len(status_output)<hour_limit):
+        status_output.append(WeatherStatus.SUNNY.value)
+
+    # adjust rain array to size 16
+    if len(status_output)==24:
+        status_output = status_24_to_16_hours(status_output)
+    # elif len(status_output)==120:
+    #     status_output = rain_120_to_16_hours(status_output)
+
+    return status_output
+
+def status_24_to_16_hours(input_array):
+    """
+    converts 24 array into 16 array
+    :param input_array: size 24
+    :return: array size 16
+    """
+    # Result array will store the 16 values
+    downsampled_array = []
+    
+    # Split the 24-length array into 16 equal chunks
+    chunk_size = len(input_array) // 16  # this is 1.5 per group, rounded
+    
+    for i in range(16):
+        start_index = i * chunk_size
+        end_index = start_index + chunk_size
+        
+        # Slice out a chunk
+        chunk = input_array[start_index:end_index]
+        
+        # Count the occurrences of each weather status
+        count = Counter(chunk)
+        
+        # Find the most common status in the chunk
+        most_common_status, _ = count.most_common(1)[0]
+        
+        # Append the most common status to the downsampled array
+        downsampled_array.append(most_common_status)
+    
+    return downsampled_array
+
 
 def get_min_max_temperature (forecast_day, weather_timeline = WeatherTimeLine.T16):
     """
