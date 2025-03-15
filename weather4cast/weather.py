@@ -186,29 +186,29 @@ def status_24_to_16_hours(input_array):
     :param input_array: size 24
     :return: array size 16
     """
-    # Result array will store the 16 values
-    downsampled_array = []
+    output_array = []
     
-    # Split the 24-length array into 16 equal chunks
-    chunk_size = len(input_array) // 16  # this is 1.5 per group, rounded
+    # Process the input array in groups of 3
+    for i in range(0, len(input_array), 3):
+        group = input_array[i:i+3]
+        
+        # Count the frequency of each element in the group
+        count = Counter(group)
+        
+        # Determine the output for this group based on the counts
+        if len(count) == 1:  # All elements are the same
+            output_array.append(group[0])
+            output_array.append(group[0])
+        elif len(count) == 2:  # Two elements are the same
+            for item, freq in count.items():
+                if freq == 2:  # The repeated element
+                    output_array.append(item)
+                    output_array.append(item)
+        elif len(count) == 3:  # All elements are different
+            output_array.append(group[0])
+            output_array.append(group[1])
     
-    for i in range(16):
-        start_index = i * chunk_size
-        end_index = start_index + chunk_size
-        
-        # Slice out a chunk
-        chunk = input_array[start_index:end_index]
-        
-        # Count the occurrences of each weather status
-        count = Counter(chunk)
-        
-        # Find the most common status in the chunk
-        most_common_status, _ = count.most_common(1)[0]
-        
-        # Append the most common status to the downsampled array
-        downsampled_array.append(most_common_status)
-    
-    return downsampled_array
+    return output_array
 
 
 def get_min_max_temperature (forecast_day, weather_timeline = WeatherTimeLine.T16):
