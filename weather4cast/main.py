@@ -12,6 +12,7 @@ import lifx
 from time import strftime
 import threading, time
 import pytz
+import holidays
 from datetime import datetime, timedelta
 import telegram
 import wlogging
@@ -440,6 +441,21 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
 
+def is_today_spanish_national_holiday():
+    """
+    check if today is spanish holiday day
+    """
+    today = datetime.date.today()
+    spanish_holidays = holidays.Spain(year=today.year)
+
+    # Filter for **national** holidays (not regional/local)
+    national_holidays = {
+        date for date, name in spanish_holidays.items()
+        if "Nacional" in name or "national" in name.lower()
+    }
+
+    return today in national_holidays
+
 def get_eco_flag (current_date, current_day, current_hour):
     """
     check if current date is holiday
@@ -447,7 +463,7 @@ def get_eco_flag (current_date, current_day, current_hour):
     """
     try:
         holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
-        if (current_date.month, current_date.day) in holidays:
+        if (current_date.month, current_date.day) in holidays or is_today_spanish_national_holiday():
             value = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
         else:
             # No holiday

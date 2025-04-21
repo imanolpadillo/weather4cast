@@ -83,26 +83,33 @@ ssh pi@192.168.0.10
 scp /Users/imanolpadillo/Documents/weather4cast/weather4cast/*.* pi@192.168.0.10:/home/pi/Documents/weather4cast
 ````
 
- 3. Execute weather4cast manually from Raspi
+ 2. Prerequisites:
+```
+cd /home/pi/Documents/weather4cast
+pip3 install pytz
+pip3 install holidays
+```
+
+ 4. Execute weather4cast manually from Raspi
 ```
 cd /home/pi/Documents/weather4cast
 python3 main.py
 ```
 
- 4. Kill weather4cast program
+ 5. Kill weather4cast program
 ```
 ps aux | grep main.py
 kill -7 process_id
 ```
 
- 5. Program a cron for executing weather4cast on restart and delete logs every week
+ 6. Program a cron for executing weather4cast on restart and delete logs every week
 ```
 sudo crontab -e -u pi
 @reboot sh /home/pi/Documents/weather4cast/launcher.sh >/home/pi/Documents/weather4cast/logs/cron.log 2>&1
 0 0 * * 0 > /home/pi/Documents/weather4cast/logs/weather.log
 ```
 
- 6. Read Raspi logs
+ 7. Read Raspi logs
 ```
 cd /home/pi/Documents/weather4cast/logs
 cat weather4cast.log
