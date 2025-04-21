@@ -443,12 +443,12 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
 
 def is_today_spanish_national_holiday():
     """
-    check if today is spanish holiday day
+    Check if today is a Spanish national holiday
     """
     today = datetime.date.today()
-    spanish_holidays = holidays.Spain(year=today.year)
+    spanish_holidays = holidays.Spain()  # No 'year' argument
 
-    # Filter for **national** holidays (not regional/local)
+    # Filter for national holidays (not regional/local)
     national_holidays = {
         date for date, name in spanish_holidays.items()
         if "Nacional" in name or "national" in name.lower()
