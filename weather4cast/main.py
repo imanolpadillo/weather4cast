@@ -445,7 +445,7 @@ def is_today_spanish_national_holiday():
     """
     Check if today is a Spanish national holiday
     """
-    today = datetime.date.today()
+    today = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)).today()
     spanish_holidays = holidays.Spain()  # No 'year' argument
 
     # Filter for national holidays (not regional/local)
