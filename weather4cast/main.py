@@ -441,20 +441,21 @@ def change_weather_api(reset_api_id = False, refresh = True, increase = True):
             ', refresh_s: ' + str(weather.get_current_weather_api_refresh_s())
         wlogging.log(LogType.INFO.value,LogMessage.API_CHG.name,log)
 
-def is_today_spanish_national_holiday():
+def is_today_regional_holiday():
     """
     Check if today is a Spanish national holiday
     """
-    today = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)).today()
-    spanish_holidays = holidays.Spain()  # No 'year' argument
+    try:
+        today = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)).today() 
 
-    # Filter for national holidays (not regional/local)
-    national_holidays = {
-        date for date, name in spanish_holidays.items()
-        if "Nacional" in name or "national" in name.lower()
-    }
+        # Holidays for Basque Country (PV) 
+        regional_holidays = holidays.Spain(subdiv="PV")
 
-    return today in national_holidays
+        # Is it a holiday?
+        return today in regional_holidays
+    except Exception as err:
+        print(f"[ERROR] is_today_regional_holiday: {err}")
+        return False     
 
 def get_eco_flag (current_date, current_day, current_hour):
     """
@@ -463,7 +464,8 @@ def get_eco_flag (current_date, current_day, current_hour):
     """
     try:
         holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
-        if (current_date.month, current_date.day) in holidays or is_today_spanish_national_holiday():
+        if (current_date.month, current_date.day) in holidays or is_today_regional_holiday():
+            # Holiday
             value = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
         else:
             # No holiday
