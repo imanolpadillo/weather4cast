@@ -75,12 +75,12 @@ ping weather4cast.local
 
  1.  Raspi ssh access
 ```
-ssh pi@192.168.0.10
+ssh pi@192.168.0.11
 ```
 
  2. Copy files from PC to Raspi
 ```
-scp /Users/imanolpadillo/Documents/weather4cast/weather4cast/*.* pi@192.168.0.10:/home/pi/Documents/weather4cast
+scp /Users/imanol/Documents/GitHub/weather4cast/weather4cast/*.* pi@192.168.0.11:/home/pi/Documents/weather4cast
 ````
 
  2. Prerequisites:

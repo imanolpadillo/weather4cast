@@ -669,8 +669,8 @@ while True:
         input_data_refresh()
 
     # Check eco_mode every 5 minutes
+    now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
     if WeatherConfig.ECO_MODE_ON.value == True:
-        now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
         if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0: 
             prev_eco_flag = eco_flag 
             eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
@@ -679,6 +679,13 @@ while True:
                 weather_refresh_flag = True
     else:
         eco_flag = WorkingMode.ON.value
+
+    # Check trend every hour. Only in ON mode and if trend schedule is enabled for current hour
+    if eco_flag == WorkingMode.ON.value:
+        if int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0 and \
+            WeatherConfig.TREND_SCHEDULE.value[int(forecast_input.hour)]=='1':
+                trend = weather.get_tomorrow_trend(forecast_input.day)
+                max7219.message = trend
 
     # A) OFF MODE
     if eco_off_manual_flag == True or (eco_flag == WorkingMode.OFF.value and weather_refresh_flag == True):
@@ -768,11 +775,6 @@ while True:
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
                 set_lifx_scene(status.name)
-            # Show trend every hour 
-            if int(now.strftime("%M")) % 1 == 0 and int(now.strftime("%S")) == 0 and \
-               WeatherConfig.TREND_SCHEDULE.value[int(forecast_input.hour)]=='1':
-                    trend = weather.get_tomorrow_trend(forecast_input.day)
-                    max7219.message = trend
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data

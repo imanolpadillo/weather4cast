@@ -586,5 +586,5 @@ def get_tomorrow_trend(forecast_day):
     
     # Format the result
     if diff >= 0:
-        return f"↑{diff}"
-    return f"↓{abs(diff)}"
+        return f"+{diff}"
+    return f"-{abs(diff)}"
