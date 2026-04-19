@@ -768,6 +768,11 @@ while True:
             if WeatherConfig.LIFX_ON.value == True and status != last_status:
                 last_status = status
                 set_lifx_scene(status.name)
+            # Show trend every hour 
+            if int(now.strftime("%M")) % 1 == 0 and int(now.strftime("%S")) == 0 and \
+               WeatherConfig.TREND_SCHEDULE.value[int(forecast_input.hour)]=='1':
+                    trend = weather.get_tomorrow_trend(forecast_input.day)
+                    max7219.message = trend
             # logging
             wlogging.log(LogType.INFO.value,LogMessage.OUTDATA_CHG.name,log)
             # sleep in case of showing 24h/48h data

@@ -560,3 +560,31 @@ def get_tomorrow_rain(forecast_day, rain_limit):
         return True
     else:
         return False
+
+def get_tomorrow_trend(forecast_day):
+    """
+    Returns a formatted trend string for the temperature difference between forecast_day and forecast_day + 1.
+    1  -> "↑1"
+    0  -> "↑0"
+    -1 -> "↓1"
+    If forecast_day + 1 does not exist, returns "↑0".
+    :param forecast_day: integer indicating forecast day (0= today, 1=tomorrow...)
+    :return: formatted trend string
+    """
+    # Check if forecast_day + 1 exists
+    if forecast_day + 1 >= WeatherConfig.DAYS.value:
+        return "↑0"
+    
+    # Get max temperature for forecast_day
+    max_today = get_min_max_temperature(forecast_day)[1]
+    
+    # Get max temperature for forecast_day + 1
+    max_tomorrow = get_min_max_temperature(forecast_day + 1)[1]
+    
+    # Calculate difference
+    diff = max_tomorrow - max_today
+    
+    # Format the result
+    if diff >= 0:
+        return f"↑{diff}"
+    return f"↓{abs(diff)}"
