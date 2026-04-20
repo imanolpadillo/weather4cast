@@ -457,20 +457,22 @@ def is_today_regional_holiday():
         print(f"[ERROR] is_today_regional_holiday: {err}")
         return False     
 
-def get_eco_flag (current_date, current_day, current_hour):
+def get_eco_flag (current_date, current_day, current_hour, current_minute):
     """
     check if current date is holiday
     check if current time is between eco scheduled init and end times
+    Uses half-hour index (0-47): hour * 2 + (minute // 30)
     """
     try:
+        half_hour_index = current_hour * 2 + (current_minute // 30)
         holidays = WeatherConfig.ECO_MODE_HOLIDAYS.value
         if (current_date.month, current_date.day) in holidays or is_today_regional_holiday():
             # Holiday
-            value = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[current_hour]
+            value = WeatherConfig.ECO_MODE_HOLIDAYS_SCHEDULE.value[half_hour_index]
         else:
             # No holiday
             today_schedule = WeatherConfig.ECO_MODE_SCHEDULE.value[current_day]
-            value = str(today_schedule[current_hour])
+            value = str(today_schedule[half_hour_index])
         return value
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -644,7 +646,7 @@ change_weather_api(True, False)
 
 # get init mode
 now = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value))
-eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
+eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour,now.time().minute)
 weather_refresh_flag = True
  
 # start threads
@@ -673,17 +675,21 @@ while True:
     if WeatherConfig.ECO_MODE_ON.value == True:
         if int(now.strftime("%M")) % 5 == 0 and int(now.strftime("%S")) == 0: 
             prev_eco_flag = eco_flag 
-            eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour)
+            eco_flag = get_eco_flag(now.today(),now.weekday(),now.time().hour,now.time().minute)
             if prev_eco_flag != eco_flag or eco_flag_change:
                 eco_flag_change = True
                 weather_refresh_flag = True
     else:
         eco_flag = WorkingMode.ON.value
 
-    # Check trend every hour. Only in ON mode and if trend schedule is enabled for current hour
+    # Check trend every hour (TREND_DISPLAY_SECONDS before o'clock). Only in ON mode and if trend schedule is enabled for incoming hour
     if eco_flag == WorkingMode.ON.value:
-        if int(now.strftime("%M")) == 0 and int(now.strftime("%S")) == 0 and \
-            WeatherConfig.TREND_SCHEDULE.value[int(forecast_input.hour)]=='1':
+        trend_seconds = min(WeatherConfig.TREND_DISPLAY_SECONDS.value, 59)
+        if int(now.strftime("%M")) == 59 and int(now.strftime("%S")) >= (60 - trend_seconds):
+            incoming_hour = int(now.strftime("%H")) + 1
+            if incoming_hour >= 24:
+                incoming_hour = 0
+            if WeatherConfig.TREND_SCHEDULE.value[incoming_hour]=='1':
                 trend = weather.get_tomorrow_trend(forecast_input.day)
                 max7219.message = trend
 
