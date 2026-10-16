@@ -141,6 +141,23 @@ def calculate_status_level(input_level):
     level = output_level
 
 
+def calculate_temperature_level(input_level):
+    """Plot one point per column, scaling min/max temperatures to bottom/top."""
+    global level
+    temperatures = [float(temperature) for temperature in input_level]
+    if len(temperatures) != 16:
+        raise ValueError("Temperature array must have 16 elements.")
+    minimum = min(temperatures)
+    maximum = max(temperatures)
+    temperature_range = maximum - minimum
+    if temperature_range == 0:
+        heights = [0] * 16
+    else:
+        heights = [round((temperature - minimum) * 7 / temperature_range) for temperature in temperatures]
+    # Image rows start at the top: height 0 belongs to row 7.
+    level = [int(height == 7 - row) for row in range(8) for height in heights]
+
+
 def calculate_level(input_level, weather_timeline = WeatherTimeLine.T16, action_button_mode = ActionButtonMode.Normal.value, day = 0, hourFlag = False, hour = 0):
     """
     shows level

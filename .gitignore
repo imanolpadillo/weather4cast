@@ -3,3 +3,4 @@ README.md
 *.pyc
 secrets.ini
 logs/weather4cast.log
+weather4cast/.DS_Store

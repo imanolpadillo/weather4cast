@@ -14,6 +14,7 @@ import threading, time
 import pytz
 import holidays
 from datetime import datetime, timedelta
+from typing import Literal
 import telegram
 import wlogging
 from wlogging import LogType, LogMessage
@@ -34,7 +35,7 @@ eco_flag_change = False            # working mode changes
 eco_off_manual_flag = False        # in manual eco_off, all leds are switched off until manual disabling
 eco_clock_manual_flag = False      # in manual eco_clock, only time is enabled
 last_status = None                 # if last_status != current_status, LIFX color changes
-level_status_enabled = False    # level is used for status and temperature instead of for rain
+led_matrix_info: Literal["rain", "status", "temperature"] = "rain"  # information displayed on the LED matrix
 telegram_deadline  = datetime.now(pytz.timezone(WeatherConfig.TIME_ZONE.value)) # no telegram will be send until this deadline
 action_button_mode = ActionButtonMode.Normal.value
 
@@ -103,7 +104,7 @@ def thread_actionButton_function():
     global eco_flag_change
     global action_button_mode
     global forecast_input
-    global level_status_enabled
+    global led_matrix_info
     while True:
         # Wait until action button is pressed
         button_output = weatherAPIchange.detect_button()
@@ -126,7 +127,7 @@ def thread_actionButton_function():
                 button_output = WeatherButton.NoClick
             else:
                 action_button_mode = ActionButtonMode.NextRain.value
-        elif (ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 2) or + \
+        elif (ky040.dayDial_click_times == 1 and ky040.hourDial_click_times == 2) or \
             (ky040.dayDial_click_times == 2 and ky040.hourDial_click_times == 1):
             # Rain report
             if button_output == WeatherButton.LongClick:
@@ -197,32 +198,42 @@ def thread_actionButton_function():
                 forecast_input.day = 0
             else:
                 forecast_input.day = ky040.forecast_day
-            # increase input day sequentally
-            if button_output == WeatherButton.x01Click or button_output == WeatherButton.x01ClickLongClick:
+            # increase input day sequentially
+            if button_output in (WeatherButton.x01Click, WeatherButton.x01ClickLongClick, WeatherButton.x01ClickSuperLongClick):
                 # +1 day
                 forecast_input.day += 1
                 if button_output == WeatherButton.x01ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x02Click or button_output == WeatherButton.x02ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x01ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x02Click, WeatherButton.x02ClickLongClick, WeatherButton.x02ClickSuperLongClick):
                 # +2 days
                 forecast_input.day += 2
                 if button_output == WeatherButton.x02ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x03Click or button_output == WeatherButton.x03ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x02ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x03Click, WeatherButton.x03ClickLongClick, WeatherButton.x03ClickSuperLongClick):
                 # +3 days
                 forecast_input.day += 3
                 if button_output == WeatherButton.x03ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x04Click or button_output == WeatherButton.x04ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x03ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x04Click, WeatherButton.x04ClickLongClick, WeatherButton.x04ClickSuperLongClick):
                 # +4 days
                 forecast_input.day += 4	
                 if button_output == WeatherButton.x04ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x05Click or button_output == WeatherButton.x05ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x04ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x05Click, WeatherButton.x05ClickLongClick, WeatherButton.x05ClickSuperLongClick):
                 # +5 days
                 forecast_input.day += 5 
                 if button_output == WeatherButton.x05ClickLongClick:
-                    level_status_enabled = True
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x05ClickSuperLongClick:
+                    led_matrix_info = "temperature"
             elif button_output == WeatherButton.LongClick:
                 # display weather API
                 weather.weather_timeline = WeatherTimeLine.T16
@@ -242,41 +253,55 @@ def thread_actionButton_function():
         # C) Action button: increase day absolute
         elif action_button_mode == ActionButtonMode.IncreaseDayAbs.value:
             weather.weather_timeline = WeatherTimeLine.T24
-            if button_output == WeatherButton.x01Click or button_output == WeatherButton.x01ClickLongClick:
+            if button_output in (WeatherButton.x01Click, WeatherButton.x01ClickLongClick, WeatherButton.x01ClickSuperLongClick):
                 # Monday
                 forecast_input.day = days_until_weekday(1)
                 if button_output == WeatherButton.x01ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x02Click or button_output == WeatherButton.x02ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x01ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x02Click, WeatherButton.x02ClickLongClick, WeatherButton.x02ClickSuperLongClick):
                 # Tuesday
                 forecast_input.day = days_until_weekday(2)	
                 if button_output == WeatherButton.x02ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x03Click or button_output == WeatherButton.x03ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x02ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x03Click, WeatherButton.x03ClickLongClick, WeatherButton.x03ClickSuperLongClick):
                 # Wednesday
                 forecast_input.day = days_until_weekday(3)
                 if button_output == WeatherButton.x03ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x04Click or button_output == WeatherButton.x04ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x03ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x04Click, WeatherButton.x04ClickLongClick, WeatherButton.x04ClickSuperLongClick):
                 # Thursday
                 forecast_input.day = days_until_weekday(4)
                 if button_output == WeatherButton.x04ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x05Click or button_output == WeatherButton.x05ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x04ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x05Click, WeatherButton.x05ClickLongClick, WeatherButton.x05ClickSuperLongClick):
                 # Friday
                 forecast_input.day = days_until_weekday(5)
                 if button_output == WeatherButton.x05ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x06Click or button_output == WeatherButton.x06ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x05ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x06Click, WeatherButton.x06ClickLongClick, WeatherButton.x06ClickSuperLongClick):
                 # Saturday
                 forecast_input.day = days_until_weekday(6)	
                 if button_output == WeatherButton.x06ClickLongClick:
-                    level_status_enabled = True
-            elif button_output == WeatherButton.x07Click or button_output == WeatherButton.x07ClickLongClick:
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x06ClickSuperLongClick:
+                    led_matrix_info = "temperature"
+            elif button_output in (WeatherButton.x07Click, WeatherButton.x07ClickLongClick, WeatherButton.x07ClickSuperLongClick):
                 # Sunday
                 forecast_input.day = days_until_weekday(7) 
                 if button_output == WeatherButton.x07ClickLongClick:
-                    level_status_enabled = True
+                    led_matrix_info = "status"
+                elif button_output == WeatherButton.x07ClickSuperLongClick:
+                    led_matrix_info = "temperature"
             # display day name
             if button_output != WeatherButton.LongClick:
                 day_name = max7219.calculate_week_day_name(forecast_input.day)
@@ -293,16 +318,24 @@ def thread_actionButton_function():
                 # show date with manual flag
                 tm1637l.show_date_time(WeatherConfig.INTENSITY_7LED_MODE_CLOCK.value, eco_clock_manual_flag)   
                 wlogging.log(LogType.INFO.value,LogMessage.MAN_MODE_CLK1.name,LogMessage.MAN_MODE_CLK1.value) 
-            else:
+            elif (1 <= button_output.value <= 24 or
+                101 <= button_output.value <= 124 or
+                301 <= button_output.value <= 324):
                 current_hour = int(forecast_input.hour)
                 button_val = int(button_output.value)
-                if button_val > 100:
+                if 301 <= button_val <= 324:
+                    button_val -= 300
+                    led_matrix_info = "temperature"
+                elif 101 <= button_val <= 124:
                     button_val-=100
-                    level_status_enabled = True
+                    led_matrix_info = "status"
                 forecast_input.hour=current_hour + button_val
-                while forecast_input.hour > 24:
+                while forecast_input.hour >= 24:
                     if forecast_input.day < WeatherConfig.DAYS.value - 1:
                         forecast_input.day += 1
+                    else:
+                        forecast_input.hour = 23
+                        break
                     forecast_input.hour = forecast_input.hour - 24
                 if len(str(forecast_input.hour))==1:
                     max7219.message = '0' + str(forecast_input.hour)
@@ -310,12 +343,19 @@ def thread_actionButton_function():
                     max7219.message = str(forecast_input.hour)
         # E) Action button: increase hour absolute
         elif action_button_mode == ActionButtonMode.IncreaseHourAbs.value: 
+            if not (1 <= button_output.value <= 24 or
+                    101 <= button_output.value <= 124 or
+                    301 <= button_output.value <= 324):
+                continue
             button_val = int(button_output.value)
-            if button_val > 100:
+            if 301 <= button_val <= 324:
+                button_val -= 300
+                led_matrix_info = "temperature"
+            elif 101 <= button_val <= 124:
                 button_val-=100
-                level_status_enabled = True
+                led_matrix_info = "status"
             forecast_input.hour = button_val
-            while forecast_input.hour > 24:
+            while forecast_input.hour >= 24:
                 forecast_input.hour = forecast_input.hour - 24
             if len(str(forecast_input.hour))==1:
                 max7219.message = '0' + str(forecast_input.hour)
@@ -747,15 +787,19 @@ while True:
             status=weather.get_status(forecast_input.day, forecast_input.hour, weather.weather_timeline)
             pcf8574.display_status(status)
             log+='; status' + suffix_24_48_120h + '=' + str(status)
-            # display rain (or status only when level_status_enabled)
-            if level_status_enabled == False:
+            # Display the selected LED matrix information.
+            if led_matrix_info == "rain":
                 rain=weather.get_rain(forecast_input.day, forecast_input.hour, weather.weather_timeline)
                 max7219.calculate_level(rain, weather.weather_timeline, action_button_mode, forecast_input.day, forecast_input.hourFlag, forecast_input.hour)
                 log+='; rain' + suffix_24_48_120h + '=' + str(rain)
-            else:
-                level_status_enabled = False
+            elif led_matrix_info == "status":
+                led_matrix_info = "rain"
                 status_arr=weather.get_status_arr(forecast_input.day, forecast_input.hour, weather.weather_timeline)
                 max7219.calculate_status_level(status_arr)
+            elif led_matrix_info == "temperature":
+                led_matrix_info = "rain"
+                temperature_arr = weather.get_temperature_arr(forecast_input.day, forecast_input.hour, weather.weather_timeline)
+                max7219.calculate_temperature_level(temperature_arr)
 
             # display rain warning
             rain_warning_flag, rain_warning_quantity, rain_hour_counter = weather.get_rain_warning(forecast_input.day,forecast_input.hour,

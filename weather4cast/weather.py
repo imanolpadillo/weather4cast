@@ -157,8 +157,8 @@ def get_status_arr (forecast_day, forecast_hour, weather_timeline = WeatherTimeL
     #     index = 24
     else: #T24 + T48
         hour_limit=24
-        # if weather_timeline==WeatherTimeLine.T48:
-        #     if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
+        if weather_timeline==WeatherTimeLine.T48:
+            if forecast_day<WeatherConfig.DAYS.value-1: forecast_day += 1
         index = forecast_day * 24
     
     # from index count 16, 24 or 120 rain values
@@ -170,7 +170,7 @@ def get_status_arr (forecast_day, forecast_hour, weather_timeline = WeatherTimeL
 
     # fill with 'SUNNY' if array´s size is lower than hour limit
     while(len(status_output)<hour_limit):
-        status_output.append(WeatherStatus.SUNNY.value)
+        status_output.append(WeatherStatus.SUNNY)
 
     # adjust rain array to size 16
     if len(status_output)==24:
@@ -208,6 +208,58 @@ def status_24_to_16_hours(input_array):
             output_array.append(group[0])
             output_array.append(group[1])
     
+    return output_array
+
+
+def get_temperature_arr(forecast_day, forecast_hour, weather_timeline=WeatherTimeLine.T16):
+    """Return 16 temperatures for the selected forecast window.
+
+    Daily/multi-day windows are linearly resampled to 16 columns.
+    If the forecast ends early, repeat its last available temperature.
+    """
+    forecast_day = int(forecast_day)
+    forecast_hour = int(forecast_hour)
+    temperature_data = [
+        temperature
+        for day in range(WeatherConfig.DAYS.value)
+        for temperature in weatherAPI.weekWeather[day].temperature
+    ]
+    if weather_timeline == WeatherTimeLine.T16:
+        index = forecast_day * 24 + forecast_hour
+        hour_limit = 16
+    elif weather_timeline == WeatherTimeLine.T120:
+        index = 24
+        hour_limit = 120
+    else:
+        if weather_timeline == WeatherTimeLine.T48:
+            forecast_day = min(forecast_day + 1, WeatherConfig.DAYS.value - 1)
+        index = forecast_day * 24
+        hour_limit = 24
+
+    temperature_output = temperature_data[index:index + hour_limit]
+    if not temperature_output:
+        raise ValueError("No temperature data available for the selected forecast window.")
+    # Convert only the selected window: unavailable future days must not
+    # prevent displaying a valid current forecast.
+    if any(temperature is None for temperature in temperature_output):
+        raise ValueError("Missing temperature data in the selected forecast window.")
+    temperature_output = [float(temperature) for temperature in temperature_output]
+    if not all(math.isfinite(temperature) for temperature in temperature_output):
+        raise ValueError("Temperature data must contain only finite values.")
+    temperature_output += [temperature_output[-1]] * (hour_limit - len(temperature_output))
+    if hour_limit == 16:
+        return temperature_output
+
+    # Equally spaced samples including the first and last hours.
+    output_array = []
+    for column in range(16):
+        position = column * (hour_limit - 1) / 15
+        left = int(position)
+        right = min(left + 1, hour_limit - 1)
+        fraction = position - left
+        output_array.append(
+            temperature_output[left] * (1 - fraction) + temperature_output[right] * fraction
+        )
     return output_array
 
 
